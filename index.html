@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posgrado FIF</title>
+    <link rel="stylesheet" href="loginDesign.css">
+</head>
+
+<body>        
+    <div class="container1" id="initialContent">
+        <!-- Contenido inicial -->
+        <form action="/login" method="POST" action="ValidaAcceso.php">
+            <h1>Iniciar sesión</h1>
+            <label for="">Usuario:</label>
+            <input type="text" name="username" id="username">
+            <br>
+            <label for="">Contraseña:</label>
+            <input type="password" name="password" id="password">
+            <br>
+            <input type="submit" value="Enviar" class="boton_enviar">
+            <hr class="x-component x-component-default" style="border-color:#ececec;margin:auto;width:60%;" id="box-1034">
+            <a href="#" class="boton_registrarse" onclick="showRegistrationOptions()">Registrarse</a>
+        </form>
+    </div>
+    <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+    <div class="container2" id="registrationOptions" style="display: none;">
+        <h1>Registro de alumno</h1>
+        <h2 class="espacio">espacio</h2>
+        <form>
+            <div class="grid-container">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" required>
+                </div>
+                <div>
+                    <label for="apellidoPaterno">Apellido paterno:</label>
+                    <input type="text" name="apellidoPaterno" id="apellidoPaterno" required>
+                </div>
+                <div>
+                    <label for="apellidoMaterno">Apellido materno:</label>
+                    <input type="text" name="apellidoMaterno" id="apellidoMaterno" required>
+                </div>
+                <div>
+                    <label for="expediente">Expediente:</label>
+                    <input type="number" name="expediente" id="expediente" required>
+                </div>
+                <div>
+                    <label for="carrera">Carrera:</label>
+                    <select name="carrera" id="carrera" required>
+                        <option value="" disabled selected>Selecciona...</option>
+                        <option value="option1">option1</option>
+                        <option value="option2">option2</option>
+                        <option value="option3">option3</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="correo">Correo electrónico:</label>
+                    <input type="email" name="correo" id="correo" required>
+                </div>
+                <div>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" name="telefono" id="telefono" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" required>
+                </div>
+            </div>
+            <input type="submit" value="Guardar" class="boton_enviar">
+            <button type="button" class="boton_regresar" onclick="showInitialContent()">
+                <p>Regresar</p>
+            </button>
+        </form>
+    </div>        
+    <script src="registration_options.js"></script>
+</body>
+</html>
