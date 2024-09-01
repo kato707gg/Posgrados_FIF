@@ -1,60 +1,67 @@
 <?php
-    session_start();
-    include("BD.php");
+session_start(); // Iniciar la sesión
 
-    // Recibir y sanitizar las entradas del usuario
-    $usuario = mysqli_real_escape_string($Con, $_POST['inputUsuario']);
-    $contrasena = mysqli_real_escape_string($Con, $_POST['inputPassword']);
+// Obtener datos del formulario
+$Expediente = $_POST['inputUsuario'];
+$Password = $_POST['inputPassword']; // Esto debería ser la contraseña en texto plano
 
-    // Conectar a la base de datos
-    $Con = Conectar();
+include("conexion.php");
+$Con = Conectar();
 
-    // Consultar la cuenta según el usuario ingresado
-    $query = "SELECT * FROM cuentas WHERE id = '$usuario'";
-    $result = mysqli_query($Con, $query);
+// Verificar la conexión
+if (!$Con) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
 
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
-        
-        // Verificar la contraseña
-        if ($row['contrasena'] === $contrasena) {
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['tipo'] = $row['tipo'];
+// Consulta SQL para verificar el usuario
+$query = "SELECT * FROM cuentas WHERE id = ?";
+$stmt = $Con->prepare($query);
+$stmt->bind_param("i", $Expediente);
+$stmt->execute();
+$result = $stmt->get_result();
 
-            // Redirigir según el tipo de usuario
-            switch ($row['tipo']) {
-                case 'A':
-                    header('Location: Alumno.php');
-                    break;
-                case 'C':
-                    header('Location: Coordinador.php');
-                    break;
-                case 'D':
-                    header('Location: Docente.php');
-                    break;
-                default:
-                    session_destroy();
-                    echo '<script type="text/javascript">
-                            alert("Tipo de cuenta no válido.");
-                            window.location.href="index.html";
-                          </script>';
-                    break;
-            }
-        } else {
-            // Contraseña incorrecta
-            echo '<script type="text/javascript">
-                    alert("Usuario o Contraseña Incorrecta");
-                    window.location.href="index.html";
-                  </script>';
+if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+
+    // Comparar directamente si ambos son hashes
+    if ($Password === $row['contrasena']) {
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['tipo'] = $row['tipo'];
+
+        // Redirigir según el tipo de usuario
+        switch ($row['tipo']) {
+            case 'A':
+                header('Location: MenuA.php');
+                break;
+            case 'C':
+                header('Location: Coordinador.php');
+                break;
+            case 'D':
+                header('Location: Docente.php');
+                break;
+            default:
+                session_destroy();
+                echo '<script type="text/javascript">
+                        alert("Tipo de cuenta no válido.");
+                        window.location.href="index.html";
+                      </script>';
+                break;
         }
     } else {
-        // Usuario no encontrado
         echo '<script type="text/javascript">
                 alert("Usuario o Contraseña Incorrecta");
                 window.location.href="index.html";
               </script>';
     }
+} else {
+    echo '<script type="text/javascript">
+            alert("Usuario no encontrado.");
+            window.location.href="index.html";
+          </script>';
+}
 
-    // Cerrar la conexión
-    mysqli_close($Con);
+// Cerrar la conexión
+$stmt->close();
+mysqli_close($Con);
+
 ?>
