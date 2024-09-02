@@ -11,6 +11,13 @@ body {
   background-color: #ddefff !important;
 }
 
+.escudofif{
+  display: flex;
+  width: 35%;
+  margin: auto;
+  margin-bottom: 1.5rem;
+}
+
 .container1,
 .container2 {
   background: #fff;
@@ -25,6 +32,7 @@ body {
   border-radius: 15px;
   font: caption;
   font-size: medium;
+  z-index: 1;
 }
 
 .container1 h1,
@@ -76,7 +84,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.container1 input[type="submit"]:hover {
+.boton_enviar:hover {
   cursor: pointer;
   background: #092F75;
   color: rgb(255, 255, 255);
@@ -95,12 +103,6 @@ input::placeholder {
   display: block;
   margin: 1.5rem auto 0 auto;
   cursor: pointer;
-}
-
-.container2 input[type="submit"]:hover {
-  cursor: pointer;
-  background: #092F75;
-  color: rgb(255, 255, 255);
 }
 
 .boton_regresar {
@@ -136,20 +138,11 @@ td {
   font-size: large;
 }
 
-.text-muted {
-  color: #6c757d !important;
-}
-
-.mt-5,
-.my-5 {
+.mb-3 {
   position: absolute;
-  bottom: 10%;
-  margin-top: 3rem !important;
-}
-
-.mb-3,
-.my-3 {
-  margin-bottom: 1rem !important;
+  bottom: 1%;
+  color: #6c757d !important;
+  margin: 3rem;
 }
 
 /* Estilos para el pop-up */
