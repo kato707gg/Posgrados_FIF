@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: Poppins;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    align-items: stretch;
+    color: white;
+    padding: 2vh 2vw;
+    height: 7vh; /* Ajusta esta altura según tus necesidades */
+}
+
+.header > div,
+.header > .container-botones {
+    padding: 0 1vw;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.container-titulo-header,
+.container-botones,
+.container-usuario,
+.container-cerrar-btn {
+    border-radius: 0.4vw;
+    background: #001a37;
+    height: 100%;
+}
+
+.container-titulo-header,
+.container-botones,
+.container-usuario {
+    margin-right: 0.8vw;
+}
+
+.container-titulo-header,
+.container-usuario, .container-cerrar-btn  {
+    justify-content: center;
+}
+
+.container-titulo-header {
+    width: 15vw;
+    flex-grow: 0!important; 
+}
+
+.titulo-header {
+    color: #fff;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.container-lista-botones {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    display: flex;
+}
+
+.boton-link {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5vw;
+}
+
+.boton-link a,
+.boton-link button {
+    font-family: Poppins;
+    text-decoration: none;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 0.4vw;
+}
+
+.boton-link button:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.boton-link button.active {
+    background-color: #555; /* Color de fondo cuando está activo */
+    color: white; /* Color del texto cuando está activo */
+}
+
+.usuario {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.container-cerrar-btn {
+    background-color: rgb(255, 30, 30);
+    width: 3vw; /* Ajusta esta anchura según tus necesidades */
+    flex-grow: 0!important; /* Asegura que no se expanda */
+}
+
+.cerrar-btn {
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cerrar-btn button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 2vh;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 2vh 2vw;
+    }
+
+    .container-botones {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 2vh;
+    }
+
+    .container-lista-botones {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .boton-link {
+        margin: 1vh 0.5vw;
+    }
+
+    .container-usuario,
+    .container-cerrar-btn {
+        margin-top: 1vh;
+    }
+}

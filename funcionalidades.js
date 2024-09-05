@@ -105,3 +105,17 @@ function closePopup() {
         window.location.href = 'index.html'; // Redirige al inicio
     }
 }
+
+//Botón de otro color cuando se hace clic
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.boton-link button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remover la clase 'active' de todos los botones
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Agregar la clase 'active' al botón clicado
+            this.classList.add('active');
+        });
+    });
+});

@@ -1,6 +1,7 @@
 <?php
+session_start();
 include('MenuC.php');
-if(isset($_SESSION['Nombre'])){
+//include('MenuC_prueba.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -50,8 +51,6 @@ if(isset($_SESSION['Nombre'])){
         <script src="form-validation.js"></script></body>
 </html>
 <?php
-}else {
-  print('<META HTTP-EQUIV="REFRESH" CONTENT="1;URL=index.html"> </head>');
-}
+
 
 ?>

@@ -1,9 +1,6 @@
 <?php
-  include 'menuA.php';
-?>
-
-<?php
- include("MenuA.php");
+  //include('MenuA.php');
+  include('MenuA_prueba.php');
 ?>
 
 <!doctype html>
