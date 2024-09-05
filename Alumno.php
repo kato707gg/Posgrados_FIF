@@ -1,3 +1,6 @@
+<?php
+  include 'menuA.php';
+?>
 
 <!doctype html>
 <html lang="en">

@@ -138,11 +138,10 @@ td {
   font-size: large;
 }
 
-.mb-3 {
+.año {
   position: absolute;
-  bottom: 1%;
+  bottom: 5%;
   color: #6c757d !important;
-  margin: 3rem;
 }
 
 /* Estilos para el pop-up */
