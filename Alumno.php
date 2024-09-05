@@ -1,7 +1,8 @@
-
 <?php
- include("MenuA.php");
+include('MenuA.php');
 ?>
+
+
 
 <!doctype html>
 <html lang="en">

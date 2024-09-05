@@ -42,7 +42,10 @@
         <a class="nav-link" href=""><button type="button" class="btn btn-info">Asignar Sínodo</button> <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href=""><button type="button" class="btn btn-info">Agendar Evaluación</button> <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href=""><button type="button" class="btn btn-info">Alta de docentes</button> <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href=""><button type="button" class="btn btn-info">Seguimiento</button> <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href=""><button type="button" class="btn btn-info">Seguimiento</button> <span class="sr-only">(current)</span></a>
@@ -56,7 +59,7 @@
       </ul>
 
     <form class="collapse navbar-collapse">
-      <a class="nav-link" href="">Usuario: <?php echo($_SESSION['Nombre']);?> <span class="sr-only">(current)</span></a>
+      <a class="nav-link" href="">Usuario: <?php print("Coordinador"); //echo($_SESSION['Nombre']);?> <span class="sr-only">(current)</span></a>
     </form>
 
     <form class="collapse navbar-collapse">

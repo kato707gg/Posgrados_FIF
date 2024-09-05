@@ -1,6 +1,5 @@
 <?php
 include('MenuC.php');
-if(isset($_SESSION['Nombre'])){
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,7 +7,6 @@ if(isset($_SESSION['Nombre'])){
     <meta charset="utf-8">
     <title>EDUCON FIF</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
-
     <!-- Bootstrap core CSS -->
 <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -49,9 +47,3 @@ if(isset($_SESSION['Nombre'])){
       <script>window.jQuery || document.write('<script src="../SSD/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
         <script src="form-validation.js"></script></body>
 </html>
-<?php
-}else {
-  print('<META HTTP-EQUIV="REFRESH" CONTENT="1;URL=index.html"> </head>');
-}
-
-?>
