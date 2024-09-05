@@ -56,7 +56,7 @@
     </ul>
 
     <form class="collapse navbar-collapse">
-      <a class="nav-link" href="">Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?> <span class="sr-only">(current)</span></a>
+      <a class="nav-link" href="">Usuario: <?php echo($_SESSION['Nombre']);?> <span class="sr-only">(current)</span></a>
     </form>
 
     <form class="collapse navbar-collapse">
