@@ -31,7 +31,7 @@ if ($result->num_rows == 1) {
         // Redirigir según el tipo de usuario
         switch ($row['tipo']) {
             case 'A':
-                header('Location: MenuA.php');
+                header('Location: Alumno.php');
                 break;
             case 'C':
                 header('Location: Coordinador.php');
