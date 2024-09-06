@@ -68,6 +68,10 @@ body {
     margin-right: 1.5vw;
 }
 
+.proximas-evaluaciones {
+    margin-left: 1vw;
+}
+
 .boton-link a,
 .boton-link button {
     font-family: Poppins;
@@ -94,6 +98,7 @@ body {
 }
 
 .usuario {
+    font-family: Poppins;
     color: white;
     text-decoration: none;
     font-size: 1rem;
@@ -101,7 +106,7 @@ body {
 
 .container-cerrar-btn {
     background-color: rgb(255, 30, 30);
-    width: 3vw; /* Ajusta esta anchura según tus necesidades */
+    width: 3.5vw;
     flex-grow: 0!important; /* Asegura que no se expanda */
 }
 
@@ -120,32 +125,93 @@ body {
     font-size: 2vh;
 }
 
+/* Diseño para pantallas pequeñas */
+
+.container-titulo-sidebarbtn {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0  0 0.4vw 0;
+    background-color: #001a37;
+}
+
+.header-telefono {
+    display: none;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vH;
+    background-color: #001a37;
+    padding-top: 6vh;
+    z-index: 1000;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.espacio-sidebar {
+    height: 7vh;
+    display: block;
+}
+
+.sidebar a {
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar .close-sidebar {
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.8rem 1rem;
+    font-size: 2.5rem;
+}
+
+.open-sidebar {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    border: none;
+    background-color: #001a37;
+}
+
+.cerrar-btn-telefono {
+    background-color: rgb(255, 30, 30);
+    position: absolute;
+    bottom: 4rem;
+    margin-left: 2rem;
+    border-radius: 1vw;
+    padding: 0.8rem 1.3rem !important;
+}
+
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
+    .titulo-header {
+        font-size: 1.7rem;
+    }
+
+    .sidebar {
+        width: 0;
+    }
+
     .header {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 2vh 2vw;
+        display: none;
     }
 
-    .container-botones {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        margin-top: 2vh;
+    .header-telefono {
+        display: block;
     }
 
-    .container-lista-botones {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .boton-link {
-        margin: 1vh 0.5vw;
-    }
-
-    .container-usuario,
-    .container-cerrar-btn {
-        margin-top: 1vh;
+    .openbtn {
+        display: block;
     }
 }

@@ -31,13 +31,13 @@ if ($result->num_rows == 1) {
         // Redirigir según el tipo de usuario
         switch ($row['tipo']) {
             case 'A':
-                header('Location: Alumno.php');
+                header('Location: Interfaces/Fondo estatico/Alumno_prueba.php');
                 break;
             case 'C':
-                header('Location: Coordinador.php');
+                header('Location: Interfaces/Fondo estatico/Coordinador.php');
                 break;
             case 'D':
-                header('Location: Docente.php');
+                header('Location: Interfaces/Fondo estatico/Docente.php');
                 break;
             default:
                 session_destroy();

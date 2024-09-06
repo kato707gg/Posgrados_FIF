@@ -1,6 +1,6 @@
 <?php
-  //include('MenuA.php');
-  include('MenuA_prueba.php');
+  include('../Header/MenuA.php');
+  //include('../Header/MenuA_prueba.php');
 ?>
 
 <!doctype html>
@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../Assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -30,23 +30,20 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet">
+    <link href="../../Assets/dist/css/form-validation.css" rel="stylesheet">
   </head>
   <body class="bg-light">
     <div class="container-fluid">
         <div class="py-5 text-center">
-            <img src="EscudoFIF.PNG">
+            <img src="../../EscudoFIF.PNG">
             <h1> B I E N V E N I D O </h1>
             <h2> (Alumno)  </h2>
         </div>
     </div>
   </body>
 
-
-
-
-  
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../SSD/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="form-validation.js"></script></body>
+<script>window.jQuery || document.write('<script src="../../Assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="../../Assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../Assets/js/form-validation.js"></script>
 </html>

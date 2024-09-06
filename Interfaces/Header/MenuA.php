@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
 
     <!-- Bootstrap core CSS -->
-<link href="../SSD/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../Assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -65,5 +65,5 @@
   </div>
 </nav>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../SSD/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+      <script>window.jQuery || document.write('<script src="../../Assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../../Assets/dist/js/bootstrap.bundle.min.js"></script>
 </html>
