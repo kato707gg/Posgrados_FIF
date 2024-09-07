@@ -51,7 +51,7 @@
             <a href="#">Mis evaluaciones</a>
             <a href="#">Documentos</a>
             <a href="Avisos.php">Avisos</a>
-            <a class="cerrar-btn-telefono" href="Cerrar.php">Cerrar</a>
+            <a class="cerrar-btn-telefono" href="../../Cerrar.php">Cerrar</a>
         </div>
     </div>
     <script src="../../funcionalidades.js"></script>

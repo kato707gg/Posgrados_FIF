@@ -5,14 +5,14 @@
 
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POSGRADO FIF</title>
     <link rel="stylesheet" href="../Header/Diseño_prueba.css">
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
         margin: 0;
         padding: 0;
       }

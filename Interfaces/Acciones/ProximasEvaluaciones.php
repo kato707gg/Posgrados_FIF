@@ -1,41 +1,57 @@
+<?php
+  include('../Header/MenuA_prueba.php');
+  //include('../Header/MenuA.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posgrado FIF</title>
-    <link rel="stylesheet" href="loginDesign.css">
+    <link rel="stylesheet" href="../Header/Diseño_prueba.css">
+    <title>Próximas evaluaciones</title>
 </head>
 
 <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --primary-color: rgb(26,115,232);
+        --secondary-color: #366d6f;
+        --text-color: #3c4043;
+        --background-color: #fafcff;
+    }
+
     table {
         table-layout: fixed;
         border-collapse: collapse;
         margin-bottom: 5rem;
-        table: 100%;
-        width: 40%;
+        width: 100%;
+        max-width: 40rem;
     }
 
     tr {
-        border-top: 0.1rem solid rgb(26,115,232);
-        border-bottom: 0.1rem solid rgb(26,115,232);
+        border-top: 0.1rem solid var(--primary-color);
+        border-bottom: 0.1rem solid var(--primary-color);
     }
 
     th, td {
         width: 33.33%;
         border-bottom: 0.0625rem solid #e0e0e0;
-        padding: 20px;
+        padding: 1.25rem;
     }
 
     td {
         display: table-cell;
         text-align: center;
-        font-family: "Google Sans",Roboto,Arial,sans-serif;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
         font-size: 1.1rem;
         font-weight: 500;
-        color: #3c4043;
+        color: var(--text-color);
     }
 
     th {
@@ -43,70 +59,61 @@
         font-family: system-ui;
         font-weight: 600;
         font-size: 1.5rem;
-        color: #3c4043;
+        color: var(--text-color);
         padding-bottom: 2rem;
         padding-top: 3.5rem;
     }
-    button {
-        height: 48px;
-        width: 15rem;
-        background-color: #366d6f;
-        border-radius: 5px;
-        border: 0.1rem;
-        font-family: system-ui;
-        font-weight: 600;
-        font-size: 1rem;
-        color: #fafcff;
-    }
+
     h1 {
-        font-family: "Google Sans",Roboto,Arial,sans-serif;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
         text-align: center;
     }
+
     h3 {
         font-size: 2rem;
-        font-family: "Google Sans",Roboto,Arial,sans-serif;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
     }
 
     #title-container {
         display: flex;
-        justify-content:space-between;
-        width: 100vw;
-        align-items:center;
-    }
-    #container-logo {
-        display:flex;
+        justify-content: space-between;
+        width: 100%;
         align-items: center;
     }
-    #logo {
-        width: 40px;
-        margin-left: 20px;
-    }
-    #olmos {
-        font-family: "Google Sans",Roboto,Arial,sans-serif;
-        margin-left: 10px;
-    }
-    #back {
-        all: unset;
-    }
-    #back:hover {
-        all: unset;
-        cursor: pointer;
-    }
-    body {
-        width: 100vw;
-        display: block;
-        text-align: center;
-    }
+
     #table-container {
         display: flex !important;
         justify-content: center;
+        overflow-x: auto;
     }
+
     .container-proximas-evaluacionesS {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        min-height: 85vh;
+        padding: 1rem;
+    }
+
+    @media (max-width: 48rem) {
+        table {
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            font-size: 1.1rem;
+            padding: 0.75rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        button {
+            height: 2.5rem;
+            font-size: 0.9rem;
+        }
     }
 </style>
 
