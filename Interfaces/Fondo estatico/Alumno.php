@@ -1,49 +1,69 @@
 <?php
   include('../Header/MenuA.php');
-  //include('../Header/MenuA_prueba.php');
 ?>
 
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POSGRADO FIF</title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../Assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../Header/Diseño_prueba.css">
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+      body {
+        margin: 0;
+        padding: 0;
       }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+      .container-escudo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
       }
+      .texto {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+        text-align: center !important;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      h1, h2 {
+        font-size: 3rem;
+        font-weight: 600;
+        margin: 0.5rem 0;
+        color: #454545;
+      }
+      h2 {
+        font-weight: 300;
+      }
+      /* Ajustes para pantallas pequeñas */
+    @media (max-width: 768px) {
+        .container-escudo {
+        width: 90%;
+      }
+      img {
+        max-width: 80%;
+        height: auto;
+      }
+      h1, h2 {
+        font-size: 2rem;
+      }
+    }
     </style>
-    <!-- Custom styles for this template -->
-    <link href="../../Assets/dist/css/form-validation.css" rel="stylesheet">
   </head>
-  <body class="bg-light">
-    <div class="container-fluid">
-        <div class="py-5 text-center">
-            <img src="../../EscudoFIF.PNG">
+  <body>
+    <div class="container-escudo">
+        <div class="texto">
+            <img src="../../EscudoFIF.PNG" alt="Escudo FIF">
             <h1> B I E N V E N I D O </h1>
             <h2> (Alumno)  </h2>
         </div>
     </div>
   </body>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../Assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script src="../../Assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../Assets/js/form-validation.js"></script>
 </html>

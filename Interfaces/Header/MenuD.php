@@ -1,61 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../Diseño_prueba.css">
+    <title>Docente</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container-titulo-header">
+            <a class="titulo-header" href="../Fondo estatico/Alumno.php">SSAP FIF UAQ</a>
+        </div>
+        <div class="container-botones">
+            <ul class="container-lista-botones">  
+                <li class="boton-link">
+                    <a class="evaluaciones-pendientes" href=""><button type="button">Evaluaciones Pendientes</button></a>
+                </li>
+                <li class="boton-link">
+                    <a class="historial-evaluaciones" href=""><button type="button">Historial de Evaluaciones</button></a>
+                </li>
+            </ul>
+        </div>
+        <div class="container-usuario">
+            <a class="usuario">Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
+        </div>
+        <div class="container-cerrar-btn">
+            <a class="cerrar-btn" href="../Acciones/Cerrar.php"><button type="button">Cerrar</button></a>
+        </div>
+    </header>
 
+    <div class="header-telefono">
+        <div class="container-titulo-sidebarbtn">
+            <a class="titulo-header" href="Alumno_prueba.php">SSAP FIF UAQ</a>
+            <button class="open-sidebar" onclick="openNav()">☰</button>
+        </div>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>POSGRADO FIF</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
-
-    <!-- Bootstrap core CSS -->
-<link href="../SSD/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="Docente.php">SSAP FIF </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">  
-    <li class="nav-item active">
-        <a class="nav-link" href=""><button type="button" class="btn btn-info">Evaluaciones Pendientes </button> <span class="sr-only">(current)</span></a>
-      </li>
-    <li class="nav-item active">
-        <a class="nav-link" href=""><button type="button" class="btn btn-info">Historial de Evaluaciones </button> <span class="sr-only">(current)</span></a>
-    </li>
-    </ul>
-
-
-    <form class="collapse navbar-collapse">
-      <a class="nav-link" href="">Usuario: <?php echo($_SESSION['Nombre']);?> <span class="sr-only">(current)</span></a>
-    </form>
-
-    <form class="collapse navbar-collapse">
-      <a class="nav-link" href="Cerrar.php"><button type="button" class="btn btn-danger">Cerrar</button><span class="sr-only">(current)</span></a>
-    </form>
-  </div>
-</nav>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../SSD/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <div id="mySidebar" class="sidebar">
+            <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
+            <span class="espacio-sidebar"></span>
+            <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
+            <a href="">Evaluaciones Pendientes</a>
+            <a href="">Historial de Evaluaciones</a>
+            <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
+        </div>
+    </div>
+    <script src="../../funcionalidades.js"></script>
+</body>
 </html>

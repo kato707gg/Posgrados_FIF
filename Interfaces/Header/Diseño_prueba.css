@@ -68,8 +68,8 @@ body {
     margin-right: 1.5vw;
 }
 
-.proximas-evaluaciones {
-    margin-left: 1vw;
+.boton-link:first-child {
+    margin-left: 1vw; /* Agrega margen izquierdo solo al primer botón */
 }
 
 .boton-link a,

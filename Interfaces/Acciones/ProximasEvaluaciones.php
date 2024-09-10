@@ -1,6 +1,5 @@
 <?php
-  include('../Header/MenuA_prueba.php');
-  //include('../Header/MenuA.php');
+  include('../Header/MenuA.php');
 ?>
 
 <!DOCTYPE html>
