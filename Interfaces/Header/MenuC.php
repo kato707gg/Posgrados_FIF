@@ -9,7 +9,7 @@
 <body>
     <header class="header">
         <div class="container-titulo-header">
-            <a class="titulo-header" href="../Fondo estatico/Alumno.php">SSAP FIF UAQ</a>
+            <a class="titulo-header" href="../Fondo estatico/Coordinador.php">SSAP FIF UAQ</a>
         </div>
         <div class="container-botones">
             <ul class="container-lista-botones">  
@@ -34,7 +34,7 @@
 
     <div class="header-telefono">
         <div class="container-titulo-sidebarbtn">
-            <a class="titulo-header" href="Alumno_prueba.php">SSAP FIF UAQ</a>
+            <a class="titulo-header" href="../Fondo estatico/Coordinador.php">SSAP FIF UAQ</a>
             <button class="open-sidebar" onclick="openNav()">☰</button>
         </div>
 
