@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Diseño_prueba.css">
+    <link rel="stylesheet" href="../Header/styles.css">  
     <title>Coordinador</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="container-botones">
             <ul class="container-lista-botones">  
                 <li class="boton-link">
-                    <a class="asignar-sinodo" href=""><button type="button">Asignar Sínodo</button></a>
+                    <a class="asignar-sinodo" href="../Acciones/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
                 </li>
                 <li class="boton-link">
                     <a class="agendar-evaluacion" href=""><button type="button">Agendar Evaluación</button></a>
@@ -42,12 +42,20 @@
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
-            <a href="">Asignar Sínodo</a>
+            <a href="../Acciones/AsignarSinodo.php">Asignar Sínodo</a>
             <a href="">Agendar Evaluación</a>
             <a href="">Seguimiento</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>
     </div>
-    <script src="../../funcionalidades.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "100vw";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
 </body>
 </html>

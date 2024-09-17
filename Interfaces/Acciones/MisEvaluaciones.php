@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Header/styles.css">  
-    <title>Próximas evaluaciones</title>
+    <title>Mis evaluaciones</title>
 </head>
 
 <style>
@@ -119,7 +119,7 @@
 <body>
 
 <div class="container-proximas-evaluacionesS">
-<h3>Próximas evaluaciones:</h3>
+<h3>Mis evaluaciones:</h3>
     <div id="table-container">
         <table>
             <thead>

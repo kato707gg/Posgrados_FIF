@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Diseño_prueba.css">
+    <link rel="stylesheet" href="../Header/styles.css">  
     <title>Alumno</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
                     <a class="proximas-evaluaciones" href="../Acciones/ProximasEvaluaciones.php"><button type="button">Próximas Evaluaciones</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="mis-evaluaciones" href=""><button type="button">Mis Evaluaciones</button></a>
+                    <a class="mis-evaluaciones" href="../Acciones/MisEvaluaciones.php"><button type="button">Mis Evaluaciones</button></a>
                 </li>
                 
                 <li class="boton-link">
@@ -48,12 +48,20 @@
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/ProximasEvaluaciones.php">Próximas evaluaciones</a>
-            <a href="#">Mis evaluaciones</a>
+            <a href="../Acciones/MisEvaluaciones.php">Mis evaluaciones</a>
             <a href="#">Documentos</a>
             <a href="Avisos.php">Avisos</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>
     </div>
-    <script src="../../funcionalidades.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "100vw";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
 </body>
 </html>

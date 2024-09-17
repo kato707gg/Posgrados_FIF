@@ -110,6 +110,10 @@ body {
     flex-grow: 0!important; /* Asegura que no se expanda */
 }
 
+.container-cerrar-btn:hover {
+    background-color: rgb(255, 64, 64);
+}
+
 .cerrar-btn {
     text-decoration: none;
     height: 100%;
@@ -187,18 +191,20 @@ body {
 .cerrar-btn-telefono {
     background-color: rgb(255, 30, 30);
     position: absolute;
-    bottom: 4rem;
+    bottom: 10%;
     margin-left: 2rem;
     border-radius: 1vw;
     padding: 0.8rem 1.3rem !important;
 }
 
 /* Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
+@media (max-width: 1420px) {
     .titulo-header {
         font-size: 1.7rem;
     }
+}
 
+@media (max-width: 768px) {
     .sidebar {
         width: 0;
     }

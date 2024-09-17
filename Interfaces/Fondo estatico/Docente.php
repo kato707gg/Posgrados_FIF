@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POSGRADO FIF</title>
-    <link rel="stylesheet" href="../Header/Diseño_prueba.css">
+    <link rel="stylesheet" href="../Header/styles.css">  
     <style>
       body {
         margin: 0;
@@ -20,7 +20,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 100%;
         padding: 0 15px;
         margin: 0 auto;
       }

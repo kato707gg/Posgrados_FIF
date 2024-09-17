@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Diseño_prueba.css">
+    <link rel="stylesheet" href="../Header/styles.css">  
     <title>Docente</title>
 </head>
 <body>
@@ -44,6 +44,14 @@
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>
     </div>
-    <script src="../../funcionalidades.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "100vw";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
 </body>
 </html>
