@@ -1,5 +1,5 @@
 <?php
-  include('../Header/MenuC.php');
+  include('../Header/MenuD.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,8 +8,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Header/styles.css">
-    <title>Próximas evaluaciones</title>
+    <link rel="stylesheet" href="../Header/styles.css">  
+    <title>Evaluaciones Pendientes</title>
 </head>
 
 <style>
@@ -119,7 +119,7 @@
 <body>
 
 <div class="container-proximas-evaluacionesS">
-<h3>Próximas evaluaciones:</h3>
+<h3>Evaluaciones pendientes:</h3>
     <div id="table-container">
         <table>
             <thead>

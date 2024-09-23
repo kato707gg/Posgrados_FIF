@@ -14,10 +14,10 @@
         <div class="container-botones">
             <ul class="container-lista-botones">  
                 <li class="boton-link">
-                    <a class="evaluaciones-pendientes" href=""><button type="button">Evaluaciones Pendientes</button></a>
+                    <a class="evaluaciones-pendientes" href="../Acciones/EvaluacionesPendientes.php"><button type="button">Evaluaciones Pendientes</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="historial-evaluaciones" href=""><button type="button">Historial de Evaluaciones</button></a>
+                    <a class="historial-evaluaciones" href="../Acciones/HistorialEvaluaciones.php"><button type="button">Historial de Evaluaciones</button></a>
                 </li>
             </ul>
         </div>
@@ -39,8 +39,8 @@
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
-            <a href="">Evaluaciones Pendientes</a>
-            <a href="">Historial de Evaluaciones</a>
+            <a href="../Acciones/EvaluacionesPendientes.php">Evaluaciones Pendientes</a>
+            <a href="../Acciones/HistorialEvaluaciones.php">Historial de Evaluaciones</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>
     </div>
