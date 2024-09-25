@@ -21,7 +21,7 @@
                 </li>
                 
                 <li class="boton-link">
-                    <a class="documentos" href=""><button type="button">Documentos</button></a>
+                    <a class="documentos" href="../Acciones/Documentos.php"><button type="button">Documentos</button></a>
                 </li>
                 
                 <li class="boton-link">
@@ -49,7 +49,7 @@
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/ProximasEvaluaciones.php">Próximas evaluaciones</a>
             <a href="../Acciones/MisEvaluaciones.php">Mis evaluaciones</a>
-            <a href="#">Documentos</a>
+            <a href="../Acciones/Documentos.php">Documentos</a>
             <a href="Avisos.php">Avisos</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>
