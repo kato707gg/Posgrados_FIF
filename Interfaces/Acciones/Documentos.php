@@ -28,55 +28,114 @@
     /* Centrar la sección completa */
     .container-subirdoc {
         display: flex;
-        flex-direction: column; /* Alinear los elementos verticalmente */
+        flex-direction: column;
+        /* Alinear los elementos verticalmente */
         justify-content: center;
         align-items: center;
         margin-top: 5rem;
     }
 
-    /* Espaciar los elementos */
-    .container-tipodoc, .container-subir {
+    .container-tipodoc,
+    .container-subir {
         margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        /* Alinea verticalmente los elementos hijos */
+    }
+
+    label {
+        font-size: 1.1rem;
+        margin-right: 0.4rem;
+    }
+
+    #document-type {
+        font: caption;
+        padding: 0.7rem 1rem;
+        width: 13rem;
+        border: 1px solid #ccc;
+        border-radius: 0.4rem;
+        line-height: 1.5rem;
+        /* Asegura una alineación uniforme */
     }
 
     #file-label {
+        font: caption;
         display: inline-block;
-        padding: 10px;
+        width: 13rem;
+        padding: 0.7rem 1rem;
         border: 1px solid #ccc;
-        background-color: #f4f4f4;
-        margin-right: 10px;
-        cursor: not-allowed; /* Deshabilitar clic al inicio */
+        border-radius: 0.4rem 0 0 0.4rem;
+        cursor: not-allowed;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.5rem;
+        vertical-align: middle;
     }
 
     #clear-file-btn {
+        font: caption;
         display: none;
         margin-left: 10px;
         color: red;
         cursor: pointer;
+        line-height: 1.5rem;
+        /* Ajuste de altura */
     }
 
     #upload-btn {
+        font: caption;
         display: inline-block;
-        padding: 10px;
+        padding: 0.7rem 1rem;
         background-color: grey;
         color: white;
         border: none;
         cursor: not-allowed;
         pointer-events: none;
+        border-radius: 0 0.4rem 0.4rem 0;
+        vertical-align: middle;
+        line-height: 1.62rem;
+        transition: background-color 0.3s ease;
     }
 
-    #upload-btn.enabled {
-        background-color: #4CAF50;
+    #upload-btn.option-selected {
+        background-color: #123773;
+        /* Azul cuando se ha seleccionado una opción */
         cursor: pointer;
         pointer-events: auto;
     }
 
+    #upload-btn.option-selected:hover {
+        background-color: #1A4DA1;
+    }
+
+
+    #upload-btn.enabled {
+        background-color: #4CAF50;
+        /* Verde cuando se sube un archivo */
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    .container-tabla {
+        max-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5rem;
+        padding: 1rem;
+    }
+
+    #table-header table {
+        border-collapse: collapse;
+        margin-bottom: 0;
+    }
+
     table {
         table-layout: fixed;
-        border-collapse: collapse;
-        margin-bottom: 5rem;
         width: 100%;
-        max-width: 40rem;
+        max-width: 55rem;
     }
 
     tr {
@@ -107,7 +166,6 @@
         font-size: 1.5rem;
         color: var(--text-color);
         padding-bottom: 2rem;
-        padding-top: 3.5rem;
     }
 
     h1 {
@@ -131,15 +189,6 @@
         display: flex !important;
         justify-content: center;
         overflow-x: auto;
-    }
-
-    .container-tabla {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: 3rem;
-        padding: 1rem;
     }
 
     @media (max-width: 48rem) {
@@ -181,14 +230,15 @@
         <div class="container-subir">
             <label for="file">Subir:</label>
             <span id="file-label" onclick="triggerFileInput()">Examinar...</span>
-            <input type="file" id="file" name="file" style="display:none;" accept=".pdf,.docx,.xlsx" onchange="handleFileSelect()" disabled>
+            <input type="file" id="file" name="file" style="display:none;" accept=".pdf,.docx,.xlsx"
+                onchange="handleFileSelect()" disabled>
             <button id="upload-btn">Subir archivo</button>
             <span id="clear-file-btn" onclick="clearFile()">Quitar archivo &times;</span>
         </div>
     </div>
     <div class="container-tabla">
-        <h3>Subir documentos:</h3>
-        <div id="table-container">
+        <h3>Documentos subidos:</h3>
+        <div id="table-header">
             <table>
                 <thead>
                     <tr>
@@ -197,6 +247,10 @@
                         <th>Vista</th>
                     </tr>
                 </thead>
+            </table>
+        </div>
+        <div id="table-container">
+            <table>
                 <tbody>
                     <?php
                 // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
@@ -237,6 +291,8 @@
             if (documentType.value !== "") {
                 fileInput.disabled = false; // Habilitar input de archivo
                 fileLabel.style.cursor = 'pointer'; // Cambiar cursor para indicar habilitación
+                uploadBtn.classList.add("option-selected"); // Cambia el botón a azul
+                uploadBtn.classList.remove("enabled"); // Asegúrate de que no esté en verde
             } else {
                 fileInput.disabled = true; // Deshabilitar input de archivo
                 fileLabel.style.cursor = 'not-allowed'; // Cambiar cursor para indicar deshabilitación
@@ -252,20 +308,32 @@
         }
 
         function handleFileSelect() {
-            const file = fileInput.files[0];
-            
-            if (file) {
-                fileLabel.innerText = file.name;
-                uploadBtn.classList.add('enabled'); // Habilitar botón de subida
-                clearFileBtn.style.display = 'inline'; // Mostrar botón de quitar archivo
+            var fileInput = document.getElementById("file");
+            var fileLabel = document.getElementById("file-label");
+            var uploadBtn = document.getElementById("upload-btn");
+            var clearFileBtn = document.getElementById("clear-file-btn");
+
+            if (fileInput.files.length > 0) {
+                // Actualizar el label con el nombre del archivo seleccionado
+                fileLabel.innerText = fileInput.files[0].name;
+                uploadBtn.classList.add("enabled"); // Cambiar el color del botón a verde
+                uploadBtn.classList.remove("option-selected"); // Remueve el color azul
+                clearFileBtn.style.display = "inline-block"; // Mostrar el botón de quitar archivo
             }
         }
 
         function clearFile() {
-            fileInput.value = ''; // Limpiar el archivo seleccionado
-            fileLabel.innerText = 'Examinar...';
-            uploadBtn.classList.remove('enabled'); // Deshabilitar el botón de subida
-            clearFileBtn.style.display = 'none'; // Ocultar botón de quitar archivo
+            var fileInput = document.getElementById("file");
+            var fileLabel = document.getElementById("file-label");
+            var uploadBtn = document.getElementById("upload-btn");
+            var clearFileBtn = document.getElementById("clear-file-btn");
+
+            // Limpiar el input de archivo
+            fileInput.value = "";
+            fileLabel.innerText = "Examinar..."; // Restablecer el label
+            uploadBtn.classList.remove("enabled"); // Volver a azul (opción seleccionada)
+            uploadBtn.classList.add("option-selected");
+            clearFileBtn.style.display = "none"; // Ocultar el botón de quitar archivo
         }
     </script>
 

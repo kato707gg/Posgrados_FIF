@@ -30,7 +30,7 @@
         border-collapse: collapse;
         margin-bottom: 5rem;
         width: 100%;
-        max-width: 40rem;
+        max-width: 55rem;
     }
 
     tr {

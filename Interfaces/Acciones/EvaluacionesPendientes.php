@@ -86,7 +86,7 @@
         overflow-x: auto;
     }
 
-    .container-proximas-evaluacionesS {
+    .container-evaluaciones-pendientes {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -118,7 +118,7 @@
 
 <body>
 
-<div class="container-proximas-evaluacionesS">
+<div class="container-evaluaciones-pendientes">
 <h3>Evaluaciones pendientes:</h3>
     <div id="table-container">
         <table>

@@ -25,12 +25,21 @@
         --background-color: #fafcff;
     }
 
+    .container-proximas-evaluacionesS {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 85vh;
+        padding: 1rem;
+    }
+
     table {
         table-layout: fixed;
         border-collapse: collapse;
         margin-bottom: 5rem;
         width: 100%;
-        max-width: 40rem;
+        max-width: 55rem;
     }
 
     tr {
@@ -84,15 +93,6 @@
         display: flex !important;
         justify-content: center;
         overflow-x: auto;
-    }
-
-    .container-proximas-evaluacionesS {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 85vh;
-        padding: 1rem;
     }
 
     @media (max-width: 48rem) {
