@@ -41,7 +41,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         table {
             table-layout: auto;
             border-collapse: collapse;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
             width: 100%;
             max-width: 100rem;
         }
@@ -100,7 +100,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             overflow-x: auto;
         }
 
-        .container-proximas-evaluacionesS {
+        .container-asignar-sinodo {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -144,17 +144,22 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
         .modal-content {
             background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 2rem;
             width: 50%;
+            border-radius: 0.4rem;
         }
 
         .close {
             color: #aaa;
-            float: right;
+            right: 1rem;
+            top: 0.5rem;
             font-size: 28px;
             font-weight: bold;
+            position: absolute;
         }
 
         .close:hover,
@@ -162,6 +167,17 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .asignar-button {
+            font-size: 1rem;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            padding: 0.5rem 0.6rem;
+            background-color: #123773;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.4rem;
         }
 
         .edit-button {
@@ -173,12 +189,32 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             cursor: pointer;
             text-decoration: underline;
         }
+        
+        .confirmar-button {
+            display: flex;
+            margin: auto;
+            font-size: 1.3rem;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            padding: 0.7rem 0.9rem;
+            background-color: #123773;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmar-button.disabled {
+            background-color: grey; /* Color deshabilitado */
+            cursor: not-allowed;
+            opacity: 0.6; /* Para indicar visualmente que está deshabilitado */
+        }
     </style>
 </head>
 
 <body>
 
-<div class="container-proximas-evaluacionesS">
+<div class="container-asignar-sinodo">
     <h3>Asignar sinodo:</h3>
     <div id="table-container">
         <table>
@@ -203,7 +239,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                         echo "<td>" . $Nombre . "</td>";
                         // Botones de asignar para cada sinodo
                         for ($i = 1; $i <= 4; $i++) {
-                            echo "<td><button onclick='openModal(this)'>Asignar</button><div class='sinodo-nombre'></div><button class='edit-button' onclick='openModal(this)'>Editar</button></td>";
+                            echo "<td><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-nombre'></div><button class='edit-button' onclick='openModal(this)'>Editar</button></td>";
                         }
                         echo "</tr>";
                     }
@@ -238,35 +274,76 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                         echo "<tr>";
                         echo "<td>" . $Sinodo['clave'] . "</td>";
                         echo "<td>" . $NombreCom . "</td>";
-                        echo "<td><button onclick='selectSinodo(this, \"" . $Sinodo['nombre'] . "\")'>Seleccionar</button></td>";
+                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['nombre'] . "' onclick='handleCheckbox(this)'></td>";
                         echo "</tr>";
                     }
                 }
                 ?>
             </tbody>
         </table>
+        <button class="confirmar-button" onclick="confirmSelection()">Confirmar</button>
     </div>
 </div>
 
 <script>
-    let currentButton;
+let selectedSinodo = null;
+let currentButton;
+const confirmarButton = document.querySelector('.confirmar-button');
 
-    // Función para abrir el modal
-    function openModal(button) {
-        currentButton = button; // Guardamos el botón actual para modificarlo después
-        document.getElementById("sinodoModal").style.display = "block";
+// Iniciar con el botón deshabilitado
+confirmarButton.classList.add('disabled');
+confirmarButton.disabled = true;
+
+// Función para permitir solo un checkbox seleccionado a la vez
+function handleCheckbox(checkbox) {
+    let checkboxes = document.querySelectorAll('.sinodo-checkbox');
+    
+    // Desmarcar otros checkboxes si se selecciona uno nuevo
+    checkboxes.forEach(cb => {
+        if (cb !== checkbox) {
+            cb.checked = false;
+        }
+    });
+    
+    // Guardar el sínodo seleccionado
+    if (checkbox.checked) {
+        selectedSinodo = checkbox.value;
+        confirmarButton.classList.remove('disabled');
+        confirmarButton.disabled = false;
+    } else {
+        selectedSinodo = null;
+        confirmarButton.classList.add('disabled');
+        confirmarButton.disabled = true;
     }
+}
 
-    // Función para seleccionar un sínodo
-    function selectSinodo(button, sinodoNombre) {
-        let sinodoContainer = currentButton.nextElementSibling; // El contenedor donde mostraremos el nombre del sínodo
-        let editButton = currentButton.nextElementSibling.nextElementSibling; // El botón de editar
+// Función para abrir el modal y reiniciar la selección
+function openModal(button) {
+    currentButton = button; // Guardamos el botón actual para modificarlo después
+    document.getElementById("sinodoModal").style.display = "block";
+    
+    // Reiniciar la selección previa cuando se abre el modal
+    let checkboxes = document.querySelectorAll('.sinodo-checkbox');
+    checkboxes.forEach(cb => {
+        cb.checked = false;
+    });
+
+    selectedSinodo = null;
+    confirmarButton.classList.add('disabled');
+    confirmarButton.disabled = true;
+}
+
+// Función para confirmar la selección
+function confirmSelection() {
+    if (selectedSinodo) {
+        let sinodoContainer = currentButton.nextElementSibling; // Contenedor donde se mostrará el nombre del sínodo
+        let editButton = currentButton.nextElementSibling.nextElementSibling; // Botón de editar
 
         // Ocultar el botón de Asignar
         currentButton.style.display = 'none';
         
-        // Mostrar el nombre del sinodo
-        sinodoContainer.textContent = sinodoNombre;
+        // Mostrar el nombre del sínodo seleccionado
+        sinodoContainer.textContent = selectedSinodo;
         
         // Mostrar el botón de editar
         editButton.style.display = 'inline';
@@ -274,18 +351,20 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         // Cerrar el modal
         document.getElementById("sinodoModal").style.display = "none";
     }
+}
 
-    // Cerrar el modal al hacer clic en el botón de cerrar
-    document.querySelector(".close").onclick = function() {
+// Cerrar el modal al hacer clic en el botón de cerrar
+document.querySelector(".close").onclick = function() {
+    document.getElementById("sinodoModal").style.display = "none";
+};
+
+// Cerrar el modal si el usuario hace clic fuera del contenido del modal
+window.onclick = function(event) {
+    if (event.target == document.getElementById("sinodoModal")) {
         document.getElementById("sinodoModal").style.display = "none";
-    };
+    }
+};
 
-    // Cerrar el modal si el usuario hace clic fuera del contenido del modal
-    window.onclick = function(event) {
-        if (event.target == document.getElementById("sinodoModal")) {
-            document.getElementById("sinodoModal").style.display = "none";
-        }
-    };
 </script>
 
 </body>
