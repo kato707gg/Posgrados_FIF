@@ -270,11 +270,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                 <?php
                 if ($ResultadoSinodos->num_rows > 0) {
                     while ($Sinodo = $ResultadoSinodos->fetch_assoc()) {
-                        $NombreCom = $Sinodo["nombre"] . " " . $Sinodo["a_paterno"] . " " . $Sinodo["a_materno"];
+                        $NombreSin = $Sinodo["nombre"] . " " . $Sinodo["a_paterno"] . " " . $Sinodo["a_materno"];
                         echo "<tr>";
                         echo "<td>" . $Sinodo['clave'] . "</td>";
-                        echo "<td>" . $NombreCom . "</td>";
-                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['nombre'] . "' onclick='handleCheckbox(this)'></td>";
+                        echo "<td>" . $NombreSin . "</td>";
+                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $NombreSin ."' onclick='handleCheckbox(this)'></td>";
                         echo "</tr>";
                     }
                 }
@@ -353,6 +353,21 @@ function confirmSelection() {
     }
 }
 
+// Función para abrir el modal al hacer clic en Editar y permitir seleccionar otro sínodo
+function editSinodo(button) {
+    currentButton = button.previousElementSibling.previousElementSibling; // Recuperar el botón de Asignar
+
+    // Mostrar el botón de Asignar para permitir seleccionar otro sínodo
+    currentButton.style.display = 'inline';
+
+    // Limpiar el contenedor de la selección previa
+    let sinodoContainer = button.previousElementSibling;
+    sinodoContainer.textContent = '';
+
+    // Abrir el modal
+    openModal(currentButton);
+}
+
 // Cerrar el modal al hacer clic en el botón de cerrar
 document.querySelector(".close").onclick = function() {
     document.getElementById("sinodoModal").style.display = "none";
@@ -364,6 +379,13 @@ window.onclick = function(event) {
         document.getElementById("sinodoModal").style.display = "none";
     }
 };
+
+// Cuando se edita un sínodo, actualizar el estado y permitir que el botón de confirmar funcione
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('sinodo-checkbox')) {
+        handleCheckbox(event.target); // Asegurarse de manejar el checkbox al hacer clic
+    }
+});
 
 </script>
 
