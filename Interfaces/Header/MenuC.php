@@ -17,7 +17,7 @@
                     <a class="asignar-sinodo" href="../Acciones/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="agendar-evaluacion" href=""><button type="button">Agendar Evaluación</button></a>
+                    <a class="agendar-evaluacion" href="../Acciones/AgendarEvaluacion.php"><button type="button">Agendar Evaluación</button></a>
                 </li>
                 <li class="boton-link">
                     <a class="seguimiento" href=""><button type="button">Seguimiento</button></a>

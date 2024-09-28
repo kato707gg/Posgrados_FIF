@@ -24,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Crear contraseña
     $Password = $ApellidoP . substr($Telefono, -2);
+
+    //Variable de nombre completo 
     $NombreC = "$ApellidoP $ApellidoM $Nombre";
 
     // Conectar a la base de datos
@@ -47,14 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insertar datos en la base de datos
         $SQL2 = "INSERT INTO estudiantes (exp, nombre, a_paterno, a_materno, telefono, correo, periodo, programa) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $SQL3 = "INSERT INTO cuentas (id, contrasena, tipo, id_estudiante) 
-                 VALUES (?, ?, 'A', ?)";
+        $SQL3 = "INSERT INTO cuentas (id, contrasena, tipo) 
+                 VALUES (?, ?, 'A')";
 
         $stmt2 = mysqli_prepare($Con, $SQL2);
-        mysqli_stmt_bind_param($stmt2, 'isssisis', $Expediente, $NombreC, $ApellidoP, $ApellidoM, $Telefono, $Correo, $Periodo, $Programa);
+        mysqli_stmt_bind_param($stmt2, 'isssisis', $Expediente, $Nombre, $ApellidoP, $ApellidoM, $Telefono, $Correo, $Periodo, $Programa);
 
         $stmt3 = mysqli_prepare($Con, $SQL3);
-        mysqli_stmt_bind_param($stmt3, 'isi', $Expediente, $Password, $Expediente);
+        mysqli_stmt_bind_param($stmt3, 'is', $Expediente, $Password);
 
         if (mysqli_stmt_execute($stmt2) && mysqli_stmt_execute($stmt3)) {
             $response['status'] = 'success';
