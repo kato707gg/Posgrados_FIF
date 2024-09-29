@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-09-2024 a las 23:49:38
+-- Tiempo de generación: 29-09-2024 a las 00:36:41
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.3.11
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,14 +36,6 @@ CREATE TABLE `asignaciones` (
   `externo` bigint(20) NOT NULL,
   `clave_coordinador` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `asignaciones`
---
-
-INSERT INTO `asignaciones` (`id`, `exp_alumno`, `sinodo1`, `sinodo2`, `sinodo3`, `externo`, `clave_coordinador`) VALUES
-(11, 270309, 1, 2, 301614, 301615, 6),
-(13, 150618, 1, 2, 301614, 301615, 6);
 
 -- --------------------------------------------------------
 
@@ -79,20 +71,18 @@ INSERT INTO `coordinadores` (`clave`, `nombre`, `a_paterno`, `a_materno`, `carre
 CREATE TABLE `cuentas` (
   `id` bigint(20) DEFAULT NULL,
   `contrasena` varchar(255) DEFAULT NULL,
-  `tipo` char(1) DEFAULT NULL,
-  `id_estudiante` bigint(20) DEFAULT NULL,
-  `id_coordinador` bigint(20) DEFAULT NULL,
-  `id_docente` bigint(20) DEFAULT NULL
+  `tipo` char(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `cuentas`
 --
 
-INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`, `id_estudiante`, `id_coordinador`, `id_docente`) VALUES
-(1234567890, '$2a$10$fd2hYukA1ZA6/gy3HONAtuqQ0vECW9ggeH6Q80bah0tbYzHvTQiAK', 'A', 1234567890, NULL, NULL),
-(9876543210, '$2a$10$XrCjsTsSc9p5pFTsCkcxFeXifHsk3TfH3EUApUySO.FuJfRpqMfpa', 'C', NULL, 9876543210, NULL),
-(1122334455, '$2a$10$sEbYox1XppliF6SbPmBoy.oVZIvYA68vvm08i1UWpeg.4njcEuaYC', 'D', NULL, NULL, 1122334455);
+INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
+(301612, 'LOPEZ80', 'D'),
+(114090, 'PAULIN55', 'D'),
+(4411071968, '123456', 'C'),
+(301574, 'GARCIA68', 'A');
 
 -- --------------------------------------------------------
 
@@ -153,6 +143,9 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `periodo`, `programa`) VALUES
+(13123, '213123 312312 312313', '213123', '312312', 21123213, '23123@454', 1, 'option1'),
+(114090, 'PAULIN MARTINEZ FRANCISCO JAVIER', 'PAULIN', 'MARTINEZ', 4424337355, 'fpaulin@gmail.com', 2024, 'option1'),
+(301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4411071968, 'jesusgs0729@gmail.com', 2, 'option1'),
 (301579, 'HERNANDEZ SANCHEZ DIEGO', 'HERNANDEZ', 'SANCHEZ', 4424322665, 'dhernandez211@alumnos.uaq.mx', 8, 'option1');
 
 -- --------------------------------------------------------
@@ -189,14 +182,6 @@ ALTER TABLE `asignaciones`
 --
 ALTER TABLE `coordinadores`
   ADD PRIMARY KEY (`clave`);
-
---
--- Indices de la tabla `cuentas`
---
-ALTER TABLE `cuentas`
-  ADD KEY `fk_estudiante` (`id_estudiante`),
-  ADD KEY `fk_coordinador` (`id_coordinador`),
-  ADD KEY `fk_sinodo` (`id_docente`);
 
 --
 -- Indices de la tabla `detalle_evaluaciones`
@@ -245,16 +230,7 @@ ALTER TABLE `asignaciones`
   ADD CONSTRAINT `asignaciones_ibfk_2` FOREIGN KEY (`sinodo1`) REFERENCES `docentes` (`clave`),
   ADD CONSTRAINT `asignaciones_ibfk_3` FOREIGN KEY (`sinodo2`) REFERENCES `docentes` (`clave`),
   ADD CONSTRAINT `asignaciones_ibfk_4` FOREIGN KEY (`sinodo3`) REFERENCES `docentes` (`clave`),
-  ADD CONSTRAINT `asignaciones_ibfk_5` FOREIGN KEY (`externo`) REFERENCES `docentes` (`clave`),
-  ADD CONSTRAINT `asignaciones_ibfk_6` FOREIGN KEY (`clave_coordinador`) REFERENCES `coordinadores` (`clave`);
-
---
--- Filtros para la tabla `cuentas`
---
-ALTER TABLE `cuentas`
-  ADD CONSTRAINT `fk_coordinador` FOREIGN KEY (`id_coordinador`) REFERENCES `coordinadores` (`clave`),
-  ADD CONSTRAINT `fk_estudiante` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`exp`),
-  ADD CONSTRAINT `fk_sinodo` FOREIGN KEY (`id_docente`) REFERENCES `docentes` (`clave`);
+  ADD CONSTRAINT `asignaciones_ibfk_5` FOREIGN KEY (`externo`) REFERENCES `docentes` (`clave`);
 
 --
 -- Filtros para la tabla `detalle_evaluaciones`

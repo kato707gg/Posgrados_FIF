@@ -173,39 +173,33 @@ $Res = Ejecutar($Con, $SQL);
             border-radius: 0.4rem;
         }
 
-        .edit-button {
-            display: none;
-            font-size: 0.8rem;
-            color: blue;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        .confirmar-button {
-            display: flex;
-            margin: auto;
-            font-size: 1.3rem;
+        .input-container input {
             font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.7rem 0.9rem;
-            background-color: #123773;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
         }
 
-        .confirmar-button.disabled {
-            background-color: grey; /* Color deshabilitado */
-            cursor: not-allowed;
-            opacity: 0.6; /* Para indicar visualmente que está deshabilitado */
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-icon {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .check-icon:hover {
+            color: green;
         }
     </style>
 </head>
-
-
 
 <body>
   <div class="container-agendar-evaluacion">
@@ -228,8 +222,8 @@ $Res = Ejecutar($Con, $SQL);
               echo "<tr>";
               echo "<td>" . $Fila["exp"] . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td><button class='asignar-button' onclick='openModalFecha(this)'>Asignar Fecha</button></td>";
-              echo "<td><button class='asignar-button' onclick='openModalHora(this)'>Asignar Hora</button></td>";
+              echo "<td><div class='input-container'><input type='date' id='fecha-seleccionada' oninput='showIcon(this)'><span class='check-icon' onclick='confirmDate(this)' style='display:none;'>&#x2714;</span></div></td>";
+              echo "<td><div class='input-container'><input type='time' id='hora-seleccionada' oninput='showIcon(this)'><span class='check-icon' onclick='confirmTime(this)' style='display:none;'>&#x2714;</span></div></td>";
               echo "</tr>";
             }
           }else{
@@ -242,97 +236,65 @@ $Res = Ejecutar($Con, $SQL);
     </div>
   </div>
 
-
-
-  <div id="modal-fecha" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModalFecha()">&times;</span>
-      <h3>Seleccionar Fecha:</h3>
-      <input type="date" id="fecha-seleccionada" min="" style="font-size: 1.2rem; padding: 0.5rem;">
-      <button class="confirmar-button" onclick="confirmarFecha()">Confirmar</button>
-    </div>
-  </div>
-
-  <div id="modal-hora" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModalHora()">&times;</span>
-    <h3>Seleccionar Hora:</h3>
-    <input type="time" id="hora-seleccionada" style="font-size: 1.2rem; padding: 0.5rem;">
-    <button class="confirmar-button" onclick="confirmarHora()">Confirmar</button>
-  </div>
-</div>
-
-
-
-
-
-
-  <script> 
-
-  //Funciones para los bótones
-    let currentRow;
-
-    //Abrir ventana de Fecha
-    function openModalFecha(button){
-      const modal = document.getElementById("modal-fecha");
-      modal.style.display = "block";
-
-      currentRow = button.closest('tr');
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('fecha-seleccionada').setAttribute('min', today);  
-    }
-
-    //Cerrar ventana de fecha
-    function closeModalFecha(){
-        const modal= document.getElementById("modal-fecha");
-        modal.style.display = "none";
-      }
-
-
-      //Botón para confirmar fecha
-    function confirmarFecha(){
-        const fecha = document.getElementById('fecha-seleccionada').value;
-
-        if(fecha){
-          const fechaCell = currentRow.cells[2];
-          fechaCell.innerHTML = `<span>${fecha}</span><br><button class='edit-button' onclick='openModalFecha(this)'>EditarFecha</button>`;
-          closeModalFecha();
-        }else{
-          alert('Por favor seleccionar una fecha. ');
-        }
-    }
-    </script>
-
-
-
-
-
-
-    <script>
-    function openModalHora(button) {
-      const modal = document.getElementById("modal-hora");
-      modal.style.display = "block";
-      currentRow = button.closest('tr');
-    }
-
-
-    function closemodalHora(){
-      const modal = document.getElementById("modal-hora");
-      modal.style.display = "none";
-    }
-
-    function confirmarHora(){
-      const hora = document.getElementById('hora-seleccionada').value;
-      
-      if(hora){
-        const horaCell = currentRow.cells[3];
-        horaCell.innerHTML = `<span>${hora}</span><br><button class='edit-button' onclick='openModalHora(this)'>Editar Hora</button>`;
-        closemodalHora();
-      }else{
-        alert('Por favor selecciona una hora.');
+  <script>
+    // Mostrar el ícono de la paloma al ingresar un valor en el input
+    function showIcon(inputElement) {
+      let icon = inputElement.nextElementSibling;
+      if (inputElement.value) {
+        icon.style.display = 'inline'; // Mostrar icono si hay valor en el input
       }
     }
-    </script>
-  
+
+    function confirmDate(element) {
+      let input = element.previousElementSibling;
+      if (input.disabled === false) {
+        input.disabled = true; // Deshabilitar input
+        input.style.backgroundColor = '#a6b3c7'; // Cambiar color de fondo
+        input.style.color = 'white'; // Cambiar color de texto
+
+        // Cambiar icono a equis
+        element.innerHTML = '&#x2716';
+        element.setAttribute('onclick', 'editDate(this)');
+      }
+    }
+
+    function confirmTime(element) {
+      let input = element.previousElementSibling;
+      if (input.disabled === false) {
+        input.disabled = true; // Deshabilitar input
+        input.style.backgroundColor = '#a6b3c7'; // Cambiar color de fondo
+        input.style.color = 'white'; // Cambiar color de texto
+
+        // Cambiar icono a equis
+        element.innerHTML = '&#x2716';
+        element.setAttribute('onclick', 'editTime(this)');
+      }
+    }
+
+    function editDate(element) {
+      let input = element.previousElementSibling;
+      input.disabled = false; // Habilitar input
+      input.style.color = '#3c4043'; // Restaurar color de texto
+      input.style.backgroundColor = 'white'; // Cambiar color de fondo
+
+      // Cambiar icono a paloma
+      element.innerHTML = '&#x2714;';
+      element.setAttribute('onclick', 'confirmDate(this)');
+    }
+
+    function editTime(element) {
+      let input = element.previousElementSibling;
+      input.disabled = false; // Habilitar input
+      input.style.color = '#3c4043'; // Restaurar color de texto
+      input.style.backgroundColor = 'white'; // Cambiar color de fondo
+
+      // Cambiar icono a paloma
+      element.innerHTML = '&#x2714;';
+      element.setAttribute('onclick', 'confirmTime(this)');
+    }
+  </script>
+
 </body>
+
+
 </html>
