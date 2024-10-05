@@ -212,6 +212,7 @@ $Res = Ejecutar($Con, $SQL);
             <th>Nombre</th>
             <th>Fecha</th>
             <th>Hora</th>
+            <th>Confirmar</th>
           </tr>
         </thead>
         <tbody>
