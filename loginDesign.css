@@ -241,3 +241,28 @@ td {
   }
 
 }
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.eye-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 1.1rem;
+}
+
+/* Ocultar el ícono de mostrar/ocultar contraseña por defecto en Edge */
+input[type="password"]::-ms-reveal {
+    display: none;
+}

@@ -29,6 +29,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         body {
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Evitar desplazamiento horizontal en todo el cuerpo */
         }
 
         :root {
@@ -38,12 +39,28 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             --background-color: #fafcff;
         }
 
-        table {
-            table-layout: auto;
-            border-collapse: collapse;
-            margin-bottom: 4rem;
+        .container-asignar-sinodo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            padding: 1rem;
+        }
+
+        #table-container {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+            overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
             width: 100%;
-            max-width: 100rem;
+        }
+
+        table {
+            table-layout: fixed;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -52,7 +69,6 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         }
 
         th, td {
-            width: 20%;
             border-bottom: 0.0625rem solid #e0e0e0;
             padding: 1.25rem;
         }
@@ -92,12 +108,15 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             border-radius: 0.4rem;
         }
 
-        .confirmar-button {
+        .confirmar-icon {
+            color: #123773;
+            margin: auto;
             font-size: 1.5rem;
-            color: green;
-            cursor: pointer;
+            padding: 0.5rem 0.9rem;
+            background-color: #e0e0e0;
             border: none;
-            background-color: transparent;
+            cursor: pointer;
+            border-radius: 0.4rem;
         }
 
         /* Estilos para el modal */
@@ -109,7 +128,6 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
         }
 
@@ -121,7 +139,19 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             transform: translate(-50%, -50%);
             padding: 2rem;
             width: 50%;
+            height: 80%;
             border-radius: 0.4rem;
+            overflow-y: auto;
+        }
+
+        .modal-table {
+            max-width: 100%;
+        }
+
+        input[type="checkbox" i] {
+            cursor: pointer;
+            width: 1.2rem;
+            height: 1.2rem;
         }
 
         .confirmar-button {
@@ -129,19 +159,20 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             margin: auto;
             font-size: 1.3rem;
             font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.7rem 0.9rem;
+            padding: 0.7rem 3rem;
             background-color: #123773;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
+            margin-top: 3rem;
             margin-bottom: 1.5rem;
         }
 
         .confirmar-button.disabled {
-            background-color: grey; /* Color deshabilitado */
+            background-color: grey;
             cursor: not-allowed;
-            opacity: 0.6; /* Para indicar visualmente que está deshabilitado */
+            opacity: 0.6;
         }
 
         .close {
@@ -159,6 +190,32 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             text-decoration: none;
             cursor: pointer;
         }
+
+        @media (max-width: 48rem) {
+
+            table {
+                display: block;
+                white-space: nowrap;
+                width: 100%;
+                max-width: 90%;
+                max-height: 75%;
+            }
+
+            th, td {
+                font-size: 1rem;
+                padding: 0.75rem;
+                white-space: nowrap;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 90%;
+            }
+        }
+
     </style>
 </head>
 
@@ -193,7 +250,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                             echo "<td><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
                         }
                         // Botón de confirmar que inserta en la base de datos
-                        echo "<td><button class='confirmar-button' onclick='confirmarAsignacion(\"" . $Fila['exp'] . "\")'>✔️</button></td>";
+                        echo "<td><button class='confirmar-icon' onclick='confirmarAsignacion(\"" . $Fila['exp'] . "\")'>&#x2714;</button></td>";
                         echo "</tr>";
                     }
                 } else {
@@ -211,7 +268,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
     <div class="modal-content">
         <span class="close">&times;</span>
         <h3>Seleccionar sinodo</h3>
-        <table>
+        <table class="modal-table">
             <thead>
                 <tr>
                     <th>ID</th>

@@ -19,7 +19,12 @@
             <input type="text" name="inputUsuario" id="inputUsuario">
             <br>
             <label for="inputPassword">Contraseña:</label>
-            <input type="password" name="inputPassword" id="inputPassword">
+            <div class="password-container">
+                <input type="password" name="inputPassword" id="inputPassword">
+                <button type="button" id="togglePassword" class="toggle-password">
+                    <img src="eye-icon.png" alt="Mostrar/Ocultar contraseña" class="eye-icon">
+                </button>
+            </div>
             <br>
             <input type="submit" value="Enviar" class="boton_enviar">
             <hr class="x-component x-component-default" style="border-color:#ececec;margin:auto;width:60%;"

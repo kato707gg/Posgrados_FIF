@@ -39,7 +39,7 @@
         border-collapse: collapse;
         margin-bottom: 5rem;
         width: 100%;
-        max-width: 55rem;
+        max-width: 60%;
     }
 
     tr {
@@ -138,14 +138,14 @@
 
                 // Simulamos algunos datos para el ejemplo
                 $alumnos = [
-                    ['exp_alumno' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
-                    ['exp_alumno' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 9],
-                    ['exp_alumno' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 8]
+                    ['docente' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
+                    ['docente' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 8],
+                    ['docente' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 7]
                 ];
 
                 foreach ($alumnos as $alumno) {
                     echo "<tr>";
-                    echo "<td>" . $alumno['exp_alumno'] . "</td>";
+                    echo "<td>" . $alumno['docente'] . "</td>";
                     echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
                     echo "<td>" . $alumno['cal_final'] . "</td>";
                     echo "</tr>";

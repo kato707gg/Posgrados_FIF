@@ -22,6 +22,7 @@ $Res = Ejecutar($Con, $SQL);
         body {
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         :root {
@@ -31,12 +32,27 @@ $Res = Ejecutar($Con, $SQL);
             --background-color: #fafcff;
         }
 
-        table {
-            table-layout: auto;
-            border-collapse: collapse;
-            margin-bottom: 4rem;
+        .container-agendar-evaluacion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            padding: 1rem;
+        }
+
+        #table-container {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+            overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
             width: 100%;
-            max-width: 100rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -45,7 +61,6 @@ $Res = Ejecutar($Con, $SQL);
         }
 
         th, td {
-            width: 20%;
             border-bottom: 0.0625rem solid #e0e0e0;
             padding: 1.25rem;
         }
@@ -79,100 +94,6 @@ $Res = Ejecutar($Con, $SQL);
             font-family: "Google Sans", Roboto, Arial, sans-serif;
         }
 
-        #title-container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            align-items: center;
-        }
-
-        #table-container {
-            display: flex;
-            justify-content: center;
-            width: max-content;
-            overflow-x: auto;
-        }
-
-        .container-agendar-evaluacion {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 85vh;
-            padding: 1rem;
-        }
-
-        @media (max-width: 48rem) {
-            table {
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                font-size: 1.1rem;
-                padding: 0.75rem;
-            }
-
-            h3 {
-                font-size: 1.5rem;
-            }
-
-            button {
-                height: 2.5rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Estilos para el modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 2rem;
-            width: 50%;
-            border-radius: 0.4rem;
-        }
-
-        .close {
-            color: #aaa;
-            right: 1rem;
-            top: 0.5rem;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .asignar-button {
-            font-size: 1rem;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.5rem 0.6rem;
-            background-color: #123773;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
-        }
-
         .input-container input {
             font-family: "Google Sans", Roboto, Arial, sans-serif;
             font-size: 1rem;
@@ -189,14 +110,46 @@ $Res = Ejecutar($Con, $SQL);
             justify-content: center;
         }
 
-        .check-icon {
-            margin-left: 0.5rem;
+        .confirmar-icon {
+            color: #123773;
+            margin: auto;
+            font-size: 1.5rem;
+            padding: 0.5rem 0.9rem;
+            background-color: #e0e0e0;
+            border: none;
             cursor: pointer;
-            font-size: 1.2rem;
+            border-radius: 0.4rem;
         }
 
-        .check-icon:hover {
-            color: green;
+        @media (max-width: 48rem) {
+
+            #table-container {
+                display: unset;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                width: 20%;
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                height: 2.5rem;
+                font-size: 0.9rem;
+            }
+            .input-container input {
+                font-size: 0.8rem;
+            }
+            .confirmar-icon {
+                padding-top: 0.25rem;
+            }
         }
     </style>
 </head>
@@ -223,8 +176,10 @@ $Res = Ejecutar($Con, $SQL);
               echo "<tr>";
               echo "<td>" . $Fila["exp"] . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td><div class='input-container'><input type='date' id='fecha-seleccionada' oninput='showIcon(this)'><span class='check-icon' onclick='confirmDate(this)' style='display:none;'>&#x2714;</span></div></td>";
-              echo "<td><div class='input-container'><input type='time' id='hora-seleccionada' oninput='showIcon(this)'><span class='check-icon' onclick='confirmTime(this)' style='display:none;'>&#x2714;</span></div></td>";
+              echo "<td><div class='input-container'><input type='date' id='fecha-seleccionada'><span class='check-icon'></span></div></td>";
+              echo "<td><div class='input-container'><input type='time' id='hora-seleccionada' ><span class='check-icon'></span></div></td>";
+              echo "<td><button class='confirmar-icon' onclick='confirmarAsignacion(&quot;301574&quot;)'>✔</button></td>";
+              
               echo "</tr>";
             }
           }else{
@@ -238,60 +193,27 @@ $Res = Ejecutar($Con, $SQL);
   </div>
 
   <script>
-    // Mostrar el ícono de la paloma al ingresar un valor en el input
-    function showIcon(inputElement) {
-      let icon = inputElement.nextElementSibling;
-      if (inputElement.value) {
-        icon.style.display = 'inline'; // Mostrar icono si hay valor en el input
-      }
-    }
-
-    function confirmDate(element) {
-      let input = element.previousElementSibling;
-      if (input.disabled === false) {
-        input.disabled = true; // Deshabilitar input
-        input.style.backgroundColor = '#a6b3c7'; // Cambiar color de fondo
-        input.style.color = 'white'; // Cambiar color de texto
-
-        // Cambiar icono a equis
-        element.innerHTML = '&#x2716';
-        element.setAttribute('onclick', 'editDate(this)');
-      }
-    }
-
-    function confirmTime(element) {
-      let input = element.previousElementSibling;
-      if (input.disabled === false) {
-        input.disabled = true; // Deshabilitar input
-        input.style.backgroundColor = '#a6b3c7'; // Cambiar color de fondo
-        input.style.color = 'white'; // Cambiar color de texto
-
-        // Cambiar icono a equis
-        element.innerHTML = '&#x2716';
-        element.setAttribute('onclick', 'editTime(this)');
-      }
-    }
-
-    function editDate(element) {
-      let input = element.previousElementSibling;
-      input.disabled = false; // Habilitar input
-      input.style.color = '#3c4043'; // Restaurar color de texto
-      input.style.backgroundColor = 'white'; // Cambiar color de fondo
-
-      // Cambiar icono a paloma
-      element.innerHTML = '&#x2714;';
-      element.setAttribute('onclick', 'confirmDate(this)');
-    }
-
-    function editTime(element) {
-      let input = element.previousElementSibling;
-      input.disabled = false; // Habilitar input
-      input.style.color = '#3c4043'; // Restaurar color de texto
-      input.style.backgroundColor = 'white'; // Cambiar color de fondo
-
-      // Cambiar icono a paloma
-      element.innerHTML = '&#x2714;';
-      element.setAttribute('onclick', 'confirmTime(this)');
+    function confirmarEvaluacion(expediente) {
+      // Aquí puedes implementar la lógica para enviar los datos al servidor y actualizar la base de datos
+      alert('Confirmación de evaluación para el expediente: ' + expediente);
+      // Ejemplo de llamada AJAX para actualizar la base de datos
+      /*
+      fetch('ruta/a/tu/script.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ exp: expediente, fecha: 'fecha-seleccionada', hora: 'hora-seleccionada' })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Evaluación confirmada exitosamente');
+        } else {
+          alert('Error al confirmar la evaluación');
+        }
+      });
+      */
     }
   </script>
 

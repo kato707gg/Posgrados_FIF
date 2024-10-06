@@ -25,12 +25,18 @@
         --background-color: #fafcff;
     }
 
+    #table-container {
+        display: flex;
+        justify-content: center;
+        overflow: auto;
+    }
+
     table {
         table-layout: fixed;
         border-collapse: collapse;
         margin-bottom: 5rem;
         width: 100%;
-        max-width: 55rem;
+        max-width: 60%;
     }
 
     tr {
@@ -63,27 +69,14 @@
         padding-top: 3.5rem;
     }
 
-    h1 {
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        text-align: center;
-    }
-
     h3 {
         font-size: 2rem;
         font-family: "Google Sans", Roboto, Arial, sans-serif;
     }
 
-    #title-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-    }
-
-    #table-container {
-        display: flex !important;
-        justify-content: center;
-        overflow-x: auto;
+    h1 {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        text-align: center;
     }
 
     .container-proximas-evaluacionesS {
@@ -96,8 +89,9 @@
     }
 
     @media (max-width: 48rem) {
+
         table {
-            font-size: 0.9rem;
+            max-width: 90%;
         }
 
         th, td {
@@ -124,9 +118,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Expediente</th>
+                    <th>Docente</th>
                     <th>Fecha</th>
-                    <th>Calificación</th>
+                    <th>Salon</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,16 +132,16 @@
 
                 // Simulamos algunos datos para el ejemplo
                 $alumnos = [
-                    ['exp_alumno' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
-                    ['exp_alumno' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 9],
-                    ['exp_alumno' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 8]
+                    ['docente' => 1, 'fecha_evaluacion' => '2024-05-01', 'salon' => 'A10'],
+                    ['docente' => 2, 'fecha_evaluacion' => '2024-05-02', 'salon' => 'D4'],
+                    ['docente' => 3, 'fecha_evaluacion' => '2024-05-03', 'salon' => 'I7']
                 ];
 
                 foreach ($alumnos as $alumno) {
                     echo "<tr>";
-                    echo "<td>" . $alumno['exp_alumno'] . "</td>";
+                    echo "<td>" . $alumno['docente'] . "</td>";
                     echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
-                    echo "<td>" . $alumno['cal_final'] . "</td>";
+                    echo "<td>" . $alumno['salon'] . "</td>";
                     echo "</tr>";
                 }
 

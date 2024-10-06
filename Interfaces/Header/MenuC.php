@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -49,7 +53,7 @@
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/AsignarSinodo.php">Asignar Sínodo</a>
-            <a href="">Agendar Evaluación</a>
+            <a href="../Acciones/AgendarEvaluacion.php">Agendar Evaluación</a>
             <a href="">Seguimiento</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
         </div>

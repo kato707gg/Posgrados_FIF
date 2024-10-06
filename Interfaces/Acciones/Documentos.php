@@ -135,7 +135,7 @@
     table {
         table-layout: fixed;
         width: 100%;
-        max-width: 55rem;
+        max-width: 60rem;
     }
 
     tr {
@@ -192,6 +192,16 @@
     }
 
     @media (max-width: 48rem) {
+        #file-label {
+            width: 6rem;
+        }
+        #upload-btn {
+            height: 3.01rem;
+            padding: 0.5rem;
+        }
+        #document-type {
+            width: 12rem;
+        }
         table {
             font-size: 0.9rem;
         }
@@ -232,7 +242,7 @@
             <span id="file-label" onclick="triggerFileInput()">Examinar...</span>
             <input type="file" id="file" name="file" style="display:none;" accept=".pdf,.docx,.xlsx"
                 onchange="handleFileSelect()" disabled>
-            <button id="upload-btn">Subir archivo</button>
+            <button id="upload-btn" onclick="uploadDocument()">Subir archivo</button>
             <span id="clear-file-btn" onclick="clearFile()">Quitar archivo &times;</span>
         </div>
     </div>
@@ -251,29 +261,8 @@
         </div>
         <div id="table-container">
             <table>
-                <tbody>
-                    <?php
-                // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
-                // Por ejemplo:
-                // $conexion = new mysqli("localhost", "usuario", "contraseña", "basededatos");
-                // $resultado = $conexion->query("SELECT id, nombre, grupo FROM alumnos");
-
-                // Simulamos algunos datos para el ejemplo
-                $alumnos = [
-                    ['fecha' => '2024-05-01', 'tipo' => 'Recibo', 'vista' => 1],
-                ];
-
-                foreach ($alumnos as $alumno) {
-                    echo "<tr>";
-                    echo "<td>" . $alumno['fecha'] . "</td>";
-                    echo "<td>" . $alumno['tipo'] . "</td>";
-                    echo "<td>" . $alumno['vista'] . "</td>";
-                    echo "</tr>";
-                }
-
-                // Si estuvieras usando una conexión real a la base de datos, cerrarías la conexión aquí
-                // $conexion->close();
-                ?>
+                <tbody id="documents-table-body">
+                    <!-- Los documentos se cargarán aquí dinámicamente -->
                 </tbody>
             </table>
         </div>
@@ -335,6 +324,55 @@
             uploadBtn.classList.add("option-selected");
             clearFileBtn.style.display = "none"; // Ocultar el botón de quitar archivo
         }
+
+        function uploadDocument() {
+            const fileInput = document.getElementById('file');
+            const documentType = document.getElementById('document-type');
+            
+            if (fileInput.files.length > 0 && documentType.value !== "") {
+                const file = fileInput.files[0];
+                const date = new Date().toISOString().split('T')[0];
+                const type = documentType.value;
+                
+                // Crear un objeto URL para el archivo
+                const fileURL = URL.createObjectURL(file);
+                
+                // Simular guardado en localStorage
+                let documents = JSON.parse(localStorage.getItem('documents') || '[]');
+                documents.push({ date, type, fileName: file.name, fileURL });
+                localStorage.setItem('documents', JSON.stringify(documents));
+                
+                // Actualizar la tabla
+                updateDocumentsTable();
+                
+                // Limpiar el formulario
+                clearFile();
+                documentType.value = "";
+                enableFileSection();
+            }
+        }
+
+        function updateDocumentsTable() {
+            const tableBody = document.getElementById('documents-table-body');
+            const documents = JSON.parse(localStorage.getItem('documents') || '[]');
+            
+            tableBody.innerHTML = '';
+            documents.forEach(doc => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = doc.date;
+                row.insertCell(1).textContent = doc.type;
+                const viewCell = row.insertCell(2);
+                viewCell.innerHTML = `<span style="cursor: pointer; font-size: 2rem;" onclick="viewDocument('${doc.fileURL}')">&#x1f4c4</span>`;
+            });
+        }
+
+        function viewDocument(fileURL) {
+            // Abrir el documento en una nueva pestaña
+            window.open(fileURL, '_blank');
+        }
+
+        // Cargar documentos al iniciar la página
+        updateDocumentsTable();
     </script>
 
 </body>

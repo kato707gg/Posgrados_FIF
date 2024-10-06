@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-09-2024 a las 00:36:41
+-- Tiempo de generación: 05-10-2024 a las 07:50:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -48,19 +48,17 @@ CREATE TABLE `coordinadores` (
   `nombre` varchar(50) NOT NULL,
   `a_paterno` varchar(50) NOT NULL,
   `a_materno` varchar(50) NOT NULL,
-  `carrera` varchar(50) NOT NULL,
   `telefono` bigint(20) NOT NULL,
-  `correo` varchar(100) NOT NULL
+  `correo` varchar(100) NOT NULL,
+  `programa` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `coordinadores`
 --
 
-INSERT INTO `coordinadores` (`clave`, `nombre`, `a_paterno`, `a_materno`, `carrera`, `telefono`, `correo`) VALUES
-(5, 'C', 'C', 'C', 'Ciencia de Datos', 4427794980, 'C@gmail.com'),
-(6, 'A', 'A', 'A', 'Ciencias de la Computación', 4427794980, 'a@gmail.com'),
-(9876543210, 'María', 'López', 'Fernández', 'Administración', 5557654321, 'maria.lopez@example.com');
+INSERT INTO `coordinadores` (`clave`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `programa`) VALUES
+(4411071968, 'Jesus', 'Garcia', 'Santiago', 4411071968, 'jesusgs0729@gmail.com', 'MSC');
 
 -- --------------------------------------------------------
 
@@ -82,7 +80,15 @@ INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
 (301612, 'LOPEZ80', 'D'),
 (114090, 'PAULIN55', 'D'),
 (4411071968, '123456', 'C'),
-(301574, 'GARCIA68', 'A');
+(301574, 'GARCIA68', 'A'),
+(115260, 'PEREZ10', 'A'),
+(113278, 'PEREZ10', 'A'),
+(445698, 'PEREZ68', 'A'),
+(301574, 'GARCIA68', 'A'),
+(301612, 'GONZALEZ80', 'A'),
+(202020, 'PEREZ20', 'D'),
+(101010, 'IBARRA10', 'D'),
+(303030, 'JIMENEZ30', 'D');
 
 -- --------------------------------------------------------
 
@@ -119,7 +125,13 @@ CREATE TABLE `docentes` (
 INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) VALUES
 (11, 'Sergio', 'G', 'L', 'A'),
 (22, 'Diego', 'H', 'S', 'A'),
-(33, 'Jesus', 'G', 'S', 'A');
+(33, 'Jesus', 'G', 'S', 'A'),
+(101010, 'MAURICIO ARTURO', 'IBARRA', 'CORONA', 'A'),
+(202020, 'JORGE LUIS', 'PEREZ', 'RAMOS', 'A'),
+(303030, 'HUGO', 'JIMENEZ', 'HERNANDEZ', 'A')
+(1234, 'Diana', 'Gutierrez', 'Paredes', 'A'),
+(12345, 'Karla', 'Villarreal', 'Lopez', 'A'),
+(123456, 'Valeria', 'Diaz', 'Zuñiga', 'A');
 
 -- --------------------------------------------------------
 
@@ -134,7 +146,6 @@ CREATE TABLE `estudiantes` (
   `a_materno` varchar(50) NOT NULL,
   `telefono` bigint(20) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `periodo` int(11) NOT NULL,
   `programa` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -142,11 +153,15 @@ CREATE TABLE `estudiantes` (
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `periodo`, `programa`) VALUES
-(13123, '213123 312312 312313', '213123', '312312', 21123213, '23123@454', 1, 'option1'),
-(114090, 'PAULIN MARTINEZ FRANCISCO JAVIER', 'PAULIN', 'MARTINEZ', 4424337355, 'fpaulin@gmail.com', 2024, 'option1'),
-(301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4411071968, 'jesusgs0729@gmail.com', 2, 'option1'),
-(301579, 'HERNANDEZ SANCHEZ DIEGO', 'HERNANDEZ', 'SANCHEZ', 4424322665, 'dhernandez211@alumnos.uaq.mx', 8, 'option1');
+INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `programa`) VALUES
+(301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4411071968, 'jesusgs0729@gmail.com', 'MSC'),
+(301612, 'SERGIO', 'GONZALEZ', 'LOPEZ', 4427794980, 'sgonzalez201@alumnos.uaq.mx', 'MSC'),
+(301234, 'Diego', 'Hernandez', 'Sanchez', 4424322665, 'Diego@gmail.com', 'DCC'),
+(302345, 'Tania', 'GONZALEZ', 'LOPEZ', 4427793765, 'Tania@alumnos.uaq.mx', 'DTE'),
+(303456, 'Diana', 'GARCIA', 'SANTIAGO', 4411079636, 'Diana@gmail.com', 'DITE'),
+(304567, 'Julio', 'GONZALEZ', 'LOPEZ', 4427794432, 'Julio@alumnos.uaq.mx', 'MCC'),
+(305678, 'Erica', 'GARCIA', 'SANTIAGO', 4411076410, 'Erica@gmail.com', 'MIEVEA'),
+(306789, 'Octavio', 'GONZALEZ', 'LOPEZ', 4427792487, 'Octavio@alumnos.uaq.mx', 'MSC');
 
 -- --------------------------------------------------------
 
@@ -230,7 +245,8 @@ ALTER TABLE `asignaciones`
   ADD CONSTRAINT `asignaciones_ibfk_2` FOREIGN KEY (`sinodo1`) REFERENCES `docentes` (`clave`),
   ADD CONSTRAINT `asignaciones_ibfk_3` FOREIGN KEY (`sinodo2`) REFERENCES `docentes` (`clave`),
   ADD CONSTRAINT `asignaciones_ibfk_4` FOREIGN KEY (`sinodo3`) REFERENCES `docentes` (`clave`),
-  ADD CONSTRAINT `asignaciones_ibfk_5` FOREIGN KEY (`externo`) REFERENCES `docentes` (`clave`);
+  ADD CONSTRAINT `asignaciones_ibfk_5` FOREIGN KEY (`externo`) REFERENCES `docentes` (`clave`),
+  ADD CONSTRAINT `asignaciones_ibfk_6` FOREIGN KEY (`clave_coordinador`) REFERENCES `coordinadores` (`clave`);
 
 --
 -- Filtros para la tabla `detalle_evaluaciones`

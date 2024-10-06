@@ -28,6 +28,35 @@ if ($result->num_rows == 1) {
         $_SESSION['id'] = $row['id'];
         $_SESSION['tipo'] = $row['tipo'];
 
+        // Consulta para obtener el nombre completo según el tipo de usuario
+        switch ($row['tipo']) {
+            case 'A':
+                $query_usuario = "SELECT nombre, a_paterno, a_materno FROM estudiantes WHERE exp = ?";
+                break;
+            case 'D':
+                $query_usuario = "SELECT nombre, a_paterno, a_materno FROM docentes WHERE clave = ?";
+                break;
+            case 'C':
+                $query_usuario = "SELECT nombre, a_paterno, a_materno FROM coordinadores WHERE clave = ?";
+                break;
+            default:
+                $query_usuario = null;
+        }
+
+        if ($query_usuario) {
+            $stmt_usuario = $Con->prepare($query_usuario);
+            $stmt_usuario->bind_param("i", $Expediente);
+            $stmt_usuario->execute();
+            $result_usuario = $stmt_usuario->get_result();
+
+            if ($result_usuario->num_rows == 1) {
+                $row_usuario = $result_usuario->fetch_assoc();
+                // Guardar el nombre completo del usuario en la sesión
+                $_SESSION['Nombre'] = $row_usuario['nombre'] . ' ' . $row_usuario['a_paterno'] . ' ' . $row_usuario['a_materno'];
+            }
+            $stmt_usuario->close();
+        }
+
         // Redirigir según el tipo de usuario
         switch ($row['tipo']) {
             case 'A':
@@ -63,5 +92,6 @@ if ($result->num_rows == 1) {
 // Cerrar la conexión
 $stmt->close();
 mysqli_close($Con);
+?>
 
 ?>

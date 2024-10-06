@@ -105,3 +105,27 @@ function closePopup() {
         window.location.href = 'index.html'; // Redirige al inicio
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#inputPassword');
+
+    // Función para mostrar/ocultar la contraseña
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.querySelector('img').src = type === 'password' ? 'eye-icon.png' : 'eye-slash-icon.png';
+    });
+
+    // Función para mostrar el ícono solo si hay texto
+    password.addEventListener('input', function() {
+        if (this.value) {
+            togglePassword.style.display = 'block'; // Muestra el ícono
+        } else {
+            togglePassword.style.display = 'none'; // Oculta el ícono
+        }
+    });
+
+    // Inicialmente oculta el ícono
+    togglePassword.style.display = 'none';
+});
