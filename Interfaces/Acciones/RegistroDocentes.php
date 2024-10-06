@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ApellidoP=trim($ApellidoP);
 
     // Convertir a mayúsculas y quitar acentos
-    include("LimpiaCadenas.php");
+    include("../../LimpiaCadenas.php");
     $Nombre = strtoupper(eliminar_acentos($Nombre));
     $ApellidoP = strtoupper(eliminar_acentos($ApellidoP));
     $ApellidoM = strtoupper(eliminar_acentos($ApellidoM));
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $NombreC = "$ApellidoP $ApellidoM $Nombre";
 
     // Conectar a la base de datos
-    include("conexion.php");
+    include("../../conexion.php");
     $Con = Conectar();
     if (!$Con) {
         die(json_encode(["status" => "error", "message" => "Error de conexión: " . mysqli_connect_error()]));
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si el expediente ya existe
     $SQL1 = "SELECT * FROM docentes WHERE clave = ?";
     $stmt1 = mysqli_prepare($Con, $SQL1);
-    mysqli_stmt_bind_param($stmt1, 's', $Expediente);
+    mysqli_stmt_bind_param($stmt1, 's', $Clave);  
     mysqli_stmt_execute($stmt1);
     $Result = mysqli_stmt_get_result($stmt1);
 
