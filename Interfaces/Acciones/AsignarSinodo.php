@@ -10,7 +10,14 @@ include '../../conexion.php';
 $Con = Conectar();
 
 // Consulta SQL para obtener los datos de los estudiantes
-$SQL = "SELECT e.exp, e.nombre, e.a_paterno, e.a_materno FROM estudiantes e INNER JOIN coordinadores c ON e.programa = c.programa";
+$SQL = "
+    SELECT e.exp, e.nombre, e.a_paterno, e.a_materno 
+    FROM estudiantes e 
+    INNER JOIN coordinadores c ON e.programa = c.programa 
+    LEFT JOIN asignaciones a ON e.exp = a.exp_alumno 
+    WHERE a.exp_alumno IS NULL
+";
+
 $Resultado = Ejecutar($Con, $SQL);
 
 $SQLSinodos = "SELECT clave, nombre, a_paterno, a_materno FROM docentes"; // Consulta para obtener los sinodos
@@ -238,7 +245,6 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             </thead>
             <tbody>
                 <?php
-
                 if ($Resultado->num_rows > 0){
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
@@ -284,7 +290,8 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                         echo "<tr>";
                         echo "<td>" . $Sinodo['clave'] . "</td>";
                         echo "<td>" . $NombreSin . "</td>";
-                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $NombreSin ."' onclick='handleCheckbox(this)'></td>";
+                        // Cambiar el value del checkbox a la clave del sinodo
+                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['clave'] ."' onclick='handleCheckbox(this, \"" . $NombreSin . "\")'></td>";
                         echo "</tr>";
                     }
                 }
@@ -300,7 +307,7 @@ let selectedSinodo = null;
 let currentButton;
 
 // Función para permitir solo un checkbox seleccionado a la vez
-function handleCheckbox(checkbox) {
+function handleCheckbox(checkbox, nombreSinodo) {
     let checkboxes = document.querySelectorAll('.sinodo-checkbox');
     
     // Desmarcar otros checkboxes si se selecciona uno nuevo
@@ -312,6 +319,7 @@ function handleCheckbox(checkbox) {
     
     // Guardar el sínodo seleccionado
     selectedSinodo = checkbox.checked ? checkbox.value : null;
+    currentButton.sinodoNombre = checkbox.checked ? nombreSinodo : null; // Guardamos el nombre también
 }
 
 // Función para abrir el modal
@@ -326,7 +334,8 @@ function confirmSelection() {
         let sinodoContainer = currentButton.nextElementSibling;
         if (sinodoContainer) {
             currentButton.style.display = 'none'; // Ocultar el botón de Asignar
-            sinodoContainer.textContent = selectedSinodo; // Mostrar el sínodo asignado
+            sinodoContainer.textContent = currentButton.sinodoNombre; // Mostrar el sínodo asignado (nombre)
+            sinodoContainer.dataset.sinodoClave = selectedSinodo; // Almacenar la clave en un data attribute
             document.getElementById("sinodoModal").style.display = "none"; // Cerrar el modal
         }
     } else {
@@ -338,18 +347,20 @@ function confirmSelection() {
 function confirmarAsignacion(exp) {
     let sinodos = [];
     document.querySelectorAll('.sinodo-container').forEach(container => {
-        if (container.textContent) {
-            sinodos.push(container.textContent);
+        if (container.dataset.sinodoClave) {
+            sinodos.push(container.dataset.sinodoClave);
         }
     });
 
     if (sinodos.length === 4) {
+        console.log(sinodos);
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "insertar_sinodos.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert(xhr.responseText); // Mostrar respuesta del servidor
+                alert("Asignación hecha correctamente!!"); // Mostrar respuesta del servidor
+                location.reload();
             }
         };
         xhr.send("exp=" + exp + "&sinodo1=" + sinodos[0] + "&sinodo2=" + sinodos[1] + "&sinodo3=" + sinodos[2] + "&sinodo4=" + sinodos[3]);
