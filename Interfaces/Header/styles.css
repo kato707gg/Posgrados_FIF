@@ -10,7 +10,7 @@ body {
     align-items: stretch;
     color: white;
     padding: 2vh 2vw;
-    height: 7vh; /* Ajusta esta altura según tus necesidades */
+    height: 9vh; /* Ajusta esta altura según tus necesidades */
 }
 
 .header > div,
@@ -47,9 +47,11 @@ body {
 }
 
 .titulo-header {
+    text-align: center;
     color: #fff;
     text-decoration: none;
     font-size: 2rem;
+    line-height: 1.5rem;
     font-weight: bold;
 }
 

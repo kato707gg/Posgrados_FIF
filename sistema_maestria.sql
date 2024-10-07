@@ -128,7 +128,7 @@ INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) V
 (33, 'Jesus', 'G', 'S', 'A'),
 (101010, 'MAURICIO ARTURO', 'IBARRA', 'CORONA', 'A'),
 (202020, 'JORGE LUIS', 'PEREZ', 'RAMOS', 'A'),
-(303030, 'HUGO', 'JIMENEZ', 'HERNANDEZ', 'A')
+(303030, 'HUGO', 'JIMENEZ', 'HERNANDEZ', 'A'),
 (1234, 'Diana', 'Gutierrez', 'Paredes', 'A'),
 (12345, 'Karla', 'Villarreal', 'Lopez', 'A'),
 (123456, 'Valeria', 'Diaz', 'Zuñiga', 'A');

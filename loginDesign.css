@@ -164,7 +164,6 @@ td {
   background-color: #fff;
   padding: 3rem;
   width: 30%;
-  height: 40%;
   align-content: center;
   text-align: center;
   border-radius: 1rem;
@@ -207,7 +206,7 @@ td {
 
   .popup-content {
     width: 60%;
-    height: 40%;
+
   }
 }
 

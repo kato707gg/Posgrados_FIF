@@ -130,6 +130,14 @@
           cursor: pointer;
         }
 
+        @media screen and (max-width: 1600px) {
+
+        .alta-docentes {
+            width: 70%;
+        }
+
+        }
+
         @media screen and (max-width: 1050px) {
 
           .alta-docentes {
