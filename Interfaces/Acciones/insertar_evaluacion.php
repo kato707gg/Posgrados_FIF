@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Preparar la consulta SQL (asumiendo que tienes una tabla llamada 'evaluaciones')
     $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion) VALUES ('$exp_alumno', '$fecha_evaluacion')";
-    echo $SQL;
+    
     // Ejecutar la consulta
     if (Ejecutar($Con, $SQL)) {
         // Si la inserción es exitosa
