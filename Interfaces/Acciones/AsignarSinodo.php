@@ -41,7 +41,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
         :root {
             --primary-color: rgb(26,115,232);
-            --secondary-color: #366d6f;
+            --secondary-color: #aaa;
             --text-color: #3c4043;
             --background-color: #fafcff;
         }
@@ -72,11 +72,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
         tr {
             border-top: 0.1rem solid var(--primary-color);
-            border-bottom: 0.1rem solid var(--primary-color);
+            border-bottom: 0.1rem solid var(--secondary-color);
         }
 
         th, td {
-            border-bottom: 0.0625rem solid #e0e0e0;
+            border-bottom: 0.0625rem solid var(--secondary-color);
             padding: 1.25rem;
         }
 
@@ -153,7 +153,6 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         }
 
         .modal-table {
-            margin-bottom: 5vh;
             max-width: 100%;
         }
 
