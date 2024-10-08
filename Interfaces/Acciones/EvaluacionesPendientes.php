@@ -30,7 +30,7 @@
         border-collapse: collapse;
         margin-bottom: 5rem;
         width: 100%;
-        max-width: 60%;
+        max-width: 80%;
     }
 
     tr {
@@ -124,8 +124,11 @@
             <thead>
                 <tr>
                     <th>Expediente</th>
+                    <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Calificación</th>
+                    <th>Observaciones</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>

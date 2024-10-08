@@ -9,9 +9,10 @@ $Con = Conectar();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $exp_alumno = $_POST['exp'];
     $fecha_evaluacion = $_POST['fecha_evaluacion'];
+    $aula = $_POST['aula'];
 
     // Preparar la consulta SQL (asumiendo que tienes una tabla llamada 'evaluaciones')
-    $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion) VALUES ('$exp_alumno', '$fecha_evaluacion')";
+    $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion, aula) VALUES ('$exp_alumno', '$fecha_evaluacion', '$aula')";
     
     // Ejecutar la consulta
     if (Ejecutar($Con, $SQL)) {
