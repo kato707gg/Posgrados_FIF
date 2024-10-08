@@ -134,7 +134,12 @@
 
         .alta-docentes {
             width: 70%;
+            height: 75%;
         }
+
+        .boton_guardar {
+                margin: 2rem auto 0 auto;
+            }
 
         }
 

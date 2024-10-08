@@ -149,9 +149,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             height: 80%;
             border-radius: 0.4rem;
             overflow-y: auto;
+            padding-bottom: 0;
         }
 
         .modal-table {
+            margin-bottom: 5vh;
             max-width: 100%;
         }
 
@@ -161,9 +163,23 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             height: 1.2rem;
         }
 
-        .confirmar-button {
+        .container-confirmar-button {
+            mask-image: 
+            linear-gradient(to bottom, transparent, black 10%, black 90%);
+            mask-composite: intersect;
+            -webkit-mask-image: 
+            linear-gradient(to bottom, transparent, black 10%, black 90%);
+            -webkit-mask-composite: source-in;
+            padding: 7vh 0;
             display: flex;
-            margin: auto;
+            justify-content: center;
+            position: sticky;
+            background-color: white;
+            bottom: 0; /* Mantendrá el botón en la parte inferior de su contenedor */
+            z-index: 10; /* Para asegurarse de que esté por encima de otros elementos como la tabla */
+        }
+
+        .confirmar-button {
             font-size: 1.3rem;
             font-family: "Google Sans", Roboto, Arial, sans-serif;
             padding: 0.7rem 3rem;
@@ -172,9 +188,9 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
+            width: 30%; /* Para que el botón abarque todo el ancho del contenedor */
         }
+
 
         .confirmar-button.disabled {
             background-color: grey;
@@ -298,7 +314,9 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                 ?>
             </tbody>
         </table>
-        <button class="confirmar-button" onclick="confirmSelection()">Confirmar</button>
+        <div class="container-confirmar-button">
+            <button class="confirmar-button" onclick="confirmSelection()">Confirmar</button>
+        </div>
     </div>
 </div>
 
