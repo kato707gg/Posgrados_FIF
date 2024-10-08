@@ -7,7 +7,12 @@
 include('../../conexion.php');
 $Con = Conectar();
 
-$SQL = "SELECT exp, nombre, a_paterno, a_materno FROM estudiantes" ;
+$SQL = "
+SELECT e.exp, e.nombre, e.a_paterno, e.a_materno
+FROM estudiantes e
+LEFT JOIN evaluaciones ev ON e.exp = ev.exp_alumno
+WHERE ev.exp_alumno IS NULL;
+" ;
 $Res = Ejecutar($Con, $SQL);
 ?>
 
@@ -173,13 +178,13 @@ $Res = Ejecutar($Con, $SQL);
           if ($Res->num_rows > 0){
             while($Fila = $Res->fetch_assoc()){
               $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+              $exp = $Fila["exp"];
               echo "<tr>";
-              echo "<td>" . $Fila["exp"] . "</td>";
+              echo "<td>" . $exp . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td><div class='input-container'><input type='date' id='fecha-seleccionada'><span class='check-icon'></span></div></td>";
-              echo "<td><div class='input-container'><input type='time' id='hora-seleccionada' ><span class='check-icon'></span></div></td>";
-              echo "<td><button class='confirmar-icon' onclick='confirmarAsignacion(&quot;301574&quot;)'>✔</button></td>";
-              
+              echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
+              echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
+              echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
               echo "</tr>";
             }
           }else{
@@ -194,26 +199,35 @@ $Res = Ejecutar($Con, $SQL);
 
   <script>
     function confirmarEvaluacion(expediente) {
-      // Aquí puedes implementar la lógica para enviar los datos al servidor y actualizar la base de datos
-      alert('Confirmación de evaluación para el expediente: ' + expediente);
-      // Ejemplo de llamada AJAX para actualizar la base de datos
-      /*
-      fetch('ruta/a/tu/script.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ exp: expediente, fecha: 'fecha-seleccionada', hora: 'hora-seleccionada' })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('Evaluación confirmada exitosamente');
-        } else {
-          alert('Error al confirmar la evaluación');
+      const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
+      const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+
+      if (!fechaSeleccionada || !horaSeleccionada) {
+        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar.');
+        return;
+      }
+
+      // Crear una nueva instancia de XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+
+      // Configurar la solicitud
+      xhr.open('POST', 'insertar_evaluacion.php', true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // alert('Evaluación confirmada exitosamente');
+          alert(xhr.responseText);
+          // location.reload();
         }
-      });
-      */
+      };
+      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada);
+
+      // Configurar manejo de errores
+      xhr.onerror = function() {
+        console.error('Error de red');
+        alert('Ocurrió un error al procesar la solicitud');
+      };
     }
   </script>
 
