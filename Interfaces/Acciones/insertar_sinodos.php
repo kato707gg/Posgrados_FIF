@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Incluir el archivo de conexión
 include '../../conexion.php';
 
@@ -13,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sinodo2 = $_POST['sinodo2'];
     $sinodo3 = $_POST['sinodo3'];
     $externo = $_POST['sinodo4']; // En el código JS 'sinodo4' se refiere al sínodo externo
-    $clave_coordinador = '4411071968'; // Aquí debes reemplazarlo con el valor correspondiente, si lo tienes en alguna parte de tu sistema
+    $clave_coordinador = $_SESSION['id']; // Aquí debes reemplazarlo con el valor correspondiente, si lo tienes en alguna parte de tu sistema
 
     // Consulta SQL para insertar o actualizar los sinodos asignados en la tabla 'asignaciones'
     $SQL = "INSERT INTO asignaciones (exp_alumno, sinodo1, sinodo2, sinodo3, externo, clave_coordinador) 

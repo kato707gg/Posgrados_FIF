@@ -253,7 +253,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                         echo "<td>" . $Nombre . "</td>";
                         // Botones de asignar para cada sinodo
                         for ($i = 1; $i <= 4; $i++) {
-                            echo "<td><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
+                            echo "<td><button class='asignar-button sinodo-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
                         }
                         // Botón de confirmar que inserta en la base de datos
                         echo "<td><button class='confirmar-icon' onclick='confirmarAsignacion(\"" . $Fila['exp'] . "\")'>&#x2714;</button></td>";
@@ -303,8 +303,14 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 </div>
 
 <script>
+let sinodosSeleccionadosPorEstudiante = {}; // Objeto para almacenar sínodos seleccionados por cada estudiante
 let selectedSinodo = null;
 let currentButton;
+const confirmarButton = document.querySelector('.confirmar-button');
+
+// Iniciar con el botón deshabilitado
+confirmarButton.classList.add('disabled');
+confirmarButton.disabled = true;
 
 // Función para permitir solo un checkbox seleccionado a la vez
 function handleCheckbox(checkbox, nombreSinodo) {
@@ -316,20 +322,50 @@ function handleCheckbox(checkbox, nombreSinodo) {
             cb.checked = false;
         }
     });
-    
-    // Guardar el sínodo seleccionado
-    selectedSinodo = checkbox.checked ? checkbox.value : null;
-    currentButton.sinodoNombre = checkbox.checked ? nombreSinodo : null; // Guardamos el nombre también
+
+    // Guardar o quitar el sínodo seleccionado
+    if (checkbox.checked) {
+        selectedSinodo = checkbox.value;
+        confirmarButton.classList.remove('disabled');
+        confirmarButton.disabled = false;
+        currentButton.sinodoNombre = nombreSinodo;
+    } else {
+        selectedSinodo = null;
+        confirmarButton.classList.add('disabled');
+        confirmarButton.disabled = true;
+        currentButton.sinodoNombre = null;
+    }
 }
 
 // Función para abrir el modal
-function openModal(button) {
+function openModal(button, exp) {
     currentButton = button; // Guardamos el botón actual para modificarlo después
     document.getElementById("sinodoModal").style.display = "block";
+
+    // Restablecer el botón "Confirmar" cuando se abre un nuevo modal
+    confirmarButton.classList.add('disabled');
+    confirmarButton.disabled = true;
+
+    // Obtener los sínodos seleccionados para el estudiante actual (si existen)
+    let sinodosSeleccionados = sinodosSeleccionadosPorEstudiante[exp] || [];
+
+    // Actualizar los checkboxes según las selecciones del estudiante actual
+    let checkboxes = document.querySelectorAll('.sinodo-checkbox');
+    checkboxes.forEach(checkbox => {
+        if (sinodosSeleccionados.includes(checkbox.value)) {
+            checkbox.disabled = true; // Deshabilitar si ya fue seleccionado
+        } else {
+            checkbox.disabled = false; // Habilitar si no ha sido seleccionado
+        }
+        checkbox.checked = false; // Restablecer los checkboxes
+    });
+
+    // También restablecemos el valor de selectedSinodo a null
+    selectedSinodo = null;
 }
 
 // Función para confirmar la selección
-function confirmSelection() {
+function confirmSelection(exp) {
     if (selectedSinodo && currentButton) {
         let sinodoContainer = currentButton.nextElementSibling;
         if (sinodoContainer) {
@@ -337,6 +373,12 @@ function confirmSelection() {
             sinodoContainer.textContent = currentButton.sinodoNombre; // Mostrar el sínodo asignado (nombre)
             sinodoContainer.dataset.sinodoClave = selectedSinodo; // Almacenar la clave en un data attribute
             document.getElementById("sinodoModal").style.display = "none"; // Cerrar el modal
+
+            // Guardar el sínodo asignado en el objeto del estudiante actual
+            if (!sinodosSeleccionadosPorEstudiante[exp]) {
+                sinodosSeleccionadosPorEstudiante[exp] = [];
+            }
+            sinodosSeleccionadosPorEstudiante[exp].push(selectedSinodo); // Añadir sínodo al estudiante
         }
     } else {
         alert("Por favor selecciona un sínodo");
