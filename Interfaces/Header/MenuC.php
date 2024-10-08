@@ -24,7 +24,7 @@ session_start();
                     <a class="agendar-evaluacion" href="../Acciones/AgendarEvaluacion.php"><button type="button">Agendar Evaluación</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="agendar-evaluacion" href=""><button type="button">Evaluaciones Agendadas</button></a>
+                    <a class="evaluaciones-agendadas" href="../Acciones/EvaluacionesAgendadas.php"><button type="button">Evaluaciones Agendadas</button></a>
                 </li>
                 <li class="boton-link">
                     <a class="agendar-evaluacion" href="../Acciones/AltaDocentes.php"><button type="button">Alta de docentes</button></a>

@@ -2,17 +2,16 @@
   include('../Header/MenuC.php');
 ?>
 
-
 <?php
 include('../../conexion.php');
 $Con = Conectar();
 
 $SQL = "
-SELECT e.exp, e.nombre, e.a_paterno, e.a_materno
-FROM estudiantes e
-LEFT JOIN evaluaciones ev ON e.exp = ev.exp_alumno
-WHERE ev.exp_alumno IS NULL;
-" ;
+    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion 
+    FROM evaluaciones ev
+    JOIN estudiantes e ON ev.exp_alumno = e.exp;
+";
+
 $Res = Ejecutar($Con, $SQL);
 ?>
 
@@ -22,7 +21,7 @@ $Res = Ejecutar($Con, $SQL);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Header/styles.css">
-    <title>Agendar Evaluación</title>
+    <title>Evaluaciones Agendadas</title>
     <style>
         body {
             margin: 0;
@@ -115,7 +114,7 @@ $Res = Ejecutar($Con, $SQL);
             justify-content: center;
         }
 
-        .confirmar-icon {
+        .eliminar-icon {
             color: #123773;
             margin: auto;
             font-size: 1.5rem;
@@ -161,16 +160,15 @@ $Res = Ejecutar($Con, $SQL);
 
 <body>
   <div class="container-agendar-evaluacion">
-    <h3>Agendar Evaluación:</h3>
+    <h3>Evaluaciones Agendadas:</h3>
     <div id="table-container">
       <table>
         <thead>
           <tr>
-            <th> Expediente</th>
+            <th>Expediente</th>
             <th>Nombre</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Confirmar</th>
+            <th>Fecha y Hora</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -178,17 +176,16 @@ $Res = Ejecutar($Con, $SQL);
           if ($Res->num_rows > 0){
             while($Fila = $Res->fetch_assoc()){
               $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
-              $exp = $Fila["exp"];
-              echo "<tr>";
+              $exp = $Fila["exp_alumno"];
+              echo "<tr id='fila-" . $exp . "'>";
               echo "<td>" . $exp . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
-              echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
-              echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
+              echo "<td>" . $Fila['fecha_evaluacion'] ."</td>";
+              echo "<td><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }
           }else{
-            echo "<tr><td colspan = '6'>No se encontraron estudiantes </td></tr>";
+            echo "<tr><td colspan = '6'>No se encontraron evaluaciones agendadas </td></tr>";
           }
           Cerrar($Con);
           ?>
@@ -197,41 +194,35 @@ $Res = Ejecutar($Con, $SQL);
     </div>
   </div>
 
-  <script>
-    function confirmarEvaluacion(expediente) {
-      const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
-      const horaSeleccionada = document.getElementById('hora-' + expediente).value;
-
-      if (!fechaSeleccionada || !horaSeleccionada) {
-        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar.');
-        return;
-      }
-
-      // Crear una nueva instancia de XMLHttpRequest
-      const xhr = new XMLHttpRequest();
-
-      // Configurar la solicitud
-      xhr.open('POST', 'insertar_evaluacion.php', true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          alert('Evaluación confirmada exitosamente');
-          // alert(xhr.responseText);
-          location.reload();
-        }
-      };
-      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada);
-
-      // Configurar manejo de errores
-      xhr.onerror = function() {
-        console.error('Error de red');
-        alert('Ocurrió un error al procesar la solicitud');
-      };
-    }
-  </script>
-
 </body>
-
-
+<script>
+    function eliminarEvaluacion(expediente) {
+      // Confirmar eliminación
+      if (confirm('¿Estás seguro de que quieres eliminar esta evaluación?')) {
+        // Crear el objeto XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+        
+        // Configurar la solicitud
+        xhr.open('POST', 'eliminar_evaluacion.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        
+        // Definir lo que sucederá cuando la solicitud se complete
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // Eliminar la fila de la tabla si la solicitud fue exitosa
+            var fila = document.getElementById('fila-' + expediente);
+            if (fila) {
+              fila.remove();
+            }
+            alert('Evaluación eliminada exitosamente.');
+          } else {
+            alert('Hubo un error al eliminar la evaluación.');
+          }
+        };
+        
+        // Enviar la solicitud con el expediente del alumno
+        xhr.send('accion=eliminar&expediente=' + expediente);
+      }
+    }
+</script>
 </html>
