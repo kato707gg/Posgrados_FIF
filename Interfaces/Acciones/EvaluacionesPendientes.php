@@ -138,17 +138,26 @@ $Resultado = Ejecutar($Con, $SQL);
     }
 
     .confirmar-icon {
-            color: #123773;
-            margin: auto;
-            font-size: 1.5rem;
-            padding: 0.5rem 0.9rem;
-            background-color: #e0e0e0;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
+        color: #123773;
+        margin: auto;
+        font-size: 1.5rem;
+        padding: 0.5rem 0.9rem;
+        background-color: #e0e0e0;
+        border: none;
+        cursor: pointer;
+        border-radius: 0.4rem;
+    }
+
+    
+    @media screen and (max-width: 1600px) {
+
+        .container-agendar-evaluacion {
+            height: 75vh;
         }
 
-    @media (max-width: 48rem) {
+    }
+
+    @media (max-width: 770px) {
         table {
             font-size: 0.9rem;
         }

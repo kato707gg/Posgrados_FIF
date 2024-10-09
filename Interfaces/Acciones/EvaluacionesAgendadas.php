@@ -56,17 +56,23 @@ $Res = Ejecutar($Con, $SQL);
         table {
             border-collapse: collapse;
             width: 100%;
-            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
+            max-width: 70%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
             border-top: 0.1rem solid var(--primary-color);
             border-bottom: 0.1rem solid var(--secondary-color);
         }
-
+        
         th, td {
             border-bottom: 0.0625rem solid var(--secondary-color);
             padding: 1.25rem;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 20vw;
+        }
+        th:not(:nth-child(2)), td:not(:nth-child(2)) {
+            width: 10vw;
         }
 
         td {
@@ -118,18 +124,23 @@ $Res = Ejecutar($Con, $SQL);
             color: #123773;
             margin: auto;
             font-size: 1rem;
-            padding: 0.5rem 0.9rem;
+            padding: 0.7rem 0.9rem;
             background-color: #e0e0e0;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
         }
 
-        @media (max-width: 48rem) {
+        
+        @media screen and (max-width: 1600px) {
 
-            #table-container {
-                display: unset;
+            .container-agendar-evaluacion {
+                height: 75vh;
             }
+
+        }
+
+        @media (max-width: 770px) {
             table {
                 font-size: 0.9rem;
             }

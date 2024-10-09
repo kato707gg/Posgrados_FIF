@@ -94,6 +94,15 @@
         padding: 1rem;
     }
 
+    
+    @media screen and (max-width: 1600px) {
+
+        .container-agendar-evaluacion {
+            height: 75vh;
+        }
+
+    }
+
     @media (max-width: 48rem) {
         table {
             font-size: 0.9rem;
