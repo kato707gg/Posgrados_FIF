@@ -12,35 +12,31 @@ include '../../conexion.php';
 // Conectar a la base de datos
 $Con = Conectar();
 
-$clave_coordinador = $_SESSION['id']; // Aquí debes reemplazarlo con el valor correspondiente, si lo tienes en alguna parte de tu sistema
+$clave_coordinador = $_SESSION['id'];
 
-// Consulta SQL para obtener los datos de los estudiantes
 $SQL = "
-    SELECT
-    a.exp_alumno,
-    e.nombre,
-    e.a_paterno,
-    e.a_materno,
-    ev.aula,
-    ev.fecha_evaluacion
-FROM 
-    asignaciones a
-LEFT JOIN 
-    estudiantes e ON a.exp_alumno = e.exp
-LEFT JOIN 
-    evaluaciones ev ON a.exp_alumno = ev.exp_alumno
-LEFT JOIN 
-    detalle_evaluaciones de ON (
-        de.id_sinodo = $clave_coordinador  AND 
-        (
-            de.id_sinodo = a.sinodo1 OR
-            de.id_sinodo = a.sinodo2 OR
-            de.id_sinodo = a.sinodo3 OR
-            de.id_sinodo = a.externo
+    SELECT DISTINCT
+        a.exp_alumno,
+        e.nombre,
+        e.a_paterno,
+        e.a_materno,
+        ev.aula,
+        ev.fecha_evaluacion
+    FROM 
+        asignaciones a
+    LEFT JOIN 
+        estudiantes e ON a.exp_alumno = e.exp
+    LEFT JOIN 
+        evaluaciones ev ON a.exp_alumno = ev.exp_alumno
+    LEFT JOIN 
+        detalle_evaluaciones de ON (
+            ev.id = de.id_evaluacion AND
+            de.id_sinodo = $clave_coordinador
         )
-    )
-WHERE 
-    a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador;
+    WHERE 
+        (a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
+        a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador)
+        AND (de.id_evaluacion IS NULL OR ((de.calificacion IS NULL OR de.calificacion = 0) AND de.observacion IS NULL))
 ";
 $Resultado = Ejecutar($Con, $SQL);
 ?>
@@ -191,23 +187,24 @@ $Resultado = Ejecutar($Con, $SQL);
                 if ($Resultado->num_rows > 0){
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
-                        echo "<tr>";
+                        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . $Fila["fecha_evaluacion"] . "</td>";
-                        echo "<td>" . $Fila["aula"] . "</td>";
-                        // Input para la calificación (tipo número con decimales)
+                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+                        
                         echo "<td>";
-                        echo "<input type='number' name='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación' required>";
+                        echo "<input type='number' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'>";
                         echo "</td>";
-
-                        // Textarea para observaciones
+                    
                         echo "<td>";
-                        echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2'></textarea>";
+                        echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
                         echo "</td>";
-                        echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $Fila['exp_alumno'] . "\")'>&#x2714;</button></td>";
+                        echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
+                    
                         echo "</tr>";
                     }
+                    
                 } else {
                     echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
                 }
@@ -219,38 +216,64 @@ $Resultado = Ejecutar($Con, $SQL);
 </div>
 
 <script>
-    function confirmarEvaluacion(expediente) {
-      const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
-      const horaSeleccionada = document.getElementById('hora-' + expediente).value;
-      const aula = document.getElementById('aula-' + expediente).value;
+function checkFields(expediente) {
+    const calificacion = document.getElementById('calificacion_' + expediente).value;
+    const observacion = document.getElementById('observacion_' + expediente).value;
+    const btn = document.getElementById('btn_' + expediente);
 
-      if (!fechaSeleccionada || !horaSeleccionada || !aula) {
-        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
-        return;
-      }
+    // Obtener la fila correspondiente al expediente
+    const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
 
-      // Crear una nueva instancia de XMLHttpRequest
-      const xhr = new XMLHttpRequest();
+    // Obtener el contenido de las celdas de fecha y aula
+    const fecha = fila.querySelector('td:nth-child(3)').innerText;
+    const aula = fila.querySelector('td:nth-child(4)').innerText;
 
-      // Configurar la solicitud
-      xhr.open('POST', 'insertar_evaluacion.php', true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          alert('Evaluación confirmada exitosamente');
-          // alert(xhr.responseText);
-          location.reload();
-        }
-      };
-      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
-
-      // Configurar manejo de errores
-      xhr.onerror = function() {
-        console.error('Error de red');
-        alert('Ocurrió un error al procesar la solicitud');
-      };
+    // Verificar que todos los campos estén llenos y que la fecha y aula no sean "Pendiente"
+    if (calificacion && observacion && fecha !== "Pendiente" && aula !== "Pendiente") {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
     }
+}
+
+
+
+function actualizarEvaluacion(expediente) {
+    const calificacion = document.getElementById('calificacion_' + expediente).value;
+    const observacion = document.getElementById('observacion_' + expediente).value;
+
+    // Crear una nueva instancia de XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+
+    // Configurar la solicitud
+    xhr.open('POST', 'actualizar_detalle_evaluaciones.php', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Función a ejecutar cuando la solicitud cambie de estado
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
+            console.log(fila);  // Para verificar si la fila fue seleccionada correctamente
+            if (fila) {
+                fila.remove();
+                alert('Evaluación actualizada exitosamente');
+            } else {
+                console.error('No se encontró la fila para el expediente: ' + expediente);
+            }
+        }
+    };
+
+
+    // Enviar los datos a actualizar
+    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion));
+
+    // Configurar manejo de errores
+    xhr.onerror = function() {
+        console.error('Error de red');
+        alert('Ocurrió un error al actualizar la evaluación');
+    };
+}
+
 </script>
 
 </body>
