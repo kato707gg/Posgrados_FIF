@@ -2,6 +2,20 @@
   include('../Header/MenuA.php');
 ?>
 
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include '../../conexion.php';
+
+
+$Con = Conectar();
+$clave_alumno = $_SESSION['id'];
+$SQL = "SELECT id, fecha_evaluacion, aula FROM evaluaciones WHERE exp_alumno = $clave_alumno";
+$Resultado = Ejecutar($Con, $SQL);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,35 +140,26 @@
         <table>
             <thead>
                 <tr>
-                    <th>Docente</th>
+                    <th>No. Evaluación</th>
                     <th>Fecha</th>
                     <th>Salon</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
-                // Por ejemplo:
-                // $conexion = new mysqli("localhost", "usuario", "contraseña", "basededatos");
-                // $resultado = $conexion->query("SELECT id, nombre, grupo FROM alumnos");
 
-                // Simulamos algunos datos para el ejemplo
-                $alumnos = [
-                    ['docente' => 1, 'fecha_evaluacion' => '2024-05-01', 'salon' => 'A10'],
-                    ['docente' => 2, 'fecha_evaluacion' => '2024-05-02', 'salon' => 'D4'],
-                    ['docente' => 3, 'fecha_evaluacion' => '2024-05-03', 'salon' => 'I7']
-                ];
-
-                foreach ($alumnos as $alumno) {
-                    echo "<tr>";
-                    echo "<td>" . $alumno['docente'] . "</td>";
-                    echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
-                    echo "<td>" . $alumno['salon'] . "</td>";
-                    echo "</tr>";
+                if($Resultado->num_rows > 0){
+                    while ($Fila = $Resultado->fetch_assoc()){
+                        echo "<tr >";
+                        echo "<td>" . $Fila ["id"] . "</td>";
+                        echo "<td>" . $Fila ["fecha_evaluacion"] . "</td>";
+                        echo "<td>" . $Fila ["aula"] . "</td>";
+                    }
+                }else {
+                    echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
                 }
+                Cerrar($Con);
 
-                // Si estuvieras usando una conexión real a la base de datos, cerrarías la conexión aquí
-                // $conexion->close();
                 ?>
             </tbody>
         </table>
