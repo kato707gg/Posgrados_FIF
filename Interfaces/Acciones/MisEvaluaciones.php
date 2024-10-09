@@ -19,6 +19,22 @@ $SQL = "SELECT e.id, e.fecha_evaluacion,
         WHERE e.exp_alumno = '$clave_alumno'";
 
 $Resultado = mysqli_query($Con, $SQL);
+
+if ($Resultado) {
+    while ($fila = mysqli_fetch_assoc($Resultado)) {
+        $idEvaluacion = $fila['id'];
+        $promedioFinal = $fila['promedio_final'];
+
+        // Redondeamos el promedio a 2 decimales, por ejemplo:
+        $promedioFinalRedondeado = round($promedioFinal, 2);
+
+        // Consulta para actualizar el campo cal_final con el promedio calculado
+        $SQL_UPDATE = "UPDATE evaluaciones SET cal_final = '$promedioFinalRedondeado' WHERE id = '$idEvaluacion' AND exp_alumno = '$clave_alumno'";
+
+        // Ejecutar la consulta de actualización
+        mysqli_query($Con, $SQL_UPDATE);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -158,6 +174,7 @@ $Resultado = mysqli_query($Con, $SQL);
                 <?php
                 // Mostrar los datos obtenidos de la base de datos
                 if ($Resultado) {
+                    mysqli_data_seek($Resultado, 0);
                     while ($fila = mysqli_fetch_assoc($Resultado)) {
                         echo "<tr>";
                         echo "<td>" . $fila['id'] . "</td>";
@@ -166,6 +183,7 @@ $Resultado = mysqli_query($Con, $SQL);
                         echo "<td><button onclick=\"mostrarDetalles(" . $fila['id'] . ")\">Más</button></td>";  // Botón "Más"
                         echo "</tr>";
                     }
+                    
                 } else {
                     echo "<tr><td colspan='4'>No se encontraron evaluaciones</td></tr>";
                 }
