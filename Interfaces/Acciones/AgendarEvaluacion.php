@@ -107,6 +107,7 @@ $Res = Ejecutar($Con, $SQL);
             border: 1px solid #ccc;
             padding: 0.5rem;
             border-radius: 0.5rem;
+            width: 14vh;
         }
 
         .input-container {
@@ -126,7 +127,15 @@ $Res = Ejecutar($Con, $SQL);
             border-radius: 0.4rem;
         }
 
-        @media (max-width: 48rem) {
+        @media screen and (max-width: 1600px) {
+
+          .container-agendar-evaluacion {
+                height: 75vh;
+            }
+
+        }
+
+        @media (max-width: 770px) {
 
             #table-container {
                 display: unset;
@@ -185,7 +194,7 @@ $Res = Ejecutar($Con, $SQL);
               echo "<td>" . $NombreCom . "</td>";
               echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
-              echo "<td><input type='text' id='aula-" . $exp . "'></td>";
+              echo "<td><div class='input-container'><input type='text' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
               echo "</tr>";
             }

@@ -213,6 +213,14 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             cursor: pointer;
         }
 
+        @media screen and (max-width: 1600px) {
+
+            .container-asignar-sinodo {
+                height: 75vh;
+            }
+
+        }
+
         @media (max-width: 48rem) {
 
             table {

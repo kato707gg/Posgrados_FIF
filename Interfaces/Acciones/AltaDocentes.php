@@ -133,8 +133,8 @@
         @media screen and (max-width: 1600px) {
 
         .alta-docentes {
+            top: 56%;
             width: 70%;
-            height: 75%;
         }
 
         .boton_guardar {
@@ -143,11 +143,11 @@
 
         }
 
-        @media screen and (max-width: 1050px) {
+        @media screen and (max-width: 1150px) {
 
           .alta-docentes {
+              top: 56%;
               width: 90%;
-              padding: 1.5rem;
           }
 
           .grid-container {

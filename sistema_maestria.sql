@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-10-2024 a las 07:50:17
+-- Tiempo de generación: 09-10-2024 a las 03:12:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -37,6 +37,14 @@ CREATE TABLE `asignaciones` (
   `clave_coordinador` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asignaciones`
+--
+
+INSERT INTO `asignaciones` (`id`, `exp_alumno`, `sinodo1`, `sinodo2`, `sinodo3`, `externo`, `clave_coordinador`) VALUES
+(27, 301574, 33333, 111111, 114090, 222222, 4411071968),
+(28, 301612, 114090, 33333, 111111, 222222, 4411071968);
+
 -- --------------------------------------------------------
 
 --
@@ -58,7 +66,7 @@ CREATE TABLE `coordinadores` (
 --
 
 INSERT INTO `coordinadores` (`clave`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `programa`) VALUES
-(4411071968, 'Jesus', 'Garcia', 'Santiago', 4411071968, 'jesusgs0729@gmail.com', 'MSC');
+(4411071968, 'Jesus', 'Garcia', 'Santiago ', 4411071968, 'jesusgs0729@gmail.com', 'DCC');
 
 -- --------------------------------------------------------
 
@@ -77,18 +85,14 @@ CREATE TABLE `cuentas` (
 --
 
 INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
-(301612, 'LOPEZ80', 'D'),
-(114090, 'PAULIN55', 'D'),
 (4411071968, '123456', 'C'),
-(301574, 'GARCIA68', 'A'),
-(115260, 'PEREZ10', 'A'),
-(113278, 'PEREZ10', 'A'),
-(445698, 'PEREZ68', 'A'),
-(301574, 'GARCIA68', 'A'),
-(301612, 'GONZALEZ80', 'A'),
-(202020, 'PEREZ20', 'D'),
-(101010, 'IBARRA10', 'D'),
-(303030, 'JIMENEZ30', 'D');
+(301612, 'AA87', 'A'),
+(301574, 'GARCIA87', 'A'),
+(114090, 'PAULIN90', 'D'),
+(111111, 'PEREZ11', 'D'),
+(222222, 'ESPINOZA22', 'D'),
+(33333, 'DELGADO33', 'D'),
+(444444, 'BLANKED44', 'D');
 
 -- --------------------------------------------------------
 
@@ -97,12 +101,22 @@ INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
 --
 
 CREATE TABLE `detalle_evaluaciones` (
-  `id_detalle` int(11) DEFAULT NULL,
+  `id_detalle` int(11) NOT NULL,
   `id_evaluacion` int(11) NOT NULL,
   `id_sinodo` bigint(20) NOT NULL,
   `calificacion` double NOT NULL,
   `observacion` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_evaluaciones`
+--
+
+INSERT INTO `detalle_evaluaciones` (`id_detalle`, `id_evaluacion`, `id_sinodo`, `calificacion`, `observacion`) VALUES
+(1, 1, 33333, 0, NULL),
+(2, 1, 111111, 0, NULL),
+(3, 1, 114090, 0, NULL),
+(4, 1, 222222, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,15 +137,11 @@ CREATE TABLE `docentes` (
 --
 
 INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) VALUES
-(11, 'Sergio', 'G', 'L', 'A'),
-(22, 'Diego', 'H', 'S', 'A'),
-(33, 'Jesus', 'G', 'S', 'A'),
-(101010, 'MAURICIO ARTURO', 'IBARRA', 'CORONA', 'A'),
-(202020, 'JORGE LUIS', 'PEREZ', 'RAMOS', 'A'),
-(303030, 'HUGO', 'JIMENEZ', 'HERNANDEZ', 'A'),
-(1234, 'Diana', 'Gutierrez', 'Paredes', 'A'),
-(12345, 'Karla', 'Villarreal', 'Lopez', 'A'),
-(123456, 'Valeria', 'Diaz', 'Zuñiga', 'A');
+(33333, 'SELENE', 'DELGADO', 'LOPEZ', 'A'),
+(111111, 'JORGE', 'PEREZ', 'RAMOS', 'A'),
+(114090, 'JAVIER', 'PAULIN', 'MARTINEZ', 'A'),
+(222222, 'JULIO', 'ESPINOZA', 'PAZ', 'A'),
+(444444, 'HUGO', 'BLANKED', 'J', 'A');
 
 -- --------------------------------------------------------
 
@@ -154,14 +164,8 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`, `correo`, `programa`) VALUES
-(301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4411071968, 'jesusgs0729@gmail.com', 'MSC'),
-(301612, 'SERGIO', 'GONZALEZ', 'LOPEZ', 4427794980, 'sgonzalez201@alumnos.uaq.mx', 'MSC'),
-(301234, 'Diego', 'Hernandez', 'Sanchez', 4424322665, 'Diego@gmail.com', 'DCC'),
-(302345, 'Tania', 'GONZALEZ', 'LOPEZ', 4427793765, 'Tania@alumnos.uaq.mx', 'DTE'),
-(303456, 'Diana', 'GARCIA', 'SANTIAGO', 4411079636, 'Diana@gmail.com', 'DITE'),
-(304567, 'Julio', 'GONZALEZ', 'LOPEZ', 4427794432, 'Julio@alumnos.uaq.mx', 'MCC'),
-(305678, 'Erica', 'GARCIA', 'SANTIAGO', 4411076410, 'Erica@gmail.com', 'MIEVEA'),
-(306789, 'Octavio', 'GONZALEZ', 'LOPEZ', 4427792487, 'Octavio@alumnos.uaq.mx', 'MSC');
+(301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4425562487, 'lyaretzi361@gmail.com', 'DCC'),
+(301612, 'YARETZI', 'AA', '123123', 4425562487, 'lyaretzi361@gmail.com', 'DCC');
 
 -- --------------------------------------------------------
 
@@ -172,9 +176,17 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 CREATE TABLE `evaluaciones` (
   `id` int(11) NOT NULL,
   `exp_alumno` bigint(20) NOT NULL,
-  `fecha_evaluacion` date NOT NULL,
-  `cal_final` double NOT NULL
+  `fecha_evaluacion` datetime NOT NULL,
+  `cal_final` double NOT NULL,
+  `aula` varchar(900) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `evaluaciones`
+--
+
+INSERT INTO `evaluaciones` (`id`, `exp_alumno`, `fecha_evaluacion`, `cal_final`, `aula`) VALUES
+(1, 301574, '2024-10-10 19:01:00', 0, 'j');
 
 --
 -- Índices para tablas volcadas
@@ -202,7 +214,9 @@ ALTER TABLE `coordinadores`
 -- Indices de la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  ADD KEY `id_sinodo` (`id_sinodo`);
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `id_sinodo` (`id_sinodo`),
+  ADD KEY `id_evaluacion` (`id_evaluacion`);
 
 --
 -- Indices de la tabla `docentes`
@@ -231,7 +245,19 @@ ALTER TABLE `evaluaciones`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_evaluaciones`
+--
+ALTER TABLE `detalle_evaluaciones`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `evaluaciones`
+--
+ALTER TABLE `evaluaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -252,7 +278,8 @@ ALTER TABLE `asignaciones`
 -- Filtros para la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  ADD CONSTRAINT `detalle_evaluaciones_ibfk_1` FOREIGN KEY (`id_sinodo`) REFERENCES `docentes` (`clave`);
+  ADD CONSTRAINT `detalle_evaluaciones_ibfk_1` FOREIGN KEY (`id_sinodo`) REFERENCES `docentes` (`clave`),
+  ADD CONSTRAINT `detalle_evaluaciones_ibfk_2` FOREIGN KEY (`id_evaluacion`) REFERENCES `evaluaciones` (`id`);
 
 --
 -- Filtros para la tabla `evaluaciones`

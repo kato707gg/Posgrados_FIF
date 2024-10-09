@@ -87,7 +87,16 @@
         padding: 1rem;
     }
 
-    @media (max-width: 48rem) {
+    
+    @media screen and (max-width: 1600px) {
+
+        .container-agendar-evaluacion {
+            height: 75vh;
+        }
+
+    }
+
+    @media (max-width: 770px) {
 
         table {
             max-width: 90%;
