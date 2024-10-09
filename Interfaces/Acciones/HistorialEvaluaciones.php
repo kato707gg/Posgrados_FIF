@@ -1,5 +1,46 @@
 <?php
   include('../Header/MenuD.php');
+// Verificar si ya hay una sesión activa
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Incluir el archivo de conexión
+include '../../conexion.php';
+
+// Conectar a la base de datos
+$Con = Conectar();
+
+$clave_coordinador = $_SESSION['id'];
+$SQL = "
+SELECT DISTINCT
+    a.exp_alumno,
+    e.nombre,
+    e.a_paterno,
+    e.a_materno,
+    ev.aula,
+    ev.fecha_evaluacion,
+    de.calificacion,
+    de.observacion
+FROM 
+    asignaciones a
+LEFT JOIN 
+    estudiantes e ON a.exp_alumno = e.exp
+LEFT JOIN 
+    evaluaciones ev ON a.exp_alumno = ev.exp_alumno
+INNER JOIN 
+    detalle_evaluaciones de ON (
+        ev.id = de.id_evaluacion AND
+        de.id_sinodo = $clave_coordinador
+    )
+WHERE 
+    (a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
+    a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador)
+    AND de.calificacion != 0
+    AND de.calificacion IS NOT NULL
+    AND de.observacion IS NOT NULL
+  ";
+$Resultado = Ejecutar($Con, $SQL);
 ?>
 
 <!DOCTYPE html>
@@ -132,35 +173,34 @@
         <table>
             <thead>
                 <tr>
-                    <th>Expediente</th>
+                <th>Expediente</th>
+                    <th>Nombre</th>
                     <th>Fecha</th>
+                    <th>Aula</th>
                     <th>Calificación</th>
+                    <th>Observaciones</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
-                // Por ejemplo:
-                // $conexion = new mysqli("localhost", "usuario", "contraseña", "basededatos");
-                // $resultado = $conexion->query("SELECT id, nombre, grupo FROM alumnos");
-
-                // Simulamos algunos datos para el ejemplo
-                $alumnos = [
-                    ['exp_alumno' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
-                    ['exp_alumno' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 9],
-                    ['exp_alumno' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 8]
-                ];
-
-                foreach ($alumnos as $alumno) {
-                    echo "<tr>";
-                    echo "<td>" . $alumno['exp_alumno'] . "</td>";
-                    echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
-                    echo "<td>" . $alumno['cal_final'] . "</td>";
-                    echo "</tr>";
+            <?php
+                if ($Resultado->num_rows > 0){
+                    while ($Fila = $Resultado->fetch_assoc()){
+                        $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+                        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
+                        echo "<td>" . $Fila ["exp_alumno"] . "</td>";
+                        echo "<td>" . $Nombre . "</td>";
+                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+                        
+                        echo "<td>" . $Fila["calificacion"] . "</td>";
+                        echo "<td>" . $Fila["observacion"] . "</td>";
+                        echo "</tr>";
+                    }
+                    
+                } else {
+                    echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
                 }
-
-                // Si estuvieras usando una conexión real a la base de datos, cerrarías la conexión aquí
-                // $conexion->close();
+                Cerrar($Con);
                 ?>
             </tbody>
         </table>
