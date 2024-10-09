@@ -1,5 +1,48 @@
 <?php
   include('../Header/MenuD.php');
+
+// Verificar si ya hay una sesión activa
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Incluir el archivo de conexión
+include '../../conexion.php';
+
+// Conectar a la base de datos
+$Con = Conectar();
+
+$clave_coordinador = $_SESSION['id']; // Aquí debes reemplazarlo con el valor correspondiente, si lo tienes en alguna parte de tu sistema
+
+// Consulta SQL para obtener los datos de los estudiantes
+$SQL = "
+    SELECT
+    a.exp_alumno,
+    e.nombre,
+    e.a_paterno,
+    e.a_materno,
+    ev.aula,
+    ev.fecha_evaluacion
+FROM 
+    asignaciones a
+LEFT JOIN 
+    estudiantes e ON a.exp_alumno = e.exp
+LEFT JOIN 
+    evaluaciones ev ON a.exp_alumno = ev.exp_alumno
+LEFT JOIN 
+    detalle_evaluaciones de ON (
+        de.id_sinodo = $clave_coordinador  AND 
+        (
+            de.id_sinodo = a.sinodo1 OR
+            de.id_sinodo = a.sinodo2 OR
+            de.id_sinodo = a.sinodo3 OR
+            de.id_sinodo = a.externo
+        )
+    )
+WHERE 
+    a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador;
+";
+$Resultado = Ejecutar($Con, $SQL);
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +137,17 @@
         padding: 1rem;
     }
 
+    .confirmar-icon {
+            color: #123773;
+            margin: auto;
+            font-size: 1.5rem;
+            padding: 0.5rem 0.9rem;
+            background-color: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.4rem;
+        }
+
     @media (max-width: 48rem) {
         table {
             font-size: 0.9rem;
@@ -126,40 +180,78 @@
                     <th>Expediente</th>
                     <th>Nombre</th>
                     <th>Fecha</th>
+                    <th>Aula</th>
                     <th>Calificación</th>
                     <th>Observaciones</th>
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
-                // Por ejemplo:
-                // $conexion = new mysqli("localhost", "usuario", "contraseña", "basededatos");
-                // $resultado = $conexion->query("SELECT id, nombre, grupo FROM alumnos");
+            <?php
+                if ($Resultado->num_rows > 0){
+                    while ($Fila = $Resultado->fetch_assoc()){
+                        $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+                        echo "<tr>";
+                        echo "<td>" . $Fila ["exp_alumno"] . "</td>";
+                        echo "<td>" . $Nombre . "</td>";
+                        echo "<td>" . $Fila["fecha_evaluacion"] . "</td>";
+                        echo "<td>" . $Fila["aula"] . "</td>";
+                        // Input para la calificación (tipo número con decimales)
+                        echo "<td>";
+                        echo "<input type='number' name='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación' required>";
+                        echo "</td>";
 
-                // Simulamos algunos datos para el ejemplo
-                $alumnos = [
-                    ['exp_alumno' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
-                    ['exp_alumno' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 9],
-                    ['exp_alumno' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 8]
-                ];
-
-                foreach ($alumnos as $alumno) {
-                    echo "<tr>";
-                    echo "<td>" . $alumno['exp_alumno'] . "</td>";
-                    echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
-                    echo "<td>" . $alumno['cal_final'] . "</td>";
-                    echo "</tr>";
+                        // Textarea para observaciones
+                        echo "<td>";
+                        echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2'></textarea>";
+                        echo "</td>";
+                        echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $Fila['exp_alumno'] . "\")'>&#x2714;</button></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
                 }
-
-                // Si estuvieras usando una conexión real a la base de datos, cerrarías la conexión aquí
-                // $conexion->close();
+                Cerrar($Con);
                 ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function confirmarEvaluacion(expediente) {
+      const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
+      const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+      const aula = document.getElementById('aula-' + expediente).value;
+
+      if (!fechaSeleccionada || !horaSeleccionada || !aula) {
+        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
+        return;
+      }
+
+      // Crear una nueva instancia de XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+
+      // Configurar la solicitud
+      xhr.open('POST', 'insertar_evaluacion.php', true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          alert('Evaluación confirmada exitosamente');
+          // alert(xhr.responseText);
+          location.reload();
+        }
+      };
+      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
+
+      // Configurar manejo de errores
+      xhr.onerror = function() {
+        console.error('Error de red');
+        alert('Ocurrió un error al procesar la solicitud');
+      };
+    }
+</script>
 
 </body>
 
