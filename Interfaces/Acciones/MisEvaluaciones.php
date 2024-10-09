@@ -1,5 +1,24 @@
 <?php
-  include('../Header/MenuA.php');
+include('../Header/MenuA.php');
+?>
+
+<?php
+if (session_status() === PHP_SESSION_NONE){
+    session_start();
+}
+
+include '../../conexion.php';
+
+$Con = Conectar();
+$clave_alumno = $_SESSION['id'];
+
+// Consulta SQL para obtener las calificaciones finales de todas las evaluaciones del alumno
+$SQL = "SELECT e.id, e.fecha_evaluacion, 
+               (SELECT AVG(de.calificacion) FROM detalle_evaluaciones de WHERE de.id_evaluacion = e.id) AS promedio_final 
+        FROM evaluaciones e
+        WHERE e.exp_alumno = '$clave_alumno'";
+
+$Resultado = mysqli_query($Con, $SQL);
 ?>
 
 <!DOCTYPE html>
@@ -94,13 +113,10 @@
         overflow-x: auto;
     }
 
-    
     @media screen and (max-width: 1600px) {
-
         .container-agendar-evaluacion {
             height: 75vh;
         }
-
     }
 
     @media (max-width: 770px) {
@@ -132,40 +148,64 @@
         <table>
             <thead>
                 <tr>
-                    <th>Expediente</th>
+                    <th>Número de evaluación</th>
                     <th>Fecha</th>
-                    <th>Calificación</th>
+                    <th>Calificación Final</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Aquí deberías incluir la lógica para conectarte a la base de datos y obtener los datos de los alumnos
-                // Por ejemplo:
-                // $conexion = new mysqli("localhost", "usuario", "contraseña", "basededatos");
-                // $resultado = $conexion->query("SELECT id, nombre, grupo FROM alumnos");
-
-                // Simulamos algunos datos para el ejemplo
-                $alumnos = [
-                    ['docente' => 1, 'fecha_evaluacion' => '2024-05-01', 'cal_final' => 10],
-                    ['docente' => 2, 'fecha_evaluacion' => '2024-05-02', 'cal_final' => 8],
-                    ['docente' => 3, 'fecha_evaluacion' => '2024-05-03', 'cal_final' => 7]
-                ];
-
-                foreach ($alumnos as $alumno) {
-                    echo "<tr>";
-                    echo "<td>" . $alumno['docente'] . "</td>";
-                    echo "<td>" . $alumno['fecha_evaluacion'] . "</td>";
-                    echo "<td>" . $alumno['cal_final'] . "</td>";
-                    echo "</tr>";
+                // Mostrar los datos obtenidos de la base de datos
+                if ($Resultado) {
+                    while ($fila = mysqli_fetch_assoc($Resultado)) {
+                        echo "<tr>";
+                        echo "<td>" . $fila['id'] . "</td>";
+                        echo "<td>" . $fila['fecha_evaluacion'] . "</td>";
+                        echo "<td>" . round($fila['promedio_final'], 2) . "</td>";  // Mostrando la calificación final
+                        echo "<td><button onclick=\"mostrarDetalles(" . $fila['id'] . ")\">Más</button></td>";  // Botón "Más"
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No se encontraron evaluaciones</td></tr>";
                 }
-
-                // Si estuvieras usando una conexión real a la base de datos, cerrarías la conexión aquí
-                // $conexion->close();
                 ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Aquí es donde se mostrará la tabla de detalles -->
+<div id="detalles-container" style="display:none; padding:20px;">
+    <h3>Detalles de la evaluación:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Sinodo</th>
+                <th>Calificación</th>
+                <th>Observación</th>
+            </tr>
+        </thead>
+        <tbody id="detalles-tbody">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+function mostrarDetalles(idEvaluacion) {
+    // Realizar una petición AJAX para obtener los detalles de la evaluación
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "../Acciones/detalles_evaluacion.php?id_evaluacion=" + idEvaluacion, true);
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.getElementById('detalles-container').style.display = 'block';
+            document.getElementById('detalles-tbody').innerHTML = this.responseText;
+        }
+    };
+    xhr.send();
+}
+</script>
 
 </body>
 
