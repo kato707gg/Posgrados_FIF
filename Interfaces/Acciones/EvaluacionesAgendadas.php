@@ -7,7 +7,7 @@ include('../../conexion.php');
 $Con = Conectar();
 
 $SQL = "
-    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion 
+    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion, ev.aula
     FROM evaluaciones ev
     JOIN estudiantes e ON ev.exp_alumno = e.exp;
 ";
@@ -168,6 +168,7 @@ $Res = Ejecutar($Con, $SQL);
             <th>Expediente</th>
             <th>Nombre</th>
             <th>Fecha y Hora</th>
+            <th>Aula</th>
             <th>Eliminar</th>
           </tr>
         </thead>
@@ -181,6 +182,7 @@ $Res = Ejecutar($Con, $SQL);
               echo "<td>" . $exp . "</td>";
               echo "<td>" . $NombreCom . "</td>";
               echo "<td>" . $Fila['fecha_evaluacion'] ."</td>";
+              echo "<td>" . $Fila['aula'] ."</td>";
               echo "<td><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }

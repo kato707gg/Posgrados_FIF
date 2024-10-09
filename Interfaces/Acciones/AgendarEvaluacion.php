@@ -170,6 +170,7 @@ $Res = Ejecutar($Con, $SQL);
             <th>Nombre</th>
             <th>Fecha</th>
             <th>Hora</th>
+            <th>Aula</th>
             <th>Confirmar</th>
           </tr>
         </thead>
@@ -184,6 +185,7 @@ $Res = Ejecutar($Con, $SQL);
               echo "<td>" . $NombreCom . "</td>";
               echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
+              echo "<td><input type='text' id='aula-" . $exp . "'></td>";
               echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
               echo "</tr>";
             }
@@ -201,9 +203,10 @@ $Res = Ejecutar($Con, $SQL);
     function confirmarEvaluacion(expediente) {
       const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
       const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+      const aula = document.getElementById('aula-' + expediente).value;
 
-      if (!fechaSeleccionada || !horaSeleccionada) {
-        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar.');
+      if (!fechaSeleccionada || !horaSeleccionada || !aula) {
+        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
         return;
       }
 
@@ -221,7 +224,7 @@ $Res = Ejecutar($Con, $SQL);
           location.reload();
         }
       };
-      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada);
+      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
 
       // Configurar manejo de errores
       xhr.onerror = function() {

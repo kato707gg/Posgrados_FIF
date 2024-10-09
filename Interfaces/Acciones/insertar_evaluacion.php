@@ -9,17 +9,29 @@ $Con = Conectar();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $exp_alumno = $_POST['exp'];
     $fecha_evaluacion = $_POST['fecha_evaluacion'];
+    $aula = $_POST['aula'];
 
-    // Preparar la consulta SQL (asumiendo que tienes una tabla llamada 'evaluaciones')
-    $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion) VALUES ('$exp_alumno', '$fecha_evaluacion')";
+    // Preparar la consulta SQL para insertar la evaluación
+    $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion, aula) VALUES ('$exp_alumno', '$fecha_evaluacion', '$aula')";
     
-    // Ejecutar la consulta
+    // Ejecutar la inserción en la tabla 'evaluaciones'
     if (Ejecutar($Con, $SQL)) {
-        // Si la inserción es exitosa
-        echo "Evaluacion agendada correctamente para el expediente: $exp_alumno.";
+        // Obtener el último ID insertado de la tabla 'evaluaciones'
+        $nuevo_id = mysqli_insert_id($Con); // Recuperar el id de la última inserción
+        
+        // Preparar la consulta para insertar en 'detalle_evaluaciones' usando el nuevo ID
+        $SQL2 = "INSERT INTO detalle_evaluaciones (id_evaluacion) VALUES ('$nuevo_id')";
+        echo $SQL2;
+        // Ejecutar la inserción en la tabla 'detalle_evaluaciones'
+        if (Ejecutar($Con, $SQL2)) {
+            // Si ambas inserciones son exitosas
+            echo "Evaluación agendada correctamente para el expediente: $exp_alumno.";
+        } else {
+            echo "Error al insertar en la tabla detalle_evaluaciones.";
+        }
     } else {
-        // Si hay un error al ejecutar la consulta
-        echo "Error al agendar evaluacion para el expediente: $exp_alumno.";
+        // Si hay un error al ejecutar la primera consulta
+        echo "Error al agendar evaluación para el expediente: $exp_alumno.";
     }
     
     // Cerrar la conexión a la base de datos

@@ -419,6 +419,7 @@ function confirmarAsignacion(exp) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 alert("Asignación hecha correctamente!!"); // Mostrar respuesta del servidor
+                // console.log(xhr.responseText);
                 location.reload();
             }
         };
