@@ -19,7 +19,8 @@ SELECT DISTINCT
     e.a_paterno,
     e.a_materno,
     ev.aula,
-    ev.fecha_evaluacion,
+    ev.fecha,
+    ev.hora,
     de.calificacion,
     de.observacion
 FROM 
@@ -189,7 +190,8 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["fecha"]) ? $Fila["fecha"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["hora"]) ? $Fila["hora"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>" . $Fila["calificacion"] . "</td>";

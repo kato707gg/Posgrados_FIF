@@ -42,8 +42,11 @@ $Res = Ejecutar($Con, $SQL);
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 80vh;
-            padding: 1rem;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: 0.4vw;
+            background-color: #e9e9f3;
         }
 
         #table-container {
@@ -57,7 +60,7 @@ $Res = Ejecutar($Con, $SQL);
         table {
             border-collapse: collapse;
             width: 100%;
-            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
+            max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -130,7 +133,7 @@ $Res = Ejecutar($Con, $SQL);
         @media screen and (max-width: 1600px) {
 
           .container-agendar-evaluacion {
-                height: 75vh;
+                height: 79vh;
             }
 
         }
@@ -233,7 +236,7 @@ $Res = Ejecutar($Con, $SQL);
           location.reload();
         }
       };
-      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
+      xhr.send("exp=" + expediente + "&fecha=" + fechaSeleccionada + "&hora" + horaSeleccionada + "&aula=" + aula);
 
       // Configurar manejo de errores
       xhr.onerror = function() {

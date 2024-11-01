@@ -7,7 +7,7 @@ include('../../conexion.php');
 $Con = Conectar();
 
 $SQL = "
-    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion, ev.aula
+    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha, ev.hora, ev.aula
     FROM evaluaciones ev
     JOIN estudiantes e ON ev.exp_alumno = e.exp;
 ";
@@ -41,8 +41,11 @@ $Res = Ejecutar($Con, $SQL);
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 80vh;
-            padding: 1rem;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: 0.4vw;
+            background-color: #e9e9f3;      
         }
 
         #table-container {
@@ -56,7 +59,7 @@ $Res = Ejecutar($Con, $SQL);
         table {
             border-collapse: collapse;
             width: 100%;
-            max-width: 70%; /* Asegurar que la tabla no sobrepase el contenedor */
+            max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -135,7 +138,7 @@ $Res = Ejecutar($Con, $SQL);
         @media screen and (max-width: 1600px) {
 
             .container-agendar-evaluacion {
-                height: 75vh;
+                height: 79vh;
             }
 
         }
@@ -178,7 +181,8 @@ $Res = Ejecutar($Con, $SQL);
           <tr>
             <th>Expediente</th>
             <th>Nombre</th>
-            <th>Fecha y Hora</th>
+            <th>Fecha</th>
+            <th>Hora</th>
             <th>Aula</th>
             <th>Eliminar</th>
           </tr>
@@ -192,7 +196,8 @@ $Res = Ejecutar($Con, $SQL);
               echo "<tr id='fila-" . $exp . "'>";
               echo "<td>" . $exp . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td>" . $Fila['fecha_evaluacion'] ."</td>";
+              echo "<td>" . $Fila['fecha'] ."</td>";
+              echo "<td>" . $Fila['hora'] ."</td>";
               echo "<td>" . $Fila['aula'] ."</td>";
               echo "<td><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";

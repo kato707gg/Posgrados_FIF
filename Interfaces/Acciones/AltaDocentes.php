@@ -11,6 +11,17 @@
     <title>Posgrado FIF</title>
     <link rel="stylesheet" href="../Header/styles.css">
     <style> 
+        .container-alta-docentes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: 0.4vw;
+            background-color: #e9e9f3;
+        }
         .alta-docentes {
           width: 50%;
           top: 54%;
@@ -45,13 +56,14 @@
           width: 100%;
           margin-top: 0.5rem;
           margin-bottom: 1.5rem;
-          padding: 0 5px;
-          border: none;
           border-bottom: 1px solid #636363;
           outline: none;
-          height: 2rem;
-          color: #000000;
           font-size: 1rem;
+          font-weight: 500;
+          color: var(--text-color);
+          border: 1px solid #ccc;
+          padding: 1rem 0.5rem;
+          border-radius: 0.5rem;
         }
 
         input::placeholder {
@@ -131,6 +143,10 @@
         }
 
         @media screen and (max-width: 1600px) {
+        
+        .container-alta-docentes {
+            height: 79vh;
+        }
 
         .alta-docentes {
             top: 56%;
@@ -186,7 +202,8 @@
     </style>
 </head>
   <body>
-    <div class="alta-docentes" id="registrationOptions">
+  <div class="container-alta-docentes">
+  <div class="alta-docentes" id="registrationOptions">
         <h1>Alta de Docentes</h1>
         <form action="../Acciones/RegistroDocentes.php" method="POST">
             <div class="grid-container">
@@ -218,6 +235,7 @@
             <input type="submit" value="Guardar" class="boton_guardar">
         </form>
     </div>
+  </div>
 
     <!-- Pop-up oculto inicialmente -->
     <div id="popup" class="popup" style="display: none;">

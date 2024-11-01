@@ -51,8 +51,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 80vh;
-            padding: 1rem;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: 0.4vw;
+            background-color: #e9e9f3;
         }
 
         #table-container {
@@ -67,7 +70,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             table-layout: fixed;
             border-collapse: collapse;
             width: 100%;
-            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
+            max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -216,7 +219,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         @media screen and (max-width: 1600px) {
 
             .container-asignar-sinodo {
-                height: 75vh;
+                height: 79vh;
             }
 
         }

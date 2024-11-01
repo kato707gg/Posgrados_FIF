@@ -9,8 +9,8 @@ body {
     display: flex;
     align-items: stretch;
     color: white;
-    padding: 2vh 2vw;
-    height: 9vh; /* Ajusta esta altura según tus necesidades */
+    margin: 2vh 2vw;
+    height: 9vh;
 }
 
 .header > div,
@@ -205,7 +205,6 @@ body {
         height: 11vh;
     }
 }
-
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 1420px) {
