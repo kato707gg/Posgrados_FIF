@@ -236,7 +236,7 @@ $Res = Ejecutar($Con, $SQL);
           location.reload();
         }
       };
-      xhr.send("exp=" + expediente + "&fecha=" + fechaSeleccionada + "&hora" + horaSeleccionada + "&aula=" + aula);
+      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
 
       // Configurar manejo de errores
       xhr.onerror = function() {

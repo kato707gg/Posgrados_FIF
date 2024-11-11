@@ -199,7 +199,7 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . (!empty($Fila["fecha"]) ? $Fila["fecha"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["hora"]) ? $Fila["hora"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         

@@ -8,8 +8,7 @@ $Con = Conectar();
 // Asegúrate de que la solicitud sea POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $exp_alumno = mysqli_real_escape_string($Con, $_POST['exp']);
-    $fecha = mysqli_real_escape_string($Con, $_POST['fecha']);
-    $hora = mysqli_real_escape_string($Con, $_POST['hora']);
+    $fecha_evaluacion = mysqli_real_escape_string($Con, $_POST['fecha_evaluacion']);
     $aula = mysqli_real_escape_string($Con, $_POST['aula']);
 
     // Iniciar transacción
@@ -17,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Insertar en evaluaciones
-        $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha, hora, aula) VALUES (?, ?, ?)";
+        $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion, aula) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($Con, $SQL);
-        mysqli_stmt_bind_param($stmt, "ssss", $exp_alumno, $fecha, $hora, $aula);
+        mysqli_stmt_bind_param($stmt, "sss", $exp_alumno, $fecha_evaluacion, $aula);
         mysqli_stmt_execute($stmt);
         $id_evaluacion = mysqli_insert_id($Con);
 
