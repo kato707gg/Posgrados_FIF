@@ -1,18 +1,19 @@
 <?php
-  include('../Header/MenuC.php');
+  include('../Header/MenuA.php');
 ?>
 
 
 <?php
 include('../../conexion.php');
 $Con = Conectar();
-
+$clave_alumno = $_SESSION['id'];
 $SQL = "
 SELECT e.exp, e.nombre, e.a_paterno, e.a_materno
 FROM estudiantes e
+JOIN asignaciones a ON e.exp = a.exp_alumno
 LEFT JOIN evaluaciones ev ON e.exp = ev.exp_alumno
-WHERE ev.exp_alumno IS NULL;
-" ;
+WHERE a.exp_alumno = $clave_alumno AND ev.exp_alumno IS NULL;
+";
 $Res = Ejecutar($Con, $SQL);
 ?>
 
