@@ -176,10 +176,13 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 CREATE TABLE `evaluaciones` (
   `id` int(11) NOT NULL,
   `exp_alumno` bigint(20) NOT NULL,
-  `fecha_evaluacion` datetime NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
   `cal_final` double NOT NULL,
   `aula` varchar(900) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 --
 -- Volcado de datos para la tabla `evaluaciones`

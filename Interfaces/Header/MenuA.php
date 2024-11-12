@@ -21,6 +21,12 @@ session_start();
                 <a class="proximas-evaluaciones" href="../Acciones/ProximasEvaluaciones.php"><button type="button">Próximas Evaluaciones</button></a>
             </li>
             <li class="boton-link">
+                <a class="agendar-evaluacion" href="../Acciones/AgendarEvaluacion.php"><button type="button">Agendar Evaluación</button></a>
+            </li>
+            <li class="boton-link">
+                <a class="evaluaciones-agendadas" href="../Acciones/EvaluacionesAgendadas.php"><button type="button">Evaluaciones Agendadas</button></a>
+            </li>
+            <li class="boton-link">
                 <a class="mis-evaluaciones" href="../Acciones/MisEvaluaciones.php"><button type="button">Mis Evaluaciones</button></a>
             </li>
             <li class="boton-link">
@@ -51,6 +57,8 @@ session_start();
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/ProximasEvaluaciones.php">Próximas evaluaciones</a>
+            <a href="../Acciones/AgendarEvaluacion.php">Agendar Evaluación</a>
+            <a href="../Acciones/EvaluacionesAgendadas.php">Evaluaciones Agendadas</a>
             <a href="../Acciones/MisEvaluaciones.php">Mis evaluaciones</a>
             <a href="../Acciones/Documentos.php">Documentos</a>
             <a href="Avisos.php">Avisos</a>

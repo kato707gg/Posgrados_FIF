@@ -200,6 +200,7 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
                         echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fila["hora"]) ? $Fila["hora"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";

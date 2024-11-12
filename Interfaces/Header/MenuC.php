@@ -21,12 +21,6 @@ session_start();
                     <a class="asignar-sinodo" href="../Acciones/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="agendar-evaluacion" href="../Acciones/AgendarEvaluacion.php"><button type="button">Agendar Evaluación</button></a>
-                </li>
-                <li class="boton-link">
-                    <a class="evaluaciones-agendadas" href="../Acciones/EvaluacionesAgendadas.php"><button type="button">Evaluaciones Agendadas</button></a>
-                </li>
-                <li class="boton-link">
                     <a class="agendar-evaluacion" href="../Acciones/AltaDocentes.php"><button type="button">Alta de docentes</button></a>
                 </li>
                 <li class="boton-link">
@@ -53,8 +47,6 @@ session_start();
             <span class="espacio-sidebar"></span>
             <a id="usuario-sidebar" >Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/AsignarSinodo.php">Asignar Sínodo</a>
-            <a href="../Acciones/AgendarEvaluacion.php">Agendar Evaluación</a>
-            <a href="../Acciones/EvaluacionesAgendadas.php">Evaluaciones Agendadas</a>
             <a href="../Acciones/AltaDocentes.php">Alta de docentes</a>
             <a href="">Seguimiento</a>
             <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>

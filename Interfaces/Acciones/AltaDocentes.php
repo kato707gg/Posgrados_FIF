@@ -61,7 +61,11 @@
           color: var(--text-color);
           border: 1px solid #ccc;
           padding: 1rem 0.5rem;
+<<<<<<< HEAD
+          border-radius: 0.5rem;
+=======
           border-radius: clamp(.4rem, .4vw, .4rem);
+>>>>>>> b8fbffd7b1bf392b9240f7892680dfe9319ec0b3
         }
 
         input::placeholder {
