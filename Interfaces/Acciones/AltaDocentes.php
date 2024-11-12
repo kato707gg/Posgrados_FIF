@@ -11,6 +11,17 @@
     <title>Posgrado FIF</title>
     <link rel="stylesheet" href="../Header/styles.css">
     <style> 
+        .container-alta-docentes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
+            background-color: #e9e9f3;
+        }
         .alta-docentes {
           width: 50%;
           top: 54%;
@@ -19,14 +30,12 @@
           transform: translate(-50%, -50%);
           box-sizing: border-box;
           padding: 2.5rem;
-          border: 1px solid rgb(26,115,232);
-          border-radius: 0.4rem;
         }
         .alta-docentes h1 {
           font-family: "Google Sans", Roboto, Arial, sans-serif;
           color: #000000;
           margin: 0;
-          margin: 0 0 5rem;
+          margin: 0 0 2.5rem;
           text-align: center;
           font-size: 2rem;
         }
@@ -45,13 +54,14 @@
           width: 100%;
           margin-top: 0.5rem;
           margin-bottom: 1.5rem;
-          padding: 0 5px;
-          border: none;
           border-bottom: 1px solid #636363;
           outline: none;
-          height: 2rem;
-          color: #000000;
           font-size: 1rem;
+          font-weight: 500;
+          color: var(--text-color);
+          border: 1px solid #ccc;
+          padding: 1rem 0.5rem;
+          border-radius: clamp(.4rem, .4vw, .4rem);
         }
 
         input::placeholder {
@@ -65,7 +75,7 @@
           background: #123773;
           color: #fff;
           font-size: 1.5rem;
-          border-radius: 0.4rem;
+          border-radius: clamp(.4rem, .4vw, .4rem);
           width: 30%;
           display: block;
           margin: 3rem auto 0 auto;
@@ -73,6 +83,7 @@
         }
 
         .grid-container {
+          margin-top: 2.5rem;
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 3rem;
@@ -131,6 +142,10 @@
         }
 
         @media screen and (max-width: 1600px) {
+        
+        .container-alta-docentes {
+            height: 79vh;
+        }
 
         .alta-docentes {
             top: 56%;
@@ -156,15 +171,17 @@
 
         }
 
+        @media screen and (max-width: 820px) {
+            .container-alta-docentes {
+                height: 83.5vh;
+            }
+        }
+
         @media screen and (max-width: 450px) {
 
           .alta-docentes h1 {
               font-size: 1.5rem;
               margin: 0 0 3rem;
-          }
-
-          .alta-docentes input[type="text"] {
-            padding: 0;
           }
 
           .alta-docentes label {
@@ -186,8 +203,10 @@
     </style>
 </head>
   <body>
-    <div class="alta-docentes" id="registrationOptions">
+  <div class="container-alta-docentes">
+  <div class="alta-docentes" id="registrationOptions">
         <h1>Alta de Docentes</h1>
+        <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;" id="box-1034">
         <form action="../Acciones/RegistroDocentes.php" method="POST">
             <div class="grid-container">
                 <div>
@@ -218,6 +237,7 @@
             <input type="submit" value="Guardar" class="boton_guardar">
         </form>
     </div>
+  </div>
 
     <!-- Pop-up oculto inicialmente -->
     <div id="popup" class="popup" style="display: none;">

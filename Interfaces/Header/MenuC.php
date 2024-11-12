@@ -51,7 +51,7 @@ session_start();
         <div id="mySidebar" class="sidebar">
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
-            <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
+            <a id="usuario-sidebar" >Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Acciones/AsignarSinodo.php">Asignar Sínodo</a>
             <a href="../Acciones/AgendarEvaluacion.php">Agendar Evaluación</a>
             <a href="../Acciones/EvaluacionesAgendadas.php">Evaluaciones Agendadas</a>

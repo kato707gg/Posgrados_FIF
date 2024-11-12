@@ -42,8 +42,11 @@ $Res = Ejecutar($Con, $SQL);
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 80vh;
-            padding: 1rem;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
+            background-color: #e9e9f3;
         }
 
         #table-container {
@@ -57,7 +60,7 @@ $Res = Ejecutar($Con, $SQL);
         table {
             border-collapse: collapse;
             width: 100%;
-            max-width: 80%; /* Asegurar que la tabla no sobrepase el contenedor */
+            max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
         }
 
         tr {
@@ -121,18 +124,29 @@ $Res = Ejecutar($Con, $SQL);
             margin: auto;
             font-size: 1.5rem;
             padding: 0.5rem 0.9rem;
-            background-color: #e0e0e0;
+            background-color: #ffffff;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
+            border-bottom: 0.0625rem solid var(--secondary-color);
+        }
+
+        .confirmar-icon:hover {
+            background-color: #cfcfcf;
         }
 
         @media screen and (max-width: 1600px) {
 
           .container-agendar-evaluacion {
-                height: 75vh;
+                height: 79vh;
             }
 
+        }
+
+        @media screen and (max-width: 820px) {
+            .container-agendar-evaluacion {
+                height: 83.5vh;
+            }
         }
 
         @media (max-width: 770px) {
