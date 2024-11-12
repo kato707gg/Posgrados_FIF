@@ -25,7 +25,7 @@ body {
 .container-botones,
 .container-usuario,
 .container-cerrar-btn {
-    border-radius: 0.4vw;
+    border-radius: clamp(.4rem, .4vw, .4rem);
     background: #001a37;
     height: 100%;
 }
@@ -86,7 +86,7 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1rem;
-    border-radius: 0.4vw;
+    border-radius: clamp(.4rem, .4vw, .4rem);
 }
 
 .boton-link button:hover {
@@ -138,8 +138,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 0  0 0.4vw 0;
     background-color: #001a37;
+    height: 5vh;
+    margin-bottom: 2vh;
 }
 
 .header-telefono {
@@ -171,6 +172,11 @@ body {
     color: white;
     display: block;
     transition: 0.3s;
+}
+
+#usuario-sidebar {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .sidebar .close-sidebar {

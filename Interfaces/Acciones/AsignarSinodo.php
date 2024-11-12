@@ -54,7 +54,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             height: 81vh;
             margin: 2vh 2vw;
             padding: 2vh 2vw;
-            border-radius: 0.4vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             background-color: #e9e9f3;
         }
 
@@ -123,10 +123,15 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             margin: auto;
             font-size: 1.5rem;
             padding: 0.5rem 0.9rem;
-            background-color: #e0e0e0;
+            background-color: #ffffff;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
+            border-bottom: 0.0625rem solid var(--secondary-color);
+        }
+
+        .confirmar-icon:hover {
+            background-color: #cfcfcf;
         }
 
         /* Estilos para el modal */
@@ -190,7 +195,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
-            width: 30%; /* Para que el botón abarque todo el ancho del contenedor */
+            width: 30%;
         }
 
 
@@ -224,7 +229,13 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
         }
 
-        @media (max-width: 48rem) {
+        @media screen and (max-width: 820px) {
+            .container-asignar-sinodo {
+                height: 83.5vh;
+            }
+        }
+
+        @media (max-width: 770px) {
 
             table {
                 display: block;
