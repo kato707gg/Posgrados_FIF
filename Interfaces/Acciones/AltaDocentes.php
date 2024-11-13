@@ -19,7 +19,7 @@
             height: 81vh;
             margin: 2vh 2vw;
             padding: 2vh 2vw;
-            border-radius: clamp(.4rem, .4vw, .4rem);
+            border-radius: 0.4vw;
             background-color: #e9e9f3;
         }
         .alta-docentes {
@@ -61,11 +61,7 @@
           color: var(--text-color);
           border: 1px solid #ccc;
           padding: 1rem 0.5rem;
-<<<<<<< HEAD
-          border-radius: 0.5rem;
-=======
           border-radius: clamp(.4rem, .4vw, .4rem);
->>>>>>> b8fbffd7b1bf392b9240f7892680dfe9319ec0b3
         }
 
         input::placeholder {

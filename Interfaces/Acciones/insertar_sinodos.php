@@ -10,17 +10,17 @@ $Con = Conectar();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener los datos enviados desde la función de JavaScript
     $exp_alumno = $_POST['exp']; // Cambié 'exp' a 'exp_alumno' para coincidir con tu campo
-    $sinodo1 = $_POST['sinodo1'];
+    $director = $_POST['sinodo1'];
     $sinodo2 = $_POST['sinodo2'];
     $sinodo3 = $_POST['sinodo3'];
     $externo = $_POST['sinodo4']; // En el código JS 'sinodo4' se refiere al sínodo externo
     $clave_coordinador = $_SESSION['id']; // Aquí debes reemplazarlo con el valor correspondiente, si lo tienes en alguna parte de tu sistema
 
     // Consulta SQL para insertar o actualizar los sinodos asignados en la tabla 'asignaciones'
-    $SQL = "INSERT INTO asignaciones (exp_alumno, sinodo1, sinodo2, sinodo3, externo, clave_coordinador) 
-            VALUES ('$exp_alumno', '$sinodo1', '$sinodo2', '$sinodo3', '$externo', '$clave_coordinador') 
+    $SQL = "INSERT INTO asignaciones (exp_alumno, director, sinodo2, sinodo3, externo, clave_coordinador) 
+            VALUES ('$exp_alumno', '$director', '$sinodo2', '$sinodo3', '$externo', '$clave_coordinador') 
             ON DUPLICATE KEY UPDATE 
-            sinodo1 = '$sinodo1', sinodo2 = '$sinodo2', sinodo3 = '$sinodo3', externo = '$externo', clave_coordinador = '$clave_coordinador'";
+            director = '$director', sinodo2 = '$sinodo2', sinodo3 = '$sinodo3', externo = '$externo', clave_coordinador = '$clave_coordinador'";
     echo $SQL;
     // Ejecutar la consulta
     if (Ejecutar($Con, $SQL)) {

@@ -1,16 +1,15 @@
 <?php
-  include('../Header/MenuA.php');
- if(session_status()===PHP_SESSION_NONE){
-  session_start();
- }
+  include('../Header/MenuC.php');
+?>
 
-
+<?php
 include('../../conexion.php');
 $Con = Conectar();
-$id = $_SESSION['id'];
 
 $SQL = "
-    SELECT exp_alumno, fecha_evaluacion, aula FROM evaluaciones WHERE exp_alumno = '$id'
+    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion, ev.aula
+    FROM evaluaciones ev
+    JOIN estudiantes e ON ev.exp_alumno = e.exp;
 ";
 
 $Res = Ejecutar($Con, $SQL);
@@ -45,7 +44,7 @@ $Res = Ejecutar($Con, $SQL);
             height: 81vh;
             margin: 2vh 2vw;
             padding: 2vh 2vw;
-            border-radius: 0.4vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             background-color: #e9e9f3;      
         }
 
@@ -129,10 +128,15 @@ $Res = Ejecutar($Con, $SQL);
             margin: auto;
             font-size: 1rem;
             padding: 0.7rem 0.9rem;
-            background-color: #e0e0e0;
+            background-color: #ffffff;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
+            border-bottom: 0.0625rem solid var(--secondary-color);
+        }
+
+        .eliminar-icon:hover {
+            background-color: #cfcfcf;
         }
 
         
@@ -142,6 +146,12 @@ $Res = Ejecutar($Con, $SQL);
                 height: 79vh;
             }
 
+        }
+
+        @media screen and (max-width: 820px) {
+            .container-agendar-evaluacion {
+                height: 83.5vh;
+            }
         }
 
         @media (max-width: 770px) {
@@ -177,11 +187,12 @@ $Res = Ejecutar($Con, $SQL);
   <div class="container-agendar-evaluacion">
     <h3>Evaluaciones Agendadas:</h3>
     <div id="table-container">
-          <table>
+      <table>
         <thead>
           <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
+            <th>Expediente</th>
+            <th>Nombre</th>
+            <th>Fecha y Hora</th>
             <th>Aula</th>
             <th>Eliminar</th>
           </tr>
@@ -190,28 +201,23 @@ $Res = Ejecutar($Con, $SQL);
           <?php
           if ($Res->num_rows > 0){
             while($Fila = $Res->fetch_assoc()){
+              $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
               $exp = $Fila["exp_alumno"];
-              $fechaCompleta = $Fila['fecha_evaluacion'];
-              
-              // Dividimos la fecha y la hora
-              $fecha = date("Y-m-d", strtotime($fechaCompleta));
-              $hora = date("H:i:s", strtotime($fechaCompleta));
-
-              echo "<tr>";
-              echo "<td>" . $fecha . "</td>";
-              echo "<td>" . $hora . "</td>";
-              echo "<td>" . $Fila['aula'] . "</td>";
+              echo "<tr id='fila-" . $exp . "'>";
+              echo "<td>" . $exp . "</td>";
+              echo "<td>" . $NombreCom . "</td>";
+              echo "<td>" . $Fila['fecha_evaluacion'] ."</td>";
+              echo "<td>" . $Fila['aula'] ."</td>";
               echo "<td><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }
-          } else {
-            echo "<tr><td colspan='4'>No se encontraron evaluaciones agendadas</td></tr>";
+          }else{
+            echo "<tr><td colspan = '6'>No se encontraron evaluaciones agendadas </td></tr>";
           }
           Cerrar($Con);
           ?>
         </tbody>
       </table>
-
     </div>
   </div>
 
