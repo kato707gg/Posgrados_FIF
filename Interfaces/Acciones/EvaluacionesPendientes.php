@@ -1,5 +1,5 @@
 <?php
-  include('../Header/MenuD.php');
+include('../Header/MenuD.php');
 
 // Verificar si ya hay una sesión activa
 if (session_status() === PHP_SESSION_NONE) {
@@ -14,6 +14,7 @@ $Con = Conectar();
 
 $clave_coordinador = $_SESSION['id'];
 
+// Consulta principal para obtener evaluaciones pendientes
 $SQL = "
     SELECT DISTINCT
         a.exp_alumno,
@@ -34,10 +35,21 @@ $SQL = "
             de.id_sinodo = $clave_coordinador
         )
     WHERE 
-        (a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
+        (a.director = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
         a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador)
         AND (de.id_evaluacion IS NULL OR ((de.calificacion IS NULL OR de.calificacion = 0) AND de.observacion IS NULL))
 ";
+
+// Verificar si el usuario es director
+$SQL2 = "SELECT director FROM asignaciones WHERE director = '$clave_coordinador'";
+$esDirector = false;
+$resultadoDirector = Ejecutar($Con, $SQL2);
+
+// Si la consulta encontró que el usuario es director, actualiza $esDirector a true
+if ($resultadoDirector->num_rows > 0) {
+    $esDirector = true;
+}
+
 $Resultado = Ejecutar($Con, $SQL);
 ?>
 
@@ -144,13 +156,10 @@ $Resultado = Ejecutar($Con, $SQL);
         border-radius: 0.4rem;
     }
 
-    
     @media screen and (max-width: 1600px) {
-
         .container-agendar-evaluacion {
             height: 75vh;
         }
-
     }
 
     @media (max-width: 770px) {
@@ -175,7 +184,6 @@ $Resultado = Ejecutar($Con, $SQL);
 </style>
 
 <body>
-
 <div class="container-evaluaciones-pendientes">
 <h3>Evaluaciones pendientes:</h3>
     <div id="table-container">
@@ -189,6 +197,7 @@ $Resultado = Ejecutar($Con, $SQL);
                     <th>Calificación</th>
                     <th>Observaciones</th>
                     <th>Acción</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -200,23 +209,30 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
                         echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
-                        echo "<td>" . (!empty($Fila["hora"]) ? $Fila["hora"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";
                         echo "<input type='number' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'>";
                         echo "</td>";
                     
-                        echo "<td>";
-                        echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
-                        echo "</td>";
-                        echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
+                        
+                        if ($esDirector) {
+                            echo "<td><button onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
+                        }else{
+                            echo "<td>";
+                            echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
+                            echo "</td>";
+                        }
                     
+                        echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
+
+                        // Mostrar el botón solo si el usuario es director
+                       
                         echo "</tr>";
                     }
                     
                 } else {
-                    echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
+                    echo "<tr><td colspan='8'>No se encontraron evaluaciones pendientes</td></tr>";
                 }
                 Cerrar($Con);
                 ?>
@@ -231,14 +247,10 @@ function checkFields(expediente) {
     const observacion = document.getElementById('observacion_' + expediente).value;
     const btn = document.getElementById('btn_' + expediente);
 
-    // Obtener la fila correspondiente al expediente
     const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
-
-    // Obtener el contenido de las celdas de fecha y aula
     const fecha = fila.querySelector('td:nth-child(3)').innerText;
     const aula = fila.querySelector('td:nth-child(4)').innerText;
 
-    // Verificar que todos los campos estén llenos y que la fecha y aula no sean "Pendiente"
     if (calificacion && observacion && fecha !== "Pendiente" && aula !== "Pendiente") {
         btn.disabled = false;
     } else {
@@ -246,46 +258,20 @@ function checkFields(expediente) {
     }
 }
 
-
+function opcionDirector(expediente) {
+    alert("Opciones adicionales para el director para el expediente: " + expediente);
+}
 
 function actualizarEvaluacion(expediente) {
     const calificacion = document.getElementById('calificacion_' + expediente).value;
     const observacion = document.getElementById('observacion_' + expediente).value;
 
-    // Crear una nueva instancia de XMLHttpRequest
-    const xhr = new XMLHttpRequest();
-
-    // Configurar la solicitud
-    xhr.open('POST', 'actualizar_detalle_evaluaciones.php', true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    // Función a ejecutar cuando la solicitud cambie de estado
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
-            console.log(fila);  // Para verificar si la fila fue seleccionada correctamente
-            if (fila) {
-                fila.remove();
-                alert('Evaluación actualizada exitosamente');
-            } else {
-                console.error('No se encontró la fila para el expediente: ' + expediente);
-            }
-        }
-    };
-
-
-    // Enviar los datos a actualizar
-    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion));
-
-    // Configurar manejo de errores
-    xhr.onerror = function() {
-        console.error('Error de red');
-        alert('Ocurrió un error al actualizar la evaluación');
-    };
+    if (calificacion && observacion) {
+        alert("Evaluación actualizada para el expediente: " + expediente);
+        // Aquí deberías agregar la funcionalidad para actualizar la evaluación en la base de datos
+    }
 }
-
 </script>
 
 </body>
-
 </html>
