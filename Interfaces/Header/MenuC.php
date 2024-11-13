@@ -17,6 +17,9 @@ session_start();
         </div>
         <div class="container-botones">
             <ul class="container-lista-botones">  
+            <li class="boton-link">
+                    <a class="asignar-sinodo" href="../Acciones/EvaluacionesAgendadasC.php"><button type="button">Evaluaciones Agendadas</button></a>
+                </li>
                 <li class="boton-link">
                     <a class="asignar-sinodo" href="../Acciones/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
                 </li>

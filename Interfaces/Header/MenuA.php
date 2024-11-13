@@ -16,10 +16,7 @@ session_start();
         <a class="titulo-header" href="../Fondo estatico/Alumno.php">SSAP FIF UAQ</a>
     </div>
     <div class="container-botones">
-        <ul class="container-lista-botones">  
-            <li class="boton-link">
-                <a class="proximas-evaluaciones" href="../Acciones/ProximasEvaluaciones.php"><button type="button">Próximas Evaluaciones</button></a>
-            </li>
+        <ul class="container-lista-botones">
             <li class="boton-link">
                 <a class="agendar-evaluacion" href="../Acciones/AgendarEvaluacion.php"><button type="button">Agendar Evaluación</button></a>
             </li>
@@ -56,7 +53,6 @@ session_start();
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
             <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
-            <a href="../Acciones/ProximasEvaluaciones.php">Próximas evaluaciones</a>
             <a href="../Acciones/AgendarEvaluacion.php">Agendar Evaluación</a>
             <a href="../Acciones/EvaluacionesAgendadas.php">Evaluaciones Agendadas</a>
             <a href="../Acciones/MisEvaluaciones.php">Mis evaluaciones</a>

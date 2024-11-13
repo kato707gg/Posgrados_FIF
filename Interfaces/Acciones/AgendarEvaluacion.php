@@ -1,18 +1,19 @@
 <?php
   include('../Header/MenuA.php');
-?>
-
-
-<?php
+  if(session_status()===PHP_SESSION_NONE){
+    session_start();
+   }
 include('../../conexion.php');
 $Con = Conectar();
-$clave_alumno = $_SESSION['id'];
+$id = $_SESSION['id'];
+
 $SQL = "
 SELECT e.exp, e.nombre, e.a_paterno, e.a_materno
 FROM estudiantes e
-JOIN asignaciones a ON e.exp = a.exp_alumno
 LEFT JOIN evaluaciones ev ON e.exp = ev.exp_alumno
-WHERE a.exp_alumno = $clave_alumno AND ev.exp_alumno IS NULL;
+LEFT JOIN asignaciones a ON e.exp = a.exp_alumno
+WHERE ev.fecha_evaluacion IS NULL 
+AND a.exp_alumno = '$id';
 ";
 $Res = Ejecutar($Con, $SQL);
 ?>
@@ -190,8 +191,6 @@ $Res = Ejecutar($Con, $SQL);
       <table>
         <thead>
           <tr>
-            <th> Expediente</th>
-            <th>Nombre</th>
             <th>Fecha</th>
             <th>Hora</th>
             <th>Aula</th>
@@ -202,11 +201,7 @@ $Res = Ejecutar($Con, $SQL);
           <?php
           if ($Res->num_rows > 0){
             while($Fila = $Res->fetch_assoc()){
-              $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
               $exp = $Fila["exp"];
-              echo "<tr>";
-              echo "<td>" . $exp . "</td>";
-              echo "<td>" . $NombreCom . "</td>";
               echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='text' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
@@ -224,38 +219,44 @@ $Res = Ejecutar($Con, $SQL);
   </div>
 
   <script>
-    function confirmarEvaluacion(expediente) {
-      const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
-      const horaSeleccionada = document.getElementById('hora-' + expediente).value;
-      const aula = document.getElementById('aula-' + expediente).value;
+function confirmarEvaluacion(expediente) {
+    const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
+    const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+    const aula = document.getElementById('aula-' + expediente).value;
 
-      if (!fechaSeleccionada || !horaSeleccionada || !aula) {
+    // Verificar que los campos no estén vacíos
+    if (!fechaSeleccionada || !horaSeleccionada || !aula) {
         alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
         return;
-      }
+    }
 
-      // Crear una nueva instancia de XMLHttpRequest
-      const xhr = new XMLHttpRequest();
+    // Combina la fecha y hora en el formato DATETIME (YYYY-MM-DD HH:MM:SS)
+    const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
 
-      // Configurar la solicitud
-      xhr.open('POST', 'insertar_evaluacion.php', true);
-      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Crear una nueva instancia de XMLHttpRequest
+    const xhr = new XMLHttpRequest();
 
-      xhr.onreadystatechange = function() {
+    // Configurar la solicitud
+    xhr.open('POST', 'insertar_evaluacion.php', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Manejo de la respuesta del servidor
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          alert('Evaluación confirmada exitosamente');
-          // alert(xhr.responseText);
-          location.reload();
+            alert(xhr.responseText); // Mostrar respuesta del servidor
+            location.reload(); // Recargar la página
         }
-      };
-      xhr.send("exp=" + expediente + "&fecha_evaluacion=" + fechaSeleccionada + " " + horaSeleccionada + "&aula=" + aula);
+    };
 
-      // Configurar manejo de errores
-      xhr.onerror = function() {
+    // Enviar la fecha y hora combinadas, y otros datos
+    xhr.send("exp=" + expediente + "&fecha_evaluacion=" + encodeURIComponent(fechaHoraCombinada) + "&aula=" + encodeURIComponent(aula));
+
+    // Manejo de errores
+    xhr.onerror = function() {
         console.error('Error de red');
         alert('Ocurrió un error al procesar la solicitud');
-      };
-    }
+    };
+}
   </script>
 
 </body>

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_evaluacion = mysqli_insert_id($Con);
 
         // Obtener sinodales de asignaciones
-        $SQL_sinodales = "SELECT sinodo1, sinodo2, sinodo3, externo FROM asignaciones WHERE exp_alumno = ?";
+        $SQL_sinodales = "SELECT director, sinodo2, sinodo3, externo FROM asignaciones WHERE exp_alumno = ?";
         $stmt_sinodales = mysqli_prepare($Con, $SQL_sinodales);
         mysqli_stmt_bind_param($stmt_sinodales, "s", $exp_alumno);
         mysqli_stmt_execute($stmt_sinodales);
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $asignacion = mysqli_fetch_assoc($result);
 
         // Insertar en detalle_evaluaciones para cada sinodal
-        $sinodales = array_filter([$asignacion['sinodo1'], $asignacion['sinodo2'], $asignacion['sinodo3'], $asignacion['externo']]);
+        $sinodales = array_filter([$asignacion['director'], $asignacion['sinodo2'], $asignacion['sinodo3'], $asignacion['externo']]);
         $SQL_detalle = "INSERT INTO detalle_evaluaciones (id_evaluacion, id_sinodo) VALUES (?, ?)";
         $stmt_detalle = mysqli_prepare($Con, $SQL_detalle);
 
