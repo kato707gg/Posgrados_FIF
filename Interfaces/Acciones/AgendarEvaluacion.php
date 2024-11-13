@@ -121,6 +121,21 @@ $Res = Ejecutar($Con, $SQL);
             justify-content: center;
         }
 
+        .subir-entregable {
+            color: #123773;
+            font-size: 1.5rem;
+            padding: 0.5rem 0.9rem;
+            background-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.4rem;
+            border-bottom: 0.0625rem solid var(--secondary-color);
+        }
+
+        .subir-entregable:hover {
+            background-color: #cfcfcf;
+        }
+
         .confirmar-icon {
             color: #123773;
             margin: auto;
@@ -135,6 +150,19 @@ $Res = Ejecutar($Con, $SQL);
 
         .confirmar-icon:hover {
             background-color: #cfcfcf;
+        }
+
+        .subir-entregable.archivo-subido {
+            background-color: #cfcfcf; /* Verde claro para indicar archivo subido */
+        }
+
+        .quitar-archivo {
+            color: red;
+            margin-left: 10px;
+            cursor: pointer;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 0.9rem;
+            display: none; /* Inicialmente oculto */
         }
 
         @media screen and (max-width: 1600px) {
@@ -194,6 +222,7 @@ $Res = Ejecutar($Con, $SQL);
             <th>Fecha</th>
             <th>Hora</th>
             <th>Aula</th>
+            <th>Entregable</th>
             <th>Confirmar</th>
           </tr>
         </thead>
@@ -205,11 +234,18 @@ $Res = Ejecutar($Con, $SQL);
               echo "<td><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
               echo "<td><div class='input-container'><input type='text' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
+              echo "<td>
+                      <input type='file' id='file-" . $exp . "' style='display: none;'>
+                      <div style='display: flex; align-items: center; justify-content: center;'>
+                          <button id='upload-btn-" . $exp . "' class='subir-entregable' onclick='uploadDocument(\"" . $exp . "\")'>📁</button>
+                          <span id='quitar-" . $exp . "' class='quitar-archivo' onclick='quitarArchivo(\"" . $exp . "\")'>Quitar archivo &times</span>
+                      </div>
+                    </td>";
               echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
               echo "</tr>";
             }
           }else{
-            echo "<tr><td colspan = '6'>No se encontraron estudiantes </td></tr>";
+            echo "<tr><td colspan = '6'>No se encontraron evaluaciones</td></tr>";
           }
           Cerrar($Con);
           ?>
@@ -219,44 +255,76 @@ $Res = Ejecutar($Con, $SQL);
   </div>
 
   <script>
-function confirmarEvaluacion(expediente) {
-    const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
-    const horaSeleccionada = document.getElementById('hora-' + expediente).value;
-    const aula = document.getElementById('aula-' + expediente).value;
+      function confirmarEvaluacion(expediente) {
+          const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
+          const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+          const aula = document.getElementById('aula-' + expediente).value;
 
-    // Verificar que los campos no estén vacíos
-    if (!fechaSeleccionada || !horaSeleccionada || !aula) {
-        alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
-        return;
-    }
+          // Verificar que los campos no estén vacíos
+          if (!fechaSeleccionada || !horaSeleccionada || !aula) {
+              alert('Por favor, selecciona tanto la fecha como la hora antes de confirmar o ingresa el aula.');
+              return;
+          }
 
-    // Combina la fecha y hora en el formato DATETIME (YYYY-MM-DD HH:MM:SS)
-    const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
+          // Combina la fecha y hora en el formato DATETIME (YYYY-MM-DD HH:MM:SS)
+          const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
 
-    // Crear una nueva instancia de XMLHttpRequest
-    const xhr = new XMLHttpRequest();
+          // Crear una nueva instancia de XMLHttpRequest
+          const xhr = new XMLHttpRequest();
 
-    // Configurar la solicitud
-    xhr.open('POST', 'insertar_evaluacion.php', true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          // Configurar la solicitud
+          xhr.open('POST', 'insertar_evaluacion.php', true);
+          xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    // Manejo de la respuesta del servidor
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert(xhr.responseText); // Mostrar respuesta del servidor
-            location.reload(); // Recargar la página
-        }
-    };
+          // Manejo de la respuesta del servidor
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  alert(xhr.responseText); // Mostrar respuesta del servidor
+                  location.reload(); // Recargar la página
+              }
+          };
 
-    // Enviar la fecha y hora combinadas, y otros datos
-    xhr.send("exp=" + expediente + "&fecha_evaluacion=" + encodeURIComponent(fechaHoraCombinada) + "&aula=" + encodeURIComponent(aula));
+          // Enviar la fecha y hora combinadas, y otros datos
+          xhr.send("exp=" + expediente + "&fecha_evaluacion=" + encodeURIComponent(fechaHoraCombinada) + "&aula=" + encodeURIComponent(aula));
 
-    // Manejo de errores
-    xhr.onerror = function() {
-        console.error('Error de red');
-        alert('Ocurrió un error al procesar la solicitud');
-    };
-}
+          // Manejo de errores
+          xhr.onerror = function() {
+              console.error('Error de red');
+              alert('Ocurrió un error al procesar la solicitud');
+          };
+      }
+
+      function uploadDocument(expediente) {
+          const fileInput = document.getElementById('file-' + expediente);
+          const uploadBtn = document.getElementById('upload-btn-' + expediente);
+          const quitarBtn = document.getElementById('quitar-' + expediente);
+          
+          fileInput.click();
+
+          fileInput.addEventListener('change', function() {
+              if (fileInput.files.length > 0) {
+                  const file = fileInput.files[0];
+                  console.log('Archivo seleccionado:', file.name);
+                  
+                  // Cambiar apariencia del botón
+                  uploadBtn.classList.add('archivo-subido');
+                  quitarBtn.style.display = 'inline';
+              }
+          });
+      }
+
+      function quitarArchivo(expediente) {
+          const fileInput = document.getElementById('file-' + expediente);
+          const uploadBtn = document.getElementById('upload-btn-' + expediente);
+          const quitarBtn = document.getElementById('quitar-' + expediente);
+          
+          // Limpiar el input file
+          fileInput.value = '';
+          
+          // Restaurar apariencia original
+          uploadBtn.classList.remove('archivo-subido');
+          quitarBtn.style.display = 'none';
+      }
   </script>
 
 </body>

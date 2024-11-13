@@ -45,7 +45,7 @@ $Res = Ejecutar($Con, $SQL);
             margin: 2vh 2vw;
             padding: 2vh 2vw;
             border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9f3;      
+            background-color: #e9e9e9;      
         }
 
         #table-container {
@@ -192,7 +192,8 @@ $Res = Ejecutar($Con, $SQL);
           <tr>
             <th>Expediente</th>
             <th>Nombre</th>
-            <th>Fecha y Hora</th>
+            <th>Fecha</th>
+            <th>Hora</th>
             <th>Aula</th>
             <th>Eliminar</th>
           </tr>
@@ -203,11 +204,14 @@ $Res = Ejecutar($Con, $SQL);
             while($Fila = $Res->fetch_assoc()){
               $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
               $exp = $Fila["exp_alumno"];
+              $fecha = date('Y-m-d', strtotime($Fila['fecha_evaluacion']));
+              $hora = date('H:i', strtotime($Fila['fecha_evaluacion']));
               echo "<tr id='fila-" . $exp . "'>";
               echo "<td>" . $exp . "</td>";
               echo "<td>" . $NombreCom . "</td>";
-              echo "<td>" . $Fila['fecha_evaluacion'] ."</td>";
-              echo "<td>" . $Fila['aula'] ."</td>";
+              echo "<td>" . $fecha . "</td>";
+              echo "<td>" . $hora . "</td>";
+              echo "<td>" . $Fila['aula'] . "</td>";
               echo "<td><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }
