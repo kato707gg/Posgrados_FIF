@@ -76,22 +76,46 @@ $Resultado = Ejecutar($Con, $SQL);
         --background-color: #fafcff;
     }
 
-    table {
-        table-layout: fixed;
-        border-collapse: collapse;
-        margin-bottom: 5rem;
+    .container-evaluaciones-pendientes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 81vh;
+        margin: 2vh 2vw;
+        padding: 2vh 2vw;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        background-color: #e9e9e9;      
+    }
+
+    #table-container {
+        display: flex;
+        justify-content: center;
+        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
         width: 100%;
-        max-width: 80%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
     }
 
     tr {
         border-top: 0.1rem solid var(--primary-color);
         border-bottom: 0.1rem solid var(--secondary-color);
     }
-
+    
     th, td {
         border-bottom: 0.0625rem solid var(--secondary-color);
         padding: 1.25rem;
+    }
+    th:nth-child(2), td:nth-child(2) {
+        width: 20vw;
+    }
+    th:not(:nth-child(2)), td:not(:nth-child(2)) {
+        width: 10vw;
     }
 
     td {
@@ -136,15 +160,6 @@ $Resultado = Ejecutar($Con, $SQL);
         overflow-x: auto;
     }
 
-    .container-evaluaciones-pendientes {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 85vh;
-        padding: 1rem;
-    }
-
     .confirmar-icon {
         color: #123773;
         margin: auto;
@@ -157,8 +172,16 @@ $Resultado = Ejecutar($Con, $SQL);
     }
 
     @media screen and (max-width: 1600px) {
+
         .container-agendar-evaluacion {
-            height: 75vh;
+            height: 79vh;
+        }
+
+    }
+
+    @media screen and (max-width: 820px) {
+        .container-agendar-evaluacion {
+            height: 83.5vh;
         }
     }
 
@@ -266,10 +289,36 @@ function actualizarEvaluacion(expediente) {
     const calificacion = document.getElementById('calificacion_' + expediente).value;
     const observacion = document.getElementById('observacion_' + expediente).value;
 
-    if (calificacion && observacion) {
-        alert("Evaluación actualizada para el expediente: " + expediente);
-        // Aquí deberías agregar la funcionalidad para actualizar la evaluación en la base de datos
-    }
+    // Crear una nueva instancia de XMLHttpRequest
+    const xhr = new XMLHttpRequest();
+
+    // Configurar la solicitud
+    xhr.open('POST', 'actualizar_detalle_evaluaciones.php', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Función a ejecutar cuando la solicitud cambie de estado
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
+            console.log(fila);  // Para verificar si la fila fue seleccionada correctamente
+            if (fila) {
+                fila.remove();
+                alert('Evaluación actualizada exitosamente');
+            } else {
+                console.error('No se encontró la fila para el expediente: ' + expediente);
+            }
+        }
+    };
+
+
+    // Enviar los datos a actualizar
+    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion));
+
+    // Configurar manejo de errores
+    xhr.onerror = function() {
+        console.error('Error de red');
+        alert('Ocurrió un error al actualizar la evaluación');
+    };
 }
 </script>
 

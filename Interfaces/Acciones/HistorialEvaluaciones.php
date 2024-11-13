@@ -34,7 +34,7 @@ INNER JOIN
         de.id_sinodo = $clave_coordinador
     )
 WHERE 
-    (a.sinodo1 = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
+    (a.director = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
     a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador)
     AND de.calificacion != 0
     AND de.calificacion IS NOT NULL
@@ -66,22 +66,46 @@ $Resultado = Ejecutar($Con, $SQL);
         --background-color: #fafcff;
     }
 
-    table {
-        table-layout: fixed;
-        border-collapse: collapse;
-        margin-bottom: 5rem;
+    .container-proximas-evaluaciones {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 81vh;
+        margin: 2vh 2vw;
+        padding: 2vh 2vw;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        background-color: #e9e9e9;      
+    }
+
+    #table-container {
+        display: flex;
+        justify-content: center;
+        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
         width: 100%;
-        max-width: 60%;;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
     }
 
     tr {
         border-top: 0.1rem solid var(--primary-color);
         border-bottom: 0.1rem solid var(--secondary-color);
     }
-
+    
     th, td {
         border-bottom: 0.0625rem solid var(--secondary-color);
         padding: 1.25rem;
+    }
+    th:nth-child(2), td:nth-child(2) {
+        width: 20vw;
+    }
+    th:not(:nth-child(2)), td:not(:nth-child(2)) {
+        width: 10vw;
     }
 
     td {
@@ -126,25 +150,22 @@ $Resultado = Ejecutar($Con, $SQL);
         overflow-x: auto;
     }
 
-    .container-proximas-evaluacionesS {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 85vh;
-        padding: 1rem;
-    }
-
     
     @media screen and (max-width: 1600px) {
 
         .container-agendar-evaluacion {
-            height: 75vh;
+            height: 79vh;
         }
 
     }
 
-    @media (max-width: 48rem) {
+    @media screen and (max-width: 820px) {
+        .container-agendar-evaluacion {
+            height: 83.5vh;
+        }
+    }
+
+    @media (max-width: 770px) {
         table {
             font-size: 0.9rem;
         }
@@ -167,7 +188,7 @@ $Resultado = Ejecutar($Con, $SQL);
 
 <body>
 
-<div class="container-proximas-evaluacionesS">
+<div class="container-proximas-evaluaciones">
 <h3>Historial de evaluaciones:</h3>
     <div id="table-container">
         <table>
