@@ -207,7 +207,7 @@ $Res = Ejecutar($Con, $SQL);
               $fecha = date("Y-m-d", strtotime($fechaCompleta));
               $hora = date("H:i:s", strtotime($fechaCompleta));
 
-              echo "<tr>";
+              echo "<tr id='fila-" . $exp . "'>";
               echo "<td>" . $fecha . "</td>";
               echo "<td>" . $hora . "</td>";
               echo "<td>" . $Fila['aula'] . "</td>";

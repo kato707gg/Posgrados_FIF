@@ -241,7 +241,7 @@ $Res = Ejecutar($Con, $SQL);
                           <span id='quitar-" . $exp . "' class='quitar-archivo' onclick='quitarArchivo(\"" . $exp . "\")'>Quitar archivo &times</span>
                       </div>
                     </td>";
-              echo "<td><button class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")'>✔</button></td>";
+              echo "<td><button id='confirm-btn-" . $exp . "' class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")' disabled>✔</button></td>";
               echo "</tr>";
             }
           }else{
@@ -295,36 +295,44 @@ $Res = Ejecutar($Con, $SQL);
       }
 
       function uploadDocument(expediente) {
-          const fileInput = document.getElementById('file-' + expediente);
-          const uploadBtn = document.getElementById('upload-btn-' + expediente);
-          const quitarBtn = document.getElementById('quitar-' + expediente);
-          
-          fileInput.click();
+        const fileInput = document.getElementById('file-' + expediente);
+        const uploadBtn = document.getElementById('upload-btn-' + expediente);
+        const quitarBtn = document.getElementById('quitar-' + expediente);
+        const confirmBtn = document.getElementById('confirm-btn-' + expediente);
 
-          fileInput.addEventListener('change', function() {
-              if (fileInput.files.length > 0) {
-                  const file = fileInput.files[0];
-                  console.log('Archivo seleccionado:', file.name);
-                  
-                  // Cambiar apariencia del botón
-                  uploadBtn.classList.add('archivo-subido');
-                  quitarBtn.style.display = 'inline';
-              }
-          });
-      }
+        fileInput.click();
 
-      function quitarArchivo(expediente) {
-          const fileInput = document.getElementById('file-' + expediente);
-          const uploadBtn = document.getElementById('upload-btn-' + expediente);
-          const quitarBtn = document.getElementById('quitar-' + expediente);
-          
-          // Limpiar el input file
-          fileInput.value = '';
-          
-          // Restaurar apariencia original
-          uploadBtn.classList.remove('archivo-subido');
-          quitarBtn.style.display = 'none';
-      }
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                console.log('Archivo seleccionado:', file.name);
+
+                // Cambiar apariencia del botón
+                uploadBtn.classList.add('archivo-subido');
+                quitarBtn.style.display = 'inline';
+
+                // Habilitar el botón "Confirmar"
+                confirmBtn.disabled = false;
+            }
+        });
+    }
+
+    function quitarArchivo(expediente) {
+        const fileInput = document.getElementById('file-' + expediente);
+        const uploadBtn = document.getElementById('upload-btn-' + expediente);
+        const quitarBtn = document.getElementById('quitar-' + expediente);
+        const confirmBtn = document.getElementById('confirm-btn-' + expediente);
+
+        // Limpiar el input file
+        fileInput.value = '';
+
+        // Restaurar apariencia original
+        uploadBtn.classList.remove('archivo-subido');
+        quitarBtn.style.display = 'none';
+
+            // Deshabilitar el botón "Confirmar"
+            confirmBtn.disabled = true;
+    }
   </script>
 
 </body>

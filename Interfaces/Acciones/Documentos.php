@@ -346,27 +346,53 @@
         function uploadDocument() {
             const fileInput = document.getElementById('file');
             const documentType = document.getElementById('document-type');
-            
+
             if (fileInput.files.length > 0 && documentType.value !== "") {
-                const file = fileInput.files[0];
-                const date = new Date().toISOString().split('T')[0];
-                const type = documentType.value;
-                
-                // Crear un objeto URL para el archivo
-                const fileURL = URL.createObjectURL(file);
-                
-                // Simular guardado en localStorage
-                let documents = JSON.parse(localStorage.getItem('documents') || '[]');
-                documents.push({ date, type, fileName: file.name, fileURL });
-                localStorage.setItem('documents', JSON.stringify(documents));
-                
-                // Actualizar la tabla
-                updateDocumentsTable();
-                
-                // Limpiar el formulario
-                clearFile();
-                documentType.value = "";
-                enableFileSection();
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('documentType', documentType.value);
+
+                // Mostrar algún indicador de carga si lo deseas
+                uploadBtn.disabled = true;
+                uploadBtn.textContent = 'Subiendo...';
+
+                fetch('upload_document.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualizar la tabla con el nuevo documento
+                        let documents = JSON.parse(localStorage.getItem('documents') || '[]');
+                        documents.push({
+                            date: data.data.date,
+                            type: data.data.type,
+                            fileName: data.data.fileName,
+                            fileURL: data.data.path
+                        });
+                        localStorage.setItem('documents', JSON.stringify(documents));
+                        updateDocumentsTable();
+
+                        // Limpiar el formulario
+                        clearFile();
+                        documentType.value = "";
+                        enableFileSection();
+
+                        alert('Archivo subido correctamente');
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al subir el archivo');
+                })
+                .finally(() => {
+                    // Restaurar el botón
+                    uploadBtn.disabled = false;
+                    uploadBtn.textContent = 'Subir archivo';
+                });
             }
         }
 
