@@ -154,10 +154,19 @@ $Resultado = Ejecutar($Con, $SQL);
         align-items: center;
     }
 
-    #table-container {
-        display: flex !important;
-        justify-content: center;
-        overflow-x: auto;
+    .inputs {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+        height: 2vh;
+        border-bottom: 1px solid #636363;
+        outline: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-color);
+        border: 1px solid #ccc;
+        padding: 1rem 0.5rem;
+        border-radius: clamp(.4rem, .4vw, .4rem);
     }
 
     .confirmar-icon {
@@ -173,14 +182,14 @@ $Resultado = Ejecutar($Con, $SQL);
 
     @media screen and (max-width: 1600px) {
 
-        .container-agendar-evaluacion {
+        .container-evaluaciones-pendientes {
             height: 79vh;
         }
 
     }
 
     @media screen and (max-width: 820px) {
-        .container-agendar-evaluacion {
+        .container-evaluaciones-pendientes {
             height: 83.5vh;
         }
     }
@@ -235,7 +244,7 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";
-                        echo "<input type='number' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'>";
+                        echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'>";
                         echo "</td>";
                     
                         
@@ -243,7 +252,7 @@ $Resultado = Ejecutar($Con, $SQL);
                             echo "<td><button onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
                         }else{
                             echo "<td>";
-                            echo "<textarea style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe observaciones aquí' rows='2' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
+                            echo "<textarea class='inputs' style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe aquí...' rows='3' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
                             echo "</td>";
                         }
                     

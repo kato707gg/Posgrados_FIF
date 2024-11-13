@@ -66,7 +66,7 @@ $Resultado = Ejecutar($Con, $SQL);
         --background-color: #fafcff;
     }
 
-    .container-proximas-evaluaciones {
+    .container-historial-evaluaciones {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -153,14 +153,14 @@ $Resultado = Ejecutar($Con, $SQL);
     
     @media screen and (max-width: 1600px) {
 
-        .container-agendar-evaluacion {
+        .container-historial-evaluaciones {
             height: 79vh;
         }
 
     }
 
     @media screen and (max-width: 820px) {
-        .container-agendar-evaluacion {
+        .container-historial-evaluaciones {
             height: 83.5vh;
         }
     }
@@ -188,7 +188,7 @@ $Resultado = Ejecutar($Con, $SQL);
 
 <body>
 
-<div class="container-proximas-evaluaciones">
+<div class="container-historial-evaluaciones">
 <h3>Historial de evaluaciones:</h3>
     <div id="table-container">
         <table>
