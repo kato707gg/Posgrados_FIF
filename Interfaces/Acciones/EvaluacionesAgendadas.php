@@ -45,8 +45,8 @@ $Res = Ejecutar($Con, $SQL);
             height: 81vh;
             margin: 2vh 2vw;
             padding: 2vh 2vw;
-            border-radius: 0.4vw;
-            background-color: #e9e9f3;      
+            border-radius: clamp(.4rem, .4vw, .4rem);
+            background-color: #e9e9e9;      
         }
 
         #table-container {
@@ -129,12 +129,16 @@ $Res = Ejecutar($Con, $SQL);
             margin: auto;
             font-size: 1rem;
             padding: 0.7rem 0.9rem;
-            background-color: #e0e0e0;
+            background-color: #ffffff;
             border: none;
             cursor: pointer;
             border-radius: 0.4rem;
+            border-bottom: 0.0625rem solid var(--secondary-color);
         }
 
+        .eliminar-icon:hover {
+            background-color: #cfcfcf;
+        }
         
         @media screen and (max-width: 1600px) {
 
@@ -142,6 +146,12 @@ $Res = Ejecutar($Con, $SQL);
                 height: 79vh;
             }
 
+        }
+
+        @media screen and (max-width: 820px) {
+            .container-agendar-evaluacion {
+                height: 83.5vh;
+            }
         }
 
         @media (max-width: 770px) {

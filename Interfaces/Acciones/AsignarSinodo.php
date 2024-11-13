@@ -55,7 +55,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             margin: 2vh 2vw;
             padding: 2vh 2vw;
             border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9f3;
+            background-color: #e9e9e9;
         }
 
         #table-container {
@@ -108,9 +108,9 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         }
 
         .asignar-button {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.5rem 0.6rem;
+            padding: 0.7rem 0.9rem;
             background-color: #123773;
             color: white;
             border: none;

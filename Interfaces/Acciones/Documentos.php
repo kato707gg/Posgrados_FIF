@@ -16,6 +16,7 @@
     body {
         margin: 0;
         padding: 0;
+        overflow: hidden;
     }
 
     :root {
@@ -25,14 +26,25 @@
         --background-color: #fafcff;
     }
 
-    /* Centrar la sección completa */
-    .container-subirdoc {
+    .container-documentos {
         display: flex;
         flex-direction: column;
-        /* Alinear los elementos verticalmente */
+        align-items: center;
+        justify-content: center;
+        height: 81vh;
+        margin: 2vh 2vw;
+        padding: 2vh 2vw;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        background-color: #e9e9e9;      
+    }
+
+    .container-subirdoc {
+        font: caption;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 5rem;
+        margin-bottom: 1rem;
     }
 
     .container-tipodoc,
@@ -40,7 +52,6 @@
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        /* Alinea verticalmente los elementos hijos */
     }
 
     label {
@@ -49,17 +60,16 @@
     }
 
     #document-type {
-        font: caption;
+        font-size: 1rem;
         padding: 0.7rem 1rem;
         width: 13rem;
         border: 1px solid #ccc;
         border-radius: 0.4rem;
         line-height: 1.5rem;
-        /* Asegura una alineación uniforme */
     }
 
     #file-label {
-        font: caption;
+        font-size: 1rem;
         display: inline-block;
         width: 13rem;
         padding: 0.7rem 1rem;
@@ -71,20 +81,20 @@
         text-overflow: ellipsis;
         line-height: 1.5rem;
         vertical-align: middle;
+        background-color: white;
     }
 
     #clear-file-btn {
-        font: caption;
+        font-size: 1rem;
         display: none;
         margin-left: 10px;
         color: red;
         cursor: pointer;
         line-height: 1.5rem;
-        /* Ajuste de altura */
     }
 
     #upload-btn {
-        font: caption;
+        font-size: 0.9rem;
         display: inline-block;
         padding: 0.7rem 1rem;
         background-color: grey;
@@ -109,7 +119,6 @@
         background-color: #1A4DA1;
     }
 
-
     #upload-btn.enabled {
         background-color: #4CAF50;
         /* Verde cuando se sube un archivo */
@@ -117,14 +126,12 @@
         pointer-events: auto;
     }
 
-    .container-tabla {
-        max-height: 50vh;
+    #table-container {
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        margin-top: 1.5rem;
-        padding: 1rem;
+        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
+        width: 100%;
     }
 
     #table-header table {
@@ -133,19 +140,25 @@
     }
 
     table {
-        table-layout: fixed;
+        border-collapse: collapse;
         width: 100%;
-        max-width: 60rem;
+        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
     }
 
     tr {
         border-top: 0.1rem solid var(--primary-color);
         border-bottom: 0.1rem solid var(--secondary-color);
     }
-
+    
     th, td {
         border-bottom: 0.0625rem solid var(--secondary-color);
         padding: 1.25rem;
+    }
+    th:nth-child(2), td:nth-child(2) {
+        width: 20vw;
+    }
+    th:not(:nth-child(2)), td:not(:nth-child(2)) {
+        width: 10vw;
     }
 
     td {
@@ -164,6 +177,7 @@
         font-size: 1.5rem;
         color: var(--text-color);
         padding-bottom: 2rem;
+        padding-top: 3.5rem;
     }
 
     h1 {
@@ -230,48 +244,46 @@
 </style>
 
 <body>
-    <div class="container-subirdoc">
-        <!-- Sección de selección del tipo de documento -->
-        <div class="container-tipodoc">
-            <label for="document-type">Tipo:</label>
-            <select id="document-type" onchange="enableFileSection()">
-                <option value="">Selecciona un tipo</option>
-                <option value="Recibo">Recibo</option>
-                <option value="Protocolo">Protocolo</option>
-                <option value="Registro de tesis">Registro de tesis</option>
-            </select>
-        </div>
+    <div class="container-documentos">
+        <div class="container-subirdoc">
+            <!-- Sección de selección del tipo de documento -->
+            <div class="container-tipodoc">
+                <label for="document-type">Tipo:</label>
+                <select id="document-type" onchange="enableFileSection()">
+                    <option value="">Selecciona un tipo</option>
+                    <option value="Recibo">Recibo</option>
+                    <option value="Protocolo">Protocolo</option>
+                    <option value="Registro de tesis">Registro de tesis</option>
+                </select>
+            </div>
 
-        <!-- Sección de subir archivo -->
-        <div class="container-subir">
-            <label for="file">Subir:</label>
-            <span id="file-label" onclick="triggerFileInput()">Examinar...</span>
-            <input type="file" id="file" name="file" style="display:none;" accept=".pdf,.docx,.xlsx"
-                onchange="handleFileSelect()" disabled>
-            <button id="upload-btn" onclick="uploadDocument()">Subir archivo</button>
-            <span id="clear-file-btn" onclick="clearFile()">Quitar archivo &times;</span>
+            <!-- Sección de subir archivo -->
+            <div class="container-subir">
+                <label for="file">Subir:</label>
+                <span id="file-label" onclick="triggerFileInput()">Examinar...</span>
+                <input type="file" id="file" name="file" style="display:none;" accept=".pdf,.docx,.xlsx"
+                    onchange="handleFileSelect()" disabled>
+                <button id="upload-btn" onclick="uploadDocument()">Subir archivo</button>
+                <span id="clear-file-btn" onclick="clearFile()">Quitar archivo &times;</span>
+            </div>
         </div>
-    </div>
-    <div class="container-tabla">
         <h3>Documentos subidos:</h3>
-        <div id="table-header">
+        <div id="table-container">
+        
             <table>
-                <thead>
+            <thead>
                     <tr>
                         <th>Fecha</th>
                         <th>Tipo</th>
                         <th>Vista</th>
                     </tr>
                 </thead>
-            </table>
-        </div>
-        <div id="table-container">
-            <table>
                 <tbody id="documents-table-body">
                     <!-- Los documentos se cargarán aquí dinámicamente -->
                 </tbody>
             </table>
         </div>
+      
     </div>
 
     <script>

@@ -51,8 +51,8 @@ if ($Resultado) {
     body {
         margin: 0;
         padding: 0;
+        overflow: hidden;
     }
-
     :root {
         --primary-color: rgb(26,115,232);
         --secondary-color: #aaa;
@@ -61,20 +61,29 @@ if ($Resultado) {
     }
 
     .container-proximas-evaluacionesS {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 81vh;
+            margin: 2vh 2vw;
+            padding: 2vh 2vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
+            background-color: #e9e9e9;      
+        }
+
+    #table-container {
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        min-height: 85vh;
-        padding: 1rem;
+        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
+        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
+        width: 100%;
     }
 
     table {
-        table-layout: fixed;
         border-collapse: collapse;
-        margin-bottom: 5rem;
         width: 100%;
-        max-width: 60%;
+        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
     }
 
     tr {
@@ -131,7 +140,7 @@ if ($Resultado) {
 
     @media screen and (max-width: 1600px) {
         .container-agendar-evaluacion {
-            height: 75vh;
+            height: 79vh;
         }
     }
 

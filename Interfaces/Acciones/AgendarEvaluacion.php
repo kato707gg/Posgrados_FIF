@@ -48,7 +48,7 @@ $Res = Ejecutar($Con, $SQL);
             margin: 2vh 2vw;
             padding: 2vh 2vw;
             border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9f3;
+            background-color: #e9e9e9;
         }
 
         #table-container {

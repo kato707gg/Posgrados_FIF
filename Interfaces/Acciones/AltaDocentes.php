@@ -11,6 +11,11 @@
     <title>Posgrado FIF</title>
     <link rel="stylesheet" href="../Header/styles.css">
     <style> 
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
         .container-alta-docentes {
             display: flex;
             flex-direction: column;
@@ -20,7 +25,7 @@
             margin: 2vh 2vw;
             padding: 2vh 2vw;
             border-radius: 0.4vw;
-            background-color: #e9e9f3;
+            background-color: #e9e9e9;
         }
         .alta-docentes {
           width: 50%;
