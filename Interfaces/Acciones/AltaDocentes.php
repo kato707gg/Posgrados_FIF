@@ -24,7 +24,7 @@
             height: 81vh;
             margin: 2vh 2vw;
             padding: 2vh 2vw;
-            border-radius: 0.4vw;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             background-color: #e9e9e9;
         }
         .alta-docentes {
@@ -34,7 +34,6 @@
           position: absolute;
           transform: translate(-50%, -50%);
           box-sizing: border-box;
-          padding: 2.5rem;
         }
         .alta-docentes h1 {
           font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -56,7 +55,7 @@
         .alta-docentes input[type="number"],
         .alta-docentes select {
           font-family: "Google Sans", Roboto, Arial, sans-serif;
-          width: 100%;
+          width: 96%;
           margin-top: 0.5rem;
           margin-bottom: 1.5rem;
           border-bottom: 1px solid #636363;
@@ -154,7 +153,7 @@
 
         .alta-docentes {
             top: 56%;
-            width: 70%;
+            width: 60%;
         }
 
         .boton_guardar {
@@ -163,15 +162,22 @@
 
         }
 
-        @media screen and (max-width: 1150px) {
+        @media screen and (max-width: 1050px) {
 
           .alta-docentes {
               top: 56%;
               width: 90%;
           }
 
+          .alta-docentes input[type="text"],
+          .alta-docentes input[type="number"],
+          .alta-docentes select {
+            margin-bottom: 0;
+          }
+
           .grid-container {
             grid-template-columns: repeat(2, 1fr);
+            row-gap: 1rem;
           }
 
         }
@@ -183,10 +189,15 @@
         }
 
         @media screen and (max-width: 450px) {
+          .alta-docentes input[type="text"],
+          .alta-docentes input[type="number"],
+          .alta-docentes select {
+            width: 90%;
+          }
 
           .alta-docentes h1 {
-              font-size: 1.5rem;
-              margin: 0 0 3rem;
+            font-size: 1.5rem;
+            margin: 0 0 3rem;
           }
 
           .alta-docentes label {
@@ -194,11 +205,12 @@
           }
 
           .grid-container {
-              gap: 2rem;
+            gap: 1rem;
           }
 
           .boton_guardar {
-              width: 50%;
+            margin-top: 4rem;
+            width: 50%;
           }
 
           .popup-content {

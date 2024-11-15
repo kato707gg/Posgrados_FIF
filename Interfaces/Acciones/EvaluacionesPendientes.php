@@ -156,8 +156,6 @@ $Resultado = Ejecutar($Con, $SQL);
 
     .inputs {
         font-family: "Google Sans", Roboto, Arial, sans-serif;
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
         height: 2vh;
         border-bottom: 1px solid #636363;
         outline: none;
@@ -169,15 +167,36 @@ $Resultado = Ejecutar($Con, $SQL);
         border-radius: clamp(.4rem, .4vw, .4rem);
     }
 
+    .observaciones {
+        font-size: 1rem;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        padding: 0.8rem 0.9rem;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        color: var(--text-color);
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        border-bottom: 0.0625rem solid var(--secondary-color);
+    }
+
+    .observaciones:hover {
+        background-color: #cfcfcf;
+    }
+
     .confirmar-icon {
         color: #123773;
         margin: auto;
         font-size: 1.5rem;
         padding: 0.5rem 0.9rem;
-        background-color: #e0e0e0;
+        background-color: #ffffff;
         border: none;
         cursor: pointer;
-        border-radius: 0.4rem;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        border-bottom: 0.0625rem solid var(--secondary-color);
+    }
+
+    .confirmar-icon:hover {
+        background-color: #cfcfcf;
     }
 
     @media screen and (max-width: 1600px) {
@@ -244,12 +263,12 @@ $Resultado = Ejecutar($Con, $SQL);
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";
-                        echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'>";
+                        echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")' oninput='limitDigits(this, 4)'>";
                         echo "</td>";
                     
                         
                         if ($esDirector) {
-                            echo "<td><button onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
+                            echo "<td><button class='observaciones' onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
                         }else{
                             echo "<td>";
                             echo "<textarea class='inputs' style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe aquí...' rows='3' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
@@ -328,6 +347,12 @@ function actualizarEvaluacion(expediente) {
         console.error('Error de red');
         alert('Ocurrió un error al actualizar la evaluación');
     };
+}
+
+function limitDigits(input, maxDigits) {
+    if (input.value.length > maxDigits) {
+        input.value = input.value.slice(0, maxDigits);
+    }
 }
 </script>
 

@@ -115,7 +115,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 0.4rem;
+            border-radius: clamp(.4rem, .4vw, .4rem);
+        }
+
+        .asignar-button:hover {
+            background-color: #cfcfcf;
         }
 
         .confirmar-icon {
@@ -126,7 +130,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             background-color: #ffffff;
             border: none;
             cursor: pointer;
-            border-radius: 0.4rem;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             border-bottom: 0.0625rem solid var(--secondary-color);
         }
 
@@ -194,7 +198,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 0.4rem;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             width: 30%;
         }
 

@@ -31,14 +31,23 @@ body {
   border: 1px solid #9fb3c6;
   border-radius: 15px;
   font: caption;
-  font-size: medium;
+  font-size: 1rem;
   z-index: 1;
+  max-height: 90vh;
+}
+
+.container1 {
+  max-width: 25vw;
+}
+
+.container2 {
+  max-width: 60vw;
 }
 
 .container1 h1,
 .container2 h1 {
   margin: 0;
-  padding: 0 0 35px;
+  padding: 0 0 2rem;
   text-align: center;
   font-size: 1.7rem;
 }
@@ -73,10 +82,10 @@ input::placeholder {
 .boton_enviar {
   border: none;
   outline: none;
-  height: 40px;
+  height: 2.5rem;
   background: #134bb3;
   color: #fff;
-  font-size: 18px;
+  font-size: 1.125rem;
   border-radius: 5px;
   width: 50%;
   display: block;
@@ -93,12 +102,12 @@ input::placeholder {
 .boton_registrarse {
   text-align: center;
   border: none;
-  height: 40px;
+  height: 2.5rem;
   background: none;
   color: #134bb3;
   font-weight: bold;
   text-decoration: underline;
-  font-size: 18px;
+  font-size: 1.125rem;
   width: 50%;
   display: block;
   margin: 1.5rem auto 0 auto;
@@ -188,11 +197,40 @@ td {
   cursor: pointer;
 }
 
+/* Ajuste base para pantallas normales */
+:root {
+  font-size: 1rem;
+}
+
+
+@media screen and (max-width: 1600px) {
+  .container1,
+  .container2 {
+    padding: 1.8rem;
+  }
+  
+  .container1 h1,
+  .container2 h1 {
+    padding: 0 0 1.5rem;
+  }
+  
+  .escudofif {
+    margin-bottom: 1rem;
+    width: 30%;
+  }
+
+  .grid-container {
+    gap: 1.5rem;
+}
+
+}
+
+
 @media screen and (max-width: 1050px) {
 
   .container1,
   .container2 {
-    width: 90%;
+    max-width: 90vw;
   }
 
   .grid-container {
@@ -206,7 +244,14 @@ td {
 
   .popup-content {
     width: 60%;
+  }
+}
 
+@media screen and (max-width: 770px) {
+  .container1,
+  .container2 {
+    width: 90vw; /* Cambiamos a viewport width */
+    max-width: none; /* Eliminamos el max-width para pantallas pequeñas */
   }
 }
 
@@ -220,6 +265,7 @@ td {
   .container1,
   .container2 {
     font-size: 0.9rem;
+    padding: 1.3rem;
   }
 
   .container1 input[type="text"],
