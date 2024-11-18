@@ -55,9 +55,6 @@ $Periodos = Ejecutar($Con, $SQL2);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Header/styles.css">  
     <title>Historial de Evaluaciones</title>
-    <style>
-        /* Estilos aquí (los mismos que en tu código anterior) */
-    </style>
 </head>
 <style>
     body {
