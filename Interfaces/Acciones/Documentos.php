@@ -101,7 +101,6 @@
         color: white;
         border: none;
         cursor: not-allowed;
-        pointer-events: none;
         border-radius: 0 0.4rem 0.4rem 0;
         vertical-align: middle;
         line-height: 1.62rem;
@@ -297,11 +296,13 @@
             // Habilitar la parte de subir archivo si se selecciona un tipo válido
             if (documentType.value !== "") {
                 fileInput.disabled = false; // Habilitar input de archivo
-                fileLabel.style.cursor = 'pointer'; // Cambiar cursor para indicar habilitación
+                fileLabel.style.cursor = 'pointer';
+                uploadBtn.style.cursor = 'pointer'; // Cambiar cursor para indicar habilitación
                 uploadBtn.classList.add("option-selected"); // Cambia el botón a azul
                 uploadBtn.classList.remove("enabled"); // Asegúrate de que no esté en verde
             } else {
                 fileInput.disabled = true; // Deshabilitar input de archivo
+                uploadBtn.style.cursor = 'not-allowed';
                 fileLabel.style.cursor = 'not-allowed'; // Cambiar cursor para indicar deshabilitación
                 clearFile(); // Limpiar campos
             }

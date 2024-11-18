@@ -60,17 +60,17 @@ if ($Resultado) {
         --background-color: #fafcff;
     }
 
-    .container-proximas-evaluacionesS {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 81vh;
-            margin: 2vh 2vw;
-            padding: 2vh 2vw;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9e9;      
-        }
+    .container-proximas-evaluaciones {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 81vh;
+        margin: 2vh 2vw;
+        padding: 2vh 2vw;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        background-color: #e9e9e9;      
+    }
 
     #table-container {
         display: flex;
@@ -138,6 +138,22 @@ if ($Resultado) {
         overflow-x: auto;
     }
 
+    .generar-pdf {
+        color: #123773;
+        margin: auto;
+        font-size: 1.7rem;
+        padding: 0.2rem 0.5rem 0.4rem;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        border-bottom: 0.0625rem solid var(--secondary-color);     
+    }
+
+    .generar-pdf:hover {
+        background-color: #cfcfcf;
+    }
+
     @media screen and (max-width: 1600px) {
         .container-agendar-evaluacion {
             height: 79vh;
@@ -167,7 +183,7 @@ if ($Resultado) {
 
 <body>
 
-<div class="container-proximas-evaluacionesS">
+<div class="container-proximas-evaluaciones">
 <h3>Mis evaluaciones:</h3>
     <div id="table-container">
         <table>
@@ -176,7 +192,7 @@ if ($Resultado) {
                     <th>Número de evaluación</th>
                     <th>Fecha</th>
                     <th>Calificación Final</th>
-                    <th>Acciones</th>
+                    <th>Acta de seminario</th>
                 </tr>
             </thead>
             <tbody>
@@ -189,7 +205,7 @@ if ($Resultado) {
                         echo "<td>" . $fila['id'] . "</td>";
                         echo "<td>" . $fila['fecha_evaluacion'] . "</td>";
                         echo "<td>" . round($fila['promedio_final'], 2) . "</td>";  // Mostrando la calificación final
-                        echo "<td><button onclick=\"mostrarDetalles(" . $fila['id'] . ")\">Más</button></td>";  // Botón "Más"
+                        echo "<td><button class='generar-pdf' onclick=\"mostrarDetalles(" . $fila['id'] . ")\">📄</button></td>";  // Botón "Más"
                         echo "</tr>";
                     }
                     

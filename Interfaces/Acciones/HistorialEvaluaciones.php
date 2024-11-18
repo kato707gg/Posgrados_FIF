@@ -81,6 +81,35 @@ $Periodos = Ejecutar($Con, $SQL2);
         background-color: #e9e9e9;      
     }
 
+    .buscar {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        border-bottom: 1px solid #636363;
+        outline: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-color);
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        border-radius: clamp(.4rem, .4vw, .4rem);   
+    }
+
+    /* Estilo placeholder en select */
+    .buscar.periodo {
+        color: #757575; /* Color del texto del placeholder */
+    }
+
+    .buscar.periodo option {
+        color: var(--text-color); /* Color del texto de las opciones */
+    }
+
+    .buscar.periodo:focus {
+        outline: none;
+    }
+
+    .buscar.periodo option:first-child {
+        display: none; /* Ocultar el primer option si es el placeholder */
+    }
+
     #table-container {
         display: flex;
         justify-content: center;
@@ -200,7 +229,7 @@ $Periodos = Ejecutar($Con, $SQL2);
                     <th>
                         Nombre
                         <br>
-                        <input type="text" id="search-name" placeholder="Buscar por nombre">
+                        <input class="buscar nombre" type="text" id="search-name" placeholder="Buscar por nombre...">
                     </th>
                     <th>Fecha</th>
                     <th>Aula</th>
@@ -209,8 +238,8 @@ $Periodos = Ejecutar($Con, $SQL2);
                     <th>
                         Periodo
                         <br>
-                        <select id="search-periodo">
-                            <option value="">Seleccione un periodo</option>
+                        <select class="buscar periodo" id="search-periodo">
+                            <option value="" disabled selected hidden>Seleccione un periodo</option>
                             <?php
                             if ($Periodos->num_rows > 0) {
                                 while ($row = $Periodos->fetch_assoc()) {
@@ -271,6 +300,15 @@ $Periodos = Ejecutar($Con, $SQL2);
             }
         });
     }
+
+    /* Estilo placeholder en select */
+    document.getElementById('search-periodo').addEventListener('change', function() {
+        if (this.value) {
+            this.style.color = 'var(--text-color)'; // Cambia al color fuerte
+        } else {
+            this.style.color = '#757575'; // Mantiene el color tenue si no hay selección
+        }
+    });
 </script>
 
 </body>
