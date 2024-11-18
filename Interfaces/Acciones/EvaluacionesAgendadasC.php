@@ -127,11 +127,11 @@ $Res = Ejecutar($Con, $SQL);
             color: #123773;
             margin: auto;
             font-size: 1rem;
-            padding: 0.7rem 0.9rem;
+            padding: 0.7rem 0.9rem 0.75rem;
             background-color: #ffffff;
             border: none;
             cursor: pointer;
-            border-radius: 0.4rem;
+            border-radius: clamp(.4rem, .4vw, .4rem);
             border-bottom: 0.0625rem solid var(--secondary-color);
         }
 
