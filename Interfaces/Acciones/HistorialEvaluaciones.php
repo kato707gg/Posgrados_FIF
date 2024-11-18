@@ -1,5 +1,5 @@
 <?php
-  include('../Header/MenuD.php');
+include('../Header/MenuD.php');
 // Verificar si ya hay una sesión activa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -21,7 +21,8 @@ SELECT DISTINCT
     ev.aula,
     ev.fecha_evaluacion,
     de.calificacion,
-    de.observacion
+    de.observacion,
+    de.periodo
 FROM 
     asignaciones a
 LEFT JOIN 
@@ -39,8 +40,11 @@ WHERE
     AND de.calificacion != 0
     AND de.calificacion IS NOT NULL
     AND de.observacion IS NOT NULL
-  ";
+";
+
+$SQL2 = "SELECT DISTINCT periodo FROM detalle_evaluaciones";
 $Resultado = Ejecutar($Con, $SQL);
+$Periodos = Ejecutar($Con, $SQL2);
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +55,10 @@ $Resultado = Ejecutar($Con, $SQL);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Header/styles.css">  
     <title>Historial de Evaluaciones</title>
+    <style>
+        /* Estilos aquí (los mismos que en tu código anterior) */
+    </style>
 </head>
-
 <style>
     body {
         margin: 0;
@@ -187,39 +193,57 @@ $Resultado = Ejecutar($Con, $SQL);
 </style>
 
 <body>
-
 <div class="container-historial-evaluaciones">
-<h3>Historial de evaluaciones:</h3>
+    <h3>Historial de evaluaciones:</h3>
     <div id="table-container">
         <table>
             <thead>
                 <tr>
-                <th>Expediente</th>
-                    <th>Nombre</th>
+                    <th>Expediente</th>
+                    <th>
+                        Nombre
+                        <br>
+                        <input type="text" id="search-name" placeholder="Buscar por nombre">
+                    </th>
                     <th>Fecha</th>
                     <th>Aula</th>
                     <th>Calificación</th>
                     <th>Observaciones</th>
+                    <th>
+                        Periodo
+                        <br>
+                        <select id="search-periodo">
+                            <option value="">Seleccione un periodo</option>
+                            <?php
+                            if ($Periodos->num_rows > 0) {
+                                while ($row = $Periodos->fetch_assoc()) {
+                                    echo "<option value='" . htmlspecialchars($row['periodo']) . "'>" . htmlspecialchars($row['periodo']) . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No se encontraron periodos</option>";
+                            }
+                            ?>
+                        </select>
+                    </th>
                 </tr>
             </thead>
-            <tbody>
-            <?php
+            <tbody id="table-body">
+                <?php
                 if ($Resultado->num_rows > 0){
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
-                        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
+                        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "' data-nombre='" . $Nombre . "' data-periodo='" . $Fila['periodo'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
                         echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
-                        
                         echo "<td>" . $Fila["calificacion"] . "</td>";
                         echo "<td>" . $Fila["observacion"] . "</td>";
+                        echo "<td>" . $Fila["periodo"] . "</td>";
                         echo "</tr>";
                     }
-                    
                 } else {
-                    echo "<tr><td colspan='7'>No se encontraron evaluaiones pendientes</td></tr>";
+                    echo "<tr><td colspan='7'>No se encontraron evaluaciones</td></tr>";
                 }
                 Cerrar($Con);
                 ?>
@@ -227,6 +251,30 @@ $Resultado = Ejecutar($Con, $SQL);
         </table>
     </div>
 </div>
+
+<script>
+    document.getElementById('search-name').addEventListener('input', filterTable);
+    document.getElementById('search-periodo').addEventListener('change', filterTable);
+
+    function filterTable() {
+        const nameInput = document.getElementById('search-name').value.toLowerCase();
+        const periodoInput = document.getElementById('search-periodo').value;
+        const rows = document.querySelectorAll('#table-body tr');
+
+        rows.forEach(row => {
+            const nombre = row.getAttribute('data-nombre').toLowerCase();
+            const periodo = row.getAttribute('data-periodo');
+            const matchesName = nombre.includes(nameInput);
+            const matchesPeriodo = periodoInput === '' || periodo === periodoInput;
+
+            if (matchesName && matchesPeriodo) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
 
 </body>
 
