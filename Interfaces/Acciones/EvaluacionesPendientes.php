@@ -12,7 +12,7 @@ include '../../conexion.php';
 // Conectar a la base de datos
 $Con = Conectar();
 
-$clave_coordinador = $_SESSION['id'];
+$id_sinodo = $_SESSION['id'];
 
 // Consulta principal para obtener evaluaciones pendientes
 $SQL = "
@@ -32,16 +32,16 @@ $SQL = "
     LEFT JOIN 
         detalle_evaluaciones de ON (
             ev.id = de.id_evaluacion AND
-            de.id_sinodo = $clave_coordinador
+            de.id_sinodo = $id_sinodo
         )
     WHERE 
-        (a.director = $clave_coordinador OR a.sinodo2 = $clave_coordinador OR 
-        a.sinodo3 = $clave_coordinador OR a.externo = $clave_coordinador)
+        (a.director = $id_sinodo OR a.sinodo2 = $id_sinodo OR 
+        a.sinodo3 = $id_sinodo OR a.externo = $id_sinodo)
         AND (de.id_evaluacion IS NULL OR ((de.calificacion IS NULL OR de.calificacion = 0) AND de.observacion IS NULL))
 ";
 
 // Verificar si el usuario es director
-$SQL2 = "SELECT director FROM asignaciones WHERE director = '$clave_coordinador'";
+$SQL2 = "SELECT director FROM asignaciones WHERE director = '$id_sinodo'";
 $esDirector = false;
 $resultadoDirector = Ejecutar($Con, $SQL2);
 
@@ -256,17 +256,26 @@ $Resultado = Ejecutar($Con, $SQL);
                 if ($Resultado->num_rows > 0){
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+                        $Fecha = $Fila ["fecha_evaluacion"];
+
+                        if ((int)substr($Fecha, 1, 2) < 6){
+                            $Periodo = substr($Fecha, 0, 4) . "-" .  + "2"; 
+                        }else {
+                            $Periodo = substr($Fecha, 0, 4) . "-" . "1"; 
+                        }
+
+                        echo "<input type='hidden' id='periodo_" . $Fila['exp_alumno'] . "' value='" . $Periodo . "'>";
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        echo "<td>" . (!empty($Fecha) ? $Fecha : "Pendiente") . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";
                         echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")' oninput='limitDigits(this, 4)'>";
                         echo "</td>";
                     
-                        
+                        //Botón del Director, Falta abrir el modal para poder poner los comentarios
                         if ($esDirector) {
                             echo "<td><button class='observaciones' onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
                         }else{
@@ -274,10 +283,8 @@ $Resultado = Ejecutar($Con, $SQL);
                             echo "<textarea class='inputs' style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe aquí...' rows='3' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
                             echo "</td>";
                         }
-                    
+                        // 
                         echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
-
-                        // Mostrar el botón solo si el usuario es director
                        
                         echo "</tr>";
                     }
@@ -316,6 +323,7 @@ function opcionDirector(expediente) {
 function actualizarEvaluacion(expediente) {
     const calificacion = document.getElementById('calificacion_' + expediente).value;
     const observacion = document.getElementById('observacion_' + expediente).value;
+    const periodo = document.getElementById('periodo_' + expediente).value;
 
     // Crear una nueva instancia de XMLHttpRequest
     const xhr = new XMLHttpRequest();
@@ -340,7 +348,7 @@ function actualizarEvaluacion(expediente) {
 
 
     // Enviar los datos a actualizar
-    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion));
+    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion) +"&periodo=" + encodeURIComponent(periodo));
 
     // Configurar manejo de errores
     xhr.onerror = function() {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-10-2024 a las 03:12:13
+-- Tiempo de generación: 18-11-2024 a las 01:19:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,7 +41,10 @@ CREATE TABLE `asignaciones` (
 -- Volcado de datos para la tabla `asignaciones`
 --
 
-
+INSERT INTO `asignaciones` (`id`, `exp_alumno`, `director`, `sinodo2`, `sinodo3`, `externo`, `clave_coordinador`) VALUES
+(34, 1, 4321, 1234, 33333, 54321, 567575),
+(35, 2, 4321, 1234, 12345, 33333, 567575),
+(36, 3, 4321, 1234, 12345, 114090, 567575);
 
 -- --------------------------------------------------------
 
@@ -113,7 +116,8 @@ INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
 (111111, 'PEREZ11', 'D'),
 (222222, 'ESPINOZA22', 'D'),
 (33333, 'DELGADO33', 'D'),
-(444444, 'BLANKED44', 'D');
+(444444, 'BLANKED44', 'D'),
+(128976, 'SANTIAGO65', 'A');
 
 -- --------------------------------------------------------
 
@@ -126,13 +130,23 @@ CREATE TABLE `detalle_evaluaciones` (
   `id_evaluacion` int(11) NOT NULL,
   `id_sinodo` bigint(20) NOT NULL,
   `calificacion` double NOT NULL,
-  `observacion` varchar(500) DEFAULT NULL
+  `observacion` varchar(500) DEFAULT NULL,
+  `periodo` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_evaluaciones`
 --
 
+INSERT INTO `detalle_evaluaciones` (`id_detalle`, `id_evaluacion`, `id_sinodo`, `calificacion`, `observacion`, `periodo`) VALUES
+(41, 25, 4321, 0, NULL, ''),
+(42, 25, 1234, 10, 'Bien', '2024-2'),
+(43, 25, 33333, 0, NULL, ''),
+(44, 25, 54321, 0, NULL, ''),
+(45, 28, 4321, 0, NULL, ''),
+(46, 28, 1234, 10, 'ASDAD', '2025-2'),
+(47, 28, 12345, 10, 'sdasda', '2025-2'),
+(48, 28, 33333, 0, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -156,8 +170,8 @@ INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) V
 (1234, 'ARTURO MAURICIO', 'IBARRA', 'CORONA', 'A'),
 (4321, 'ERNESTO', 'RUBALCABA', 'DURAN', 'A'),
 (12345, 'CARLOS ALBERTO', 'OLMOS', 'TREJO', 'A'),
-(54321, 'FIDEL', 'GONZALES', 'GUTIERREZ', 'A'),
 (33333, 'SELENE', 'DELGADO', 'LOPEZ', 'A'),
+(54321, 'FIDEL', 'GONZALES', 'GUTIERREZ', 'A'),
 (111111, 'JORGE', 'PEREZ', 'RAMOS', 'A'),
 (114090, 'JAVIER', 'PAULIN', 'MARTINEZ', 'A'),
 (222222, 'JULIO', 'ESPINOZA', 'PAZ', 'A'),
@@ -192,10 +206,10 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 (6, 'ROSA', 'BUENROSTRO', 'FERNANDEZ', 5523738128, 'Rosa@hotmail.com', 'MSC'),
 (7, 'ALEJANDRO', 'PAREDES', 'HUERTA', 8623862836, 'Alejandro@hotmail.com', 'MIEVEA'),
 (114589, 'HANNA PAOLA', 'VELEZQUEZ', 'SUAREZ', 5985233178, 'h@gmail.com', 'MCC'),
+(128976, 'VIRGINIA', 'SANTIAGO', 'PABLO', 4411200465, 'vicky_changuito@hotmail.com', 'MCC'),
 (301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
 (301612, 'YARETZI', 'AA', '123123', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
-(456789, 'SIUL FERNANDO', 'MARTINEZ', 'MANCERA', 9874561237, 's@gmail.com', 'DCC'),
-(4213469, 'JORGE LUIS', 'GARCIA', 'ASDASD', 4411071968, 'jhgkjhgjh@g.v', 'DCC');
+(456789, 'SIUL FERNANDO', 'MARTINEZ', 'MANCERA', 9874561237, 's@gmail.com', 'DCC');
 
 -- --------------------------------------------------------
 
@@ -214,6 +228,10 @@ CREATE TABLE `evaluaciones` (
 --
 -- Volcado de datos para la tabla `evaluaciones`
 --
+
+INSERT INTO `evaluaciones` (`id`, `exp_alumno`, `fecha_evaluacion`, `cal_final`, `aula`) VALUES
+(25, 1, '2024-11-19 17:37:00', 0, 'A13'),
+(28, 2, '2025-02-19 19:22:00', 0, 'A10');
 
 --
 -- Índices para tablas volcadas
@@ -272,19 +290,19 @@ ALTER TABLE `evaluaciones`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluaciones`
 --
 ALTER TABLE `evaluaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Restricciones para tablas volcadas
