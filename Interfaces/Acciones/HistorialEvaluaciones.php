@@ -42,7 +42,7 @@ WHERE
     AND de.observacion IS NOT NULL
 ";
 
-$SQL2 = "SELECT DISTINCT periodo FROM detalle_evaluaciones";
+$SQL2 = "SELECT DISTINCT periodo FROM detalle_evaluaciones WHERE periodo <> '' AND id_sinodo = '$clave_coordinador'" ;
 $Resultado = Ejecutar($Con, $SQL);
 $Periodos = Ejecutar($Con, $SQL2);
 ?>
