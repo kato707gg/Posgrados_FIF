@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: Poppins;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    align-items: stretch;
+    color: white;
+    margin: 2vh 2vw;
+    height: 9vh;
+}
+
+.header > div,
+.header > .container-botones {
+    padding: 0 1vw;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.container-titulo-header,
+.container-botones,
+.container-usuario,
+.container-cerrar-btn {
+    border-radius: clamp(.4rem, .4vw, .4rem);
+    background: #001a37;
+    height: 100%;
+}
+
+.container-titulo-header,
+.container-botones,
+.container-usuario {
+    margin-right: 0.8vw;
+}
+
+.container-titulo-header,
+.container-usuario, .container-cerrar-btn  {
+    justify-content: center;
+}
+
+.container-titulo-header {
+    width: 15vw;
+    flex-grow: 0!important; 
+}
+
+.titulo-header {
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2rem;
+    line-height: 1.5rem;
+    font-weight: bold;
+}
+
+.container-lista-botones {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    display: flex;
+}
+
+.boton-link {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5vw;
+}
+
+.boton-link:first-child {
+    margin-left: 1vw; /* Agrega margen izquierdo solo al primer botón */
+}
+
+.boton-link a,
+.boton-link button {
+    font-family: Poppins;
+    text-decoration: none;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: clamp(.4rem, .4vw, .4rem);
+}
+
+.boton-link button:hover {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.boton-link button.active {
+    background-color: #555; /* Color de fondo cuando está activo */
+    color: white; /* Color del texto cuando está activo */
+}
+
+.usuario {
+    font-family: Poppins;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.container-cerrar-btn {
+    background-color: rgb(255, 30, 30);
+    width: 3.5vw;
+    flex-grow: 0!important; /* Asegura que no se expanda */
+}
+
+.container-cerrar-btn:hover {
+    background-color: rgb(255, 64, 64);
+}
+
+.cerrar-btn {
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cerrar-btn button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 2vh;
+}
+
+/* Diseño para pantallas pequeñas */
+
+.container-titulo-sidebarbtn {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #001a37;
+    height: 5vh;
+    margin-bottom: 2vh;
+}
+
+.header-telefono {
+    display: none;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vH;
+    background-color: #001a37;
+    padding-top: 6vh;
+    z-index: 1000;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.espacio-sidebar {
+    height: 7vh;
+    display: block;
+}
+
+.sidebar a {
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+#usuario-sidebar {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.sidebar .close-sidebar {
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.8rem 1rem;
+    font-size: 2.5rem;
+}
+
+.open-sidebar {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    border: none;
+    background-color: #001a37;
+}
+
+.cerrar-btn-telefono {
+    background-color: rgb(255, 30, 30);
+    position: absolute;
+    bottom: 10%;
+    margin-left: 2rem;
+    border-radius: 1vw;
+    padding: 0.8rem 1.3rem !important;
+}
+
+@media screen and (max-width: 1600px) {
+
+    .header {
+        height: 11vh;
+    }
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 1420px) {
+    .titulo-header {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 820px) {
+    .sidebar {
+        width: 0;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .header-telefono {
+        display: block;
+    }
+
+    .openbtn {
+        display: block;
+    }
+}

@@ -1,0 +1,313 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ddefff !important;
+}
+
+.escudofif{
+  display: flex;
+  width: 35%;
+  margin: auto;
+  margin-bottom: 1.5rem;
+}
+
+.container1,
+.container2 {
+  background: #fff;
+  color: #636363;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 2.5rem;
+  border: 1px solid #9fb3c6;
+  border-radius: 15px;
+  font: caption;
+  font-size: 1rem;
+  z-index: 1;
+  max-height: 90vh;
+}
+
+.container1 {
+  max-width: 25vw;
+}
+
+.container2 {
+  max-width: 60vw;
+}
+
+.container1 h1,
+.container2 h1 {
+  margin: 0;
+  padding: 0 0 2rem;
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+.container2 h2 {
+  margin: 0;
+  padding: 0 35px;
+}
+
+.container1 input[type="text"],
+.container1 input[type="password"],
+.container2 input[type="text"],
+.container2 input[type="password"],
+.container2 input[type="number"],
+.container2 select,
+.container2 input[type="email"] {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-bottom: 1px solid #636363;
+  background: transparent;
+  outline: none;
+  height: 2rem;
+  color: #000000;
+  font-size: 0.9rem;
+}
+
+input::placeholder {
+  color: rgb(200, 200, 200);
+}
+
+.boton_enviar {
+  border: none;
+  outline: none;
+  height: 2.5rem;
+  background: #134bb3;
+  color: #fff;
+  font-size: 1.125rem;
+  border-radius: 5px;
+  width: 50%;
+  display: block;
+  margin: 1rem auto 2rem auto;
+  cursor: pointer;
+}
+
+.boton_enviar:hover {
+  cursor: pointer;
+  background: #092F75;
+  color: rgb(255, 255, 255);
+}
+
+.boton_registrarse {
+  text-align: center;
+  border: none;
+  height: 2.5rem;
+  background: none;
+  color: #134bb3;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 1.125rem;
+  width: 50%;
+  display: block;
+  margin: 1.5rem auto 0 auto;
+  cursor: pointer;
+}
+
+.boton_regresar {
+  background: none;
+  border: none;
+  background: none;
+  text-align: center;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #737373;
+  cursor: pointer;
+}
+
+.boton_regresar p::before {
+  content: "\25C4";
+  color: #7a7a7a;
+  margin-right: 0.5rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+td {
+  padding: 0 1rem;
+}
+
+.espacio {
+  color: #fff;
+  font-size: large;
+}
+
+.año {
+  position: absolute;
+  bottom: 5%;
+  color: #6c757d !important;
+}
+
+/* Estilos para el pop-up */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 70%);
+}
+
+.popup-content {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 3rem;
+  width: 30%;
+  align-content: center;
+  text-align: center;
+  border-radius: 1rem;
+}
+
+#popup-text {
+  font: 1em sans-serif;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.copy-btn {
+  margin: 2rem auto 0;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Ajuste base para pantallas normales */
+:root {
+  font-size: 1rem;
+}
+
+
+@media screen and (max-width: 1600px) {
+  .container1,
+  .container2 {
+    padding: 1.8rem;
+  }
+  
+  .container1 h1,
+  .container2 h1 {
+    padding: 0 0 1.5rem;
+  }
+  
+  .escudofif {
+    margin-bottom: 1rem;
+    width: 30%;
+  }
+
+  .grid-container {
+    gap: 1.5rem;
+}
+
+}
+
+
+@media screen and (max-width: 1050px) {
+
+  .container1,
+  .container2 {
+    max-width: 90vw;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mt-5,
+  .my-5 {
+    display: none;
+  }
+
+  .popup-content {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .container1,
+  .container2 {
+    width: 90vw; /* Cambiamos a viewport width */
+    max-width: none; /* Eliminamos el max-width para pantallas pequeñas */
+  }
+}
+
+@media screen and (max-width: 450px) {
+
+  .container1 h1,
+  .container2 h1 {
+    font-size: 1.5rem;
+  }
+
+  .container1,
+  .container2 {
+    font-size: 0.9rem;
+    padding: 1.3rem;
+  }
+
+  .container1 input[type="text"],
+  .container1 input[type="password"],
+  .container2 input[type="text"],
+  .container2 input[type="password"],
+  .container2 input[type="number"],
+  .container2 select,
+  .container2 input[type="email"] {
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .popup-content {
+    padding: 1rem;
+    width: 80%;
+    height: 50%;
+  }
+
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.eye-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 1.1rem;
+}
+
+/* Ocultar el ícono de mostrar/ocultar contraseña por defecto en Edge */
+input[type="password"]::-ms-reveal {
+    display: none;
+}
