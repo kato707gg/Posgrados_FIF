@@ -232,6 +232,91 @@ $Resultado = Ejecutar($Con, $SQL);
             font-size: 0.9rem;
         }
     }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 2rem;
+        border-radius: 0.4rem;
+        overflow-y: auto;
+        width: 100%;
+        max-width: 35%;
+        max-height: 70%;
+        overflow-x: hidden;
+    }
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: .6rem;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .label-observaciones {
+        letter-spacing: .01785714em;
+        font-family: system-ui;
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: var(--text-color);
+    }
+
+    .observacion-input {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        width: 98%;
+        height: 4rem;
+        margin: .5rem 0 1rem;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        resize: none;
+    }
+
+    .confirmar-button {
+        display: flex;
+        font-size: 1.3rem;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        padding: 0.7rem 3rem;
+        background-color: #123773;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        margin: auto;
+    }
+
+
+    .confirmar-button.disabled {
+        background-color: grey;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
 </style>
 
 <body>
@@ -256,19 +341,24 @@ $Resultado = Ejecutar($Con, $SQL);
                 if ($Resultado->num_rows > 0){
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
-                        $Fecha = $Fila ["fecha_evaluacion"];
+                        $Fecha = $Fila["fecha_evaluacion"];
 
-                        if ((int)substr($Fecha, 1, 2) < 6){
-                            $Periodo = substr($Fecha, 0, 4) . "-" .  + "2"; 
+                        // Separar fecha y hora
+                        $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
+                        //$Hora = !empty($Fecha) ? date('H:i', strtotime($Fecha)) : "Pendiente";
+
+                        if ((int)substr($FechaSola, 5, 2) < 6){
+                            $Periodo = substr($FechaSola, 0, 4) . "-" . "2"; 
                         }else {
-                            $Periodo = substr($Fecha, 0, 4) . "-" . "1"; 
+                            $Periodo = substr($FechaSola, 0, 4) . "-" . "1"; 
                         }
 
                         echo "<input type='hidden' id='periodo_" . $Fila['exp_alumno'] . "' value='" . $Periodo . "'>";
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . (!empty($Fecha) ? $Fecha : "Pendiente") . "</td>";
+                        echo "<td>" . $FechaSola . "</td>";
+                        //echo "<td>" . $Hora . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         
                         echo "<td>";
@@ -277,13 +367,11 @@ $Resultado = Ejecutar($Con, $SQL);
                     
                         //Botón del Director, Falta abrir el modal para poder poner los comentarios
                         if ($esDirector) {
-                            echo "<td><button class='observaciones' onclick='opcionDirector(\"" . $Fila['exp_alumno'] . "\")'>Opciones</button></td>";
-                        }else{
-                            echo "<td>";
-                            echo "<textarea class='inputs' style='resize: none;' name='observacion_" . $Fila['exp_alumno'] . "' id='observacion_" . $Fila['exp_alumno'] . "' placeholder='Escribe aquí...' rows='3' onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")'></textarea>";
-                            echo "</td>";
+                            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Fila['exp_alumno'] . "\", true)'>Agregar</button></td>";
+                        } else {
+                            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Fila['exp_alumno'] . "\", false)'>Agregar</button></td>";
                         }
-                        // 
+                        
                         echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
                        
                         echo "</tr>";
@@ -296,6 +384,18 @@ $Resultado = Ejecutar($Con, $SQL);
                 ?>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div id="modalObservaciones" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Observaciones y recomendaciones</h3>
+        <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;" id="box-1034">
+        <div id="observacionesContent">
+            <!-- El contenido se llenará dinámicamente -->
+        </div>
+        <button onclick="guardarObservaciones()" class="confirmar-button">Guardar</button>
     </div>
 </div>
 
@@ -362,6 +462,75 @@ function limitDigits(input, maxDigits) {
         input.value = input.value.slice(0, maxDigits);
     }
 }
+
+let expedienteActual = '';
+let esDirectorModal = false;
+
+function abrirModal(expediente, esDirector) {
+    expedienteActual = expediente;
+    esDirectorModal = esDirector;
+    const modal = document.getElementById('modalObservaciones');
+    const contenido = document.getElementById('observacionesContent');
+    
+    contenido.innerHTML = '';
+    
+    if (esDirector) {
+        contenido.innerHTML += `
+            <div>
+                <label class='label-observaciones'>Sobre Avance gradual:</label>
+                <textarea class="observacion-input" id="obs1_${expediente}" rows="3"></textarea>
+            </div>
+            <div>
+                <label class='label-observaciones'>Sobre entregable y resultados esperados de acuerdo con el semestre a evaluar:</label>
+                <textarea class="observacion-input" id="obs2_${expediente}" rows="3"></textarea>
+            </div>
+            <div>
+                <label class='label-observaciones'>Sobre el Avance del Proyecto:</label>
+                <textarea class="observacion-input" id="obs3_${expediente}" rows="3"></textarea>
+            </div>
+            <div>
+                <label class='label-observaciones'>Comentario Individual:</label>
+                <textarea class="observacion-input" id="obs4_${expediente}" rows="3"></textarea>
+            </div>`;
+    } else {
+        // 1 campo para otros roles
+        contenido.innerHTML = `
+            <div>
+                <textarea class="observacion-input" id="obs_${expediente}" rows="3"></textarea>
+            </div>`;
+    }
+    
+    modal.style.display = "block";
+}
+
+function guardarObservaciones() {
+    let observaciones = '';
+    
+    if (esDirectorModal) {
+        // Concatenar las 5 observaciones para director
+        for (let i = 1; i <= 5; i++) {
+            const obs = document.getElementById(`obs${i}_${expedienteActual}`).value;
+            observaciones += obs + '|';
+        }
+        observaciones = observaciones.slice(0, -1); // Remover último separador
+    } else {
+        // Una sola observación
+        observaciones = document.getElementById(`obs_${expedienteActual}`).value;
+    }
+    
+    document.getElementById('observacion_' + expedienteActual).value = observaciones;
+    checkFields(expedienteActual);
+    cerrarModal();
+}
+
+function cerrarModal() {
+    const modal = document.getElementById('modalObservaciones');
+    modal.style.display = "none";
+}
+
+// Cerrar modal al hacer clic en la X
+document.querySelector('.close').onclick = cerrarModal;
+
 </script>
 
 </body>

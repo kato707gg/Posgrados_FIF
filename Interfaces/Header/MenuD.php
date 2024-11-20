@@ -13,7 +13,7 @@ session_start();
 <body>
     <header class="header">
         <div class="container-titulo-header">
-            <a class="titulo-header" href="../Fondo estatico/Docente.php">SSAP FIF UAQ</a>
+            <a class="titulo-header" href="/Posgrados_FIF/Interfaces/Fondo estatico/Docente.php">SSAP FIF UAQ</a>
         </div>
         <div class="container-botones">
             <ul class="container-lista-botones">  
@@ -29,7 +29,7 @@ session_start();
             <a class="usuario">Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
         </div>
         <div class="container-cerrar-btn">
-            <a class="cerrar-btn" href="../Acciones/Cerrar.php"><button type="button">Cerrar</button></a>
+            <a class="cerrar-btn" href="/Posgrados_FIF/Interfaces/Acciones/Cerrar.php"><button type="button">Cerrar</button></a>
         </div>
     </header>
 

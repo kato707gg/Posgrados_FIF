@@ -147,7 +147,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
         .modal-content {
@@ -157,11 +157,8 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 2rem;
-            width: 50%;
-            height: 80%;
             border-radius: 0.4rem;
             overflow-y: auto;
-            padding-bottom: 0;
         }
 
         .modal-table {
@@ -210,12 +207,14 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         }
 
         .close {
+            position: absolute;
+            top: 0;
+            right: .6rem;
             color: #aaa;
-            right: 1rem;
-            top: 0.5rem;
+            float: right;
             font-size: 28px;
             font-weight: bold;
-            position: absolute;
+            cursor: pointer;
         }
 
         .close:hover,

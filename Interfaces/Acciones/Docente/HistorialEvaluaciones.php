@@ -176,12 +176,21 @@ $Periodos = Ejecutar($Con, $SQL2);
         align-items: center;
     }
 
-    #table-container {
-        display: flex !important;
-        justify-content: center;
-        overflow-x: auto;
+    .ver-observacion {
+        font-size: 1rem;
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        padding: 0.8rem 0.9rem;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+        color: var(--text-color);
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        border-bottom: 0.0625rem solid var(--secondary-color);
     }
 
+    .ver-observacion:hover {
+        background-color: #cfcfcf;
+    }
     
     @media screen and (max-width: 1600px) {
 
@@ -261,10 +270,12 @@ $Periodos = Ejecutar($Con, $SQL2);
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "' data-nombre='" . $Nombre . "' data-periodo='" . $Fila['periodo'] . "'>";
                         echo "<td>" . $Fila ["exp_alumno"] . "</td>";
                         echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . (!empty($Fila["fecha_evaluacion"]) ? $Fila["fecha_evaluacion"] : "Pendiente") . "</td>";
+                        $Fecha = $Fila["fecha_evaluacion"];
+                        $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
+                        echo "<td>" . $FechaSola . "</td>";
                         echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         echo "<td>" . $Fila["calificacion"] . "</td>";
-                        echo "<td>" . $Fila["observacion"] . "</td>";
+                        echo "<td><button class='ver-observacion'>Ver</button></td>";
                         echo "<td>" . $Fila["periodo"] . "</td>";
                         echo "</tr>";
                     }
