@@ -105,7 +105,7 @@ $pdf->Cell(0, $lineHeight, utf8_decode('Coordinador del programa de la Maestría
 $pdf-> Ln(12);
 $pdf->SetFont('Arial', 'B', 12);
 
-$pdf->Cell(0, $lineHeight, utf8_decode('P r e s e n t e'), 0, 1);
+$pdf->Cell(0, $lineHeight, utf8_decode('P r e s e n t e.'), 0, 1);
 $pdf->Ln(10);
 
 $pdf->SetFont('Arial', '', 12);
