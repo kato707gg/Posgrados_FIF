@@ -43,7 +43,6 @@ if ($Resultado) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../Header/styles.css">  
     <title>Mis evaluaciones</title>
 </head>
 
@@ -203,7 +202,7 @@ if ($Resultado) {
                     while ($fila = mysqli_fetch_assoc($Resultado)) {
                         echo "<tr>";
                         echo "<td>" . $fila['id'] . "</td>";
-                        echo "<td>" . $fila['fecha_evaluacion'] . "</td>";
+                        echo "<td>" . date("Y-m-d", strtotime($fila['fecha_evaluacion'])) . "</td>";
                         echo "<td>" . round($fila['promedio_final'], 2) . "</td>";  // Mostrando la calificación final
                         echo "<td><button class='generar-pdf' onclick=\"mostrarDetalles(" . $fila['id'] . ")\">📄</button></td>";  // Botón "Más"
                         echo "</tr>";
