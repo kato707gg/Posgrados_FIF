@@ -357,58 +357,78 @@ confirmarButton.disabled = true;
 function handleCheckbox(checkbox, nombreSinodo) {
     let checkboxes = document.querySelectorAll('.sinodo-checkbox');
     
-    // Desmarcar otros checkboxes si se selecciona uno nuevo
-    checkboxes.forEach(cb => {
-        if (cb !== checkbox) {
-            cb.checked = false;
+    // Si el sínodo seleccionado es el comodín (clave 0)
+    if (checkbox.value === "0") {
+        // Si está checkeado, permitir su selección sin desmarcar otros
+        if (checkbox.checked) {
+            selectedSinodo = checkbox.value;
+            confirmarButton.classList.remove('disabled');
+            confirmarButton.disabled = false;
+            currentButton.sinodoNombre = nombreSinodo;
+        } else {
+            selectedSinodo = null;
+            confirmarButton.classList.add('disabled');
+            confirmarButton.disabled = true;
+            currentButton.sinodoNombre = null;
         }
-    });
-
-    // Guardar o quitar el sínodo seleccionado
-    if (checkbox.checked) {
-        selectedSinodo = checkbox.value;
-        confirmarButton.classList.remove('disabled');
-        confirmarButton.disabled = false;
-        currentButton.sinodoNombre = nombreSinodo;
     } else {
-        selectedSinodo = null;
-        confirmarButton.classList.add('disabled');
-        confirmarButton.disabled = true;
-        currentButton.sinodoNombre = null;
+        // Para otros sínodos, mantener el comportamiento original de selección única
+        checkboxes.forEach(cb => {
+            if (cb !== checkbox && cb.value !== "0") {
+                cb.checked = false;
+            }
+        });
+
+        if (checkbox.checked) {
+            selectedSinodo = checkbox.value;
+            confirmarButton.classList.remove('disabled');
+            confirmarButton.disabled = false;
+            currentButton.sinodoNombre = nombreSinodo;
+        } else {
+            selectedSinodo = null;
+            confirmarButton.classList.add('disabled');
+            confirmarButton.disabled = true;
+            currentButton.sinodoNombre = null;
+        }
     }
 }
 
 // Función para abrir el modal
-function openModal(button, exp) {
-    currentButton = button; // Guardamos el botón actual para modificarlo después
+function openModal(button) {
+    currentButton = button;
+    const exp = button.closest('tr').querySelector('td:first-child').textContent; // Obtener el expediente de la fila actual
     document.getElementById("sinodoModal").style.display = "block";
 
-    // Restablecer el botón "Confirmar" cuando se abre un nuevo modal
     confirmarButton.classList.add('disabled');
     confirmarButton.disabled = true;
 
-    // Obtener los sínodos seleccionados para el estudiante actual (si existen)
     let sinodosSeleccionados = sinodosSeleccionadosPorEstudiante[exp] || [];
 
-    // Actualizar los checkboxes según las selecciones del estudiante actual
     let checkboxes = document.querySelectorAll('.sinodo-checkbox');
     checkboxes.forEach(checkbox => {
-        if (sinodosSeleccionados.includes(checkbox.value)) {
-            checkbox.disabled = true; // Deshabilitar si ya fue seleccionado
+        // Si el sínodo es el comodín (clave 0), siempre debe estar habilitado
+        if (checkbox.value === "0") {
+            checkbox.disabled = false;
         } else {
-            checkbox.disabled = false; // Habilitar si no ha sido seleccionado
+            // Para otros sínodos, bloquear solo si ya fue seleccionado para este estudiante
+            if (sinodosSeleccionados.includes(checkbox.value)) {
+                checkbox.disabled = true;
+            } else {
+                checkbox.disabled = false;
+            }
         }
-        checkbox.checked = false; // Restablecer los checkboxes
+        checkbox.checked = false;
     });
 
-    // También restablecemos el valor de selectedSinodo a null
     selectedSinodo = null;
 }
 
 // Función para confirmar la selección
-function confirmSelection(exp) {
+function confirmSelection() {
     if (selectedSinodo && currentButton) {
+        const exp = currentButton.closest('tr').querySelector('td:first-child').textContent; // Obtener el expediente de la fila actual
         let sinodoContainer = currentButton.nextElementSibling;
+        
         if (sinodoContainer) {
             currentButton.style.display = 'none'; // Ocultar el botón de Asignar
             sinodoContainer.textContent = currentButton.sinodoNombre; // Mostrar el sínodo asignado (nombre)
@@ -438,7 +458,7 @@ function confirmarAsignacion(exp) {
     if (sinodos.length === 4) {
         console.log(sinodos);
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "insertar_sinodos.php", true);
+        xhr.open("POST", "../insertar_sinodos.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {

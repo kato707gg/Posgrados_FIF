@@ -272,7 +272,7 @@ $Res = Ejecutar($Con, $SQL);
           const xhr = new XMLHttpRequest();
 
           // Configurar la solicitud
-          xhr.open('POST', 'insertar_evaluacion.php', true);
+          xhr.open('POST', '../insertar_evaluacion.php', true);
           xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
           // Manejo de la respuesta del servidor

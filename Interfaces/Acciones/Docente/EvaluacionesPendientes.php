@@ -428,7 +428,7 @@ function actualizarEvaluacion(expediente) {
     const xhr = new XMLHttpRequest();
 
     // Configurar la solicitud
-    xhr.open('POST', 'actualizar_detalle_evaluaciones.php', true);
+    xhr.open('POST', '../actualizar_detalle_evaluaciones.php', true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     // Función a ejecutar cuando la solicitud cambie de estado
