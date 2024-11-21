@@ -366,7 +366,7 @@
                 uploadBtn.disabled = true;
                 uploadBtn.textContent = 'Subiendo...';
 
-                fetch('upload_document.php', {
+                fetch('../upload_document.php', {
                     method: 'POST',
                     body: formData
                 })

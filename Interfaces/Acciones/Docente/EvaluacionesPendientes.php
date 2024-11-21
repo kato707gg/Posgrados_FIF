@@ -329,6 +329,7 @@ $Resultado = Ejecutar($Con, $SQL);
                     <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Aula</th>
+                    <th>Entergable</th>
                     <th>Calificación</th>
                     <th>Observaciones</th>
                     <th>Acción</th>
@@ -336,52 +337,64 @@ $Resultado = Ejecutar($Con, $SQL);
                 </tr>
             </thead>
             <tbody>
-            <?php
-                if ($Resultado->num_rows > 0){
-                    while ($Fila = $Resultado->fetch_assoc()){
-                        $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
-                        $Fecha = $Fila["fecha_evaluacion"];
+<?php
+if ($Resultado->num_rows > 0) {
+    while ($Fila = $Resultado->fetch_assoc()) {
+        $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+        $Fecha = $Fila["fecha_evaluacion"];
+        $Expediente = $Fila['exp_alumno'];
 
-                        // Separar fecha y hora
-                        $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
-                        //$Hora = !empty($Fecha) ? date('H:i', strtotime($Fecha)) : "Pendiente";
+        // Separar fecha y hora
+        $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
 
-                        if ((int)substr($FechaSola, 5, 2) < 6){
-                            $Periodo = substr($FechaSola, 0, 4) . "-" . "2"; 
-                        }else {
-                            $Periodo = substr($FechaSola, 0, 4) . "-" . "1"; 
-                        }
+        if ((int)substr($FechaSola, 5, 2) < 6) {
+            $Periodo = substr($FechaSola, 0, 4) . "-" . "2"; 
+        } else {
+            $Periodo = substr($FechaSola, 0, 4) . "-" . "1"; 
+        }
 
-                        echo "<input type='hidden' id='periodo_" . $Fila['exp_alumno'] . "' value='" . $Periodo . "'>";
-                        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
-                        echo "<td>" . $Fila ["exp_alumno"] . "</td>";
-                        echo "<td>" . $Nombre . "</td>";
-                        echo "<td>" . $FechaSola . "</td>";
-                        //echo "<td>" . $Hora . "</td>";
-                        echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
-                        
-                        echo "<td>";
-                        echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")' oninput='limitDigits(this, 4)'>";
-                        echo "</td>";
-                    
-                        //Botón del Director, Falta abrir el modal para poder poner los comentarios
-                        if ($esDirector) {
-                            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Fila['exp_alumno'] . "\", true)'>Agregar</button></td>";
-                        } else {
-                            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Fila['exp_alumno'] . "\", false)'>Agregar</button></td>";
-                        }
-                        
-                        echo "<td><button class='confirmar-icon' id='btn_" . $Fila['exp_alumno'] . "' onclick='actualizarEvaluacion(\"" . $Fila['exp_alumno'] . "\")' disabled>&#x2714;</button></td>";
-                       
-                        echo "</tr>";
-                    }
-                    
-                } else {
-                    echo "<tr><td colspan='8'>No se encontraron evaluaciones pendientes</td></tr>";
+        // Obtener lista de archivos en la carpeta de entregables
+        $entregables = [];
+        $dir = "../../../docs/$Expediente/entregables/";
+        if (is_dir($dir)) {
+            $files = scandir($dir);
+            foreach ($files as $file) {
+                if ($file !== '.' && $file !== '..') {
+                    $entregables[] = "<a href='$dir$file' target='_blank'>$file</a>";
                 }
-                Cerrar($Con);
-                ?>
-            </tbody>
+            }
+        }
+
+        // Generar contenido para la columna "Entregable"
+        $entregablesContent = empty($entregables) ? "No disponible" : implode(", ", $entregables);
+
+        echo "<input type='hidden' id='periodo_" . $Expediente . "' value='" . $Periodo . "'>";
+        echo "<tr data-expediente='" . $Expediente . "'>";
+        echo "<td>" . $Expediente . "</td>";
+        echo "<td>" . $Nombre . "</td>";
+        echo "<td>" . $FechaSola . "</td>";
+        echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+        echo "<td>" . $entregablesContent . "</td>";
+        echo "<td>";
+        echo "<input type='number' class='inputs' name='calificacion_" . $Expediente . "' id='calificacion_" . $Expediente . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Expediente . "\")' oninput='limitDigits(this, 4)'>";
+        echo "</td>";
+
+        if ($esDirector) {
+            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", true)'>Agregar</button></td>";
+        } else {
+            echo "<td><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", false)'>Agregar</button></td>";
+        }
+
+        echo "<td><button class='confirmar-icon' id='btn_" . $Expediente . "' onclick='actualizarEvaluacion(\"" . $Expediente . "\")' disabled>&#x2714;</button></td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='8'>No se encontraron evaluaciones pendientes</td></tr>";
+}
+Cerrar($Con);
+?>
+</tbody>
+
         </table>
     </div>
 </div>
@@ -428,7 +441,7 @@ function actualizarEvaluacion(expediente) {
     const xhr = new XMLHttpRequest();
 
     // Configurar la solicitud
-    xhr.open('POST', 'actualizar_detalle_evaluaciones.php', true);
+    xhr.open('POST', '../actualizar_detalle_evaluaciones.php', true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     // Función a ejecutar cuando la solicitud cambie de estado
