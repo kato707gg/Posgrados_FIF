@@ -9,11 +9,16 @@ include '../../conexion.php';
 $Con = Conectar();
 
 // Verificar si se ha enviado una solicitud POST con los parámetros necesarios
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente']) && isset($_POST['calificacion']) && isset($_POST['observacion']) && isset($_POST['periodo'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente']) && 
+isset($_POST['calificacion']) && isset($_POST['observacion']) && 
+isset($_POST['periodo']) && $_POST['d_observacion1'] && $_POST['d_observacion2'] && $_POST['d_observacion3']) {
     $expediente = $_POST['expediente'];
     $calificacion = $_POST['calificacion'];
     $observacion = $_POST['observacion'];
     $periodo = $_POST ['periodo'];
+    $d_observacion1 = $_POST['d_observacion1'];
+    $d_observacion2 = $_POST['d_observacion2'];
+    $d_observacion3 = $_POST['d_observacion3'];
 
     // Verificar si la variable de sesión 'id' está definida
     if (isset($_SESSION['id'])) {
@@ -22,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente']) && isse
         // Prepara la consulta SQL para actualizar los detalles de la evaluación
         $SQL = "
             UPDATE detalle_evaluaciones
-            SET calificacion = '$calificacion', observacion = '$observacion', periodo = '$periodo'
+            SET calificacion = '$calificacion', observacion = '$observacion', periodo = '$periodo', d_observacion1 = '$d_observacion1',  d_observacion2 = '$d_observacion2',  d_observacion3 = '$d_observacion3'
             WHERE id_sinodo = '$id_sinodo' AND id_evaluacion = (SELECT id FROM evaluaciones WHERE exp_alumno = '$expediente')
         ";
 
