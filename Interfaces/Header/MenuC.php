@@ -7,24 +7,24 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Header/styles.css">  
+    <link rel="stylesheet" href="/Posgrados_FIF/Interfaces/Header/styles.css">  
     <title>Coordinador</title>
 </head>
 <body>
     <header class="header">
         <div class="container-titulo-header">
-            <a class="titulo-header" href="../Fondo estatico/Coordinador.php">SSAP FIF UAQ</a>
+            <a class="titulo-header" href="/Posgrados_FIF/Interfaces/Fondo estatico/Coordinador.php">SSAP FIF UAQ</a>
         </div>
         <div class="container-botones">
             <ul class="container-lista-botones">  
             <li class="boton-link">
-                    <a class="asignar-sinodo" href="../Acciones/EvaluacionesAgendadasC.php"><button type="button">Evaluaciones Agendadas</button></a>
+                    <a class="asignar-sinodo" href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/EvaluacionesAgendadasC.php"><button type="button">Evaluaciones Agendadas</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="asignar-sinodo" href="../Acciones/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
+                    <a class="asignar-sinodo" href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AsignarSinodo.php"><button type="button">Asignar Sínodo</button></a>
                 </li>
                 <li class="boton-link">
-                    <a class="agendar-evaluacion" href="../Acciones/AltaDocentes.php"><button type="button">Alta de docentes</button></a>
+                    <a class="agendar-evaluacion" href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AltaDocentes.php"><button type="button">Alta de docentes</button></a>
                 </li>
                 <li class="boton-link">
                     <a class="seguimiento" href=""><button type="button">Seguimiento</button></a>
@@ -35,7 +35,7 @@ session_start();
             <a class="usuario">Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
         </div>
         <div class="container-cerrar-btn">
-            <a class="cerrar-btn" href="../Acciones/Cerrar.php"><button type="button">Cerrar</button></a>
+            <a class="cerrar-btn" href="/Posgrados_FIF/Interfaces/Acciones/Cerrar.php"><button type="button">Cerrar</button></a>
         </div>
     </header>
 
@@ -49,10 +49,10 @@ session_start();
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
             <a id="usuario-sidebar" >Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
-            <a href="../Acciones/AsignarSinodo.php">Asignar Sínodo</a>
-            <a href="../Acciones/AltaDocentes.php">Alta de docentes</a>
+            <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AsignarSinodo.php">Asignar Sínodo</a>
+            <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AltaDocentes.php">Alta de docentes</a>
             <a href="">Seguimiento</a>
-            <a class="cerrar-btn-telefono" href="../Acciones/Cerrar.php">Cerrar</a>
+            <a class="cerrar-btn-telefono" href="/Posgrados_FIF/Interfaces/Acciones/Cerrar.php">Cerrar</a>
         </div>
     </div>
     <script>
