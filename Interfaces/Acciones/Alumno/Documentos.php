@@ -8,35 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../tablas.css">
     <title>Documentos</title>
 </head>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-
-    :root {
-        --primary-color: rgb(26,115,232);
-        --secondary-color: #aaa;
-        --text-color: #3c4043;
-        --background-color: #fafcff;
-    }
-
-    .container-documentos {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 81vh;
-        margin: 2vh 2vw;
-        padding: 2vh 2vw;
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        background-color: #e9e9e9;      
-    }
-
     .container-subirdoc {
         font: caption;
         display: flex;
@@ -123,82 +99,9 @@
         cursor: pointer;
         pointer-events: auto;
     }
-
-    #table-container {
-        display: flex;
-        justify-content: center;
-        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
-        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
-        width: 100%;
-    }
-
-    #table-header table {
-        border-collapse: collapse;
-        margin-bottom: 0;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
-    }
-
-    tr {
-        border-top: 0.1rem solid var(--primary-color);
-        border-bottom: 0.1rem solid var(--secondary-color);
-    }
-    
-    th, td {
-        border-bottom: 0.0625rem solid var(--secondary-color);
-        padding: 1.25rem;
-    }
-    th:nth-child(2), td:nth-child(2) {
-        width: 20vw;
-    }
-    th:not(:nth-child(2)), td:not(:nth-child(2)) {
-        width: 10vw;
-    }
-
-    td {
-        display: table-cell;
-        text-align: center;
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--text-color);
-    }
-
-    th {
-        letter-spacing: .01785714em;
-        font-family: system-ui;
-        font-weight: 600;
-        font-size: 1.5rem;
-        color: var(--text-color);
-        padding-bottom: 2rem;
-        padding-top: 3.5rem;
-    }
-
-    h1 {
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        text-align: center;
-    }
-
-    h3 {
-        font-size: 2rem;
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-    }
-
-    #title-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-    }
-
     .ver-doc {
         color: #123773;
-        margin: auto;
-        font-size: 1rem;
+        font-size: 2rem;
         padding: 0.25rem 0.7rem;
         background-color: #ffffff;
         border: none;
@@ -206,18 +109,10 @@
         border-radius: clamp(.4rem, .4vw, .4rem);
         border-bottom: 0.0625rem solid var(--secondary-color);
     }
-
     .ver-doc:hover {
         background-color: #cfcfcf;
     }
 
-    @media screen and (max-width: 1600px) {
-
-        .container-agendar-evaluacion {
-            height: 75vh;
-        }
-
-    }
 
     @media (max-width: 770px) {
         #file-label {
@@ -230,29 +125,29 @@
         #document-type {
             width: 12rem;
         }
-        table {
-            font-size: 0.9rem;
+        .ver-doc {
+            background-color: #123773;
+            color: white;
+            padding: 0.7rem 0.9rem;
+            border: none;
+            cursor: pointer;
         }
 
-        th,
-        td {
+        .ver-doc::before {
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
             font-size: 1.1rem;
-            padding: 0.75rem;
+            font-weight: 600;
+            content: 'Ver archivo';
         }
 
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        button {
-            height: 2.5rem;
-            font-size: 0.9rem;
+        .ver-doc {
+            font-size: 0;  
         }
     }
 </style>
 
 <body>
-    <div class="container-documentos">
+    <div class="container-principal">
         <div class="container-subirdoc">
             <!-- Sección de selección del tipo de documento -->
             <div class="container-tipodoc">
@@ -413,10 +308,19 @@
             tableBody.innerHTML = '';
             documents.forEach(doc => {
                 const row = tableBody.insertRow();
-                row.insertCell(0).textContent = doc.date;
-                row.insertCell(1).textContent = doc.type;
+                
+                // Agregar data-label a cada celda
+                const dateCell = row.insertCell(0);
+                dateCell.setAttribute('data-label', 'Fecha');
+                dateCell.textContent = doc.date;
+                
+                const typeCell = row.insertCell(1);
+                typeCell.setAttribute('data-label', 'Tipo');
+                typeCell.textContent = doc.type;
+                
                 const viewCell = row.insertCell(2);
-                viewCell.innerHTML = `<span class="ver-doc" style="cursor: pointer; font-size: 2rem;" onclick="viewDocument('${doc.fileURL}')">👁</span>`;
+                viewCell.setAttribute('data-label', 'Vista');
+                viewCell.innerHTML = `<span class="ver-doc" onclick="viewDocument('${doc.fileURL}')">👁</span>`;
             });
         }
 
