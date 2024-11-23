@@ -103,6 +103,13 @@ $Periodos = Ejecutar($Con, $SQL2);
     .ver-observacion:hover {
         background-color: #cfcfcf;
     }
+
+    @media (max-width: 770px) {
+        .ver-observacion {
+            color: white;
+            background-color: #123773;
+        }
+    }
 </style>
 
 <body>
@@ -120,8 +127,6 @@ $Periodos = Ejecutar($Con, $SQL2);
                     </th>
                     <th>Fecha</th>
                     <th>Aula</th>
-                    <th>Calificación</th>
-                    <th>Observaciones</th>
                     <th>
                         Periodo
                         <br>
@@ -138,6 +143,9 @@ $Periodos = Ejecutar($Con, $SQL2);
                             ?>
                         </select>
                     </th>
+                    <th>Calificación</th>
+                    <th>Observaciones</th>
+                    
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -152,9 +160,9 @@ $Periodos = Ejecutar($Con, $SQL2);
                         $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
                         echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
                         echo "<td data-label='Aula'>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+                        echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
                         echo "<td data-label='Calificación'>" . $Fila["calificacion"] . "</td>";
                         echo "<td data-label='Observaciones'><button class='ver-observacion'>Ver</button></td>";
-                        echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
                         echo "</tr>";
                     }
                 } else {

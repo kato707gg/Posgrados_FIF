@@ -240,10 +240,10 @@ $Resultado = Ejecutar($Con, $SQL);
                     <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Aula</th>
-                    <th>Entergable</th>
+                    <th>Entregable</th>
                     <th>Calificación</th>
                     <th>Observaciones</th>
-                    <th>Acción</th>
+                    <th>Confirmar</th>
                     
                 </tr>
             </thead>
