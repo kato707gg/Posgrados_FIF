@@ -41,7 +41,7 @@ session_start();
 
     <div class="header-telefono">
         <div class="container-titulo-sidebarbtn">
-            <a class="titulo-header" href="../Fondo estatico/Coordinador.php">SSAP FIF UAQ</a>
+            <a class="titulo-header" href="/Posgrados_FIF/Interfaces/Fondo estatico/Alumno.php">SSAP FIF UAQ</a>
             <button class="open-sidebar" onclick="openNav()">☰</button>
         </div>
 
@@ -49,7 +49,8 @@ session_start();
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
             <a id="usuario-sidebar" >Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
-            <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AsignarSinodo.php">Asignar Sínodo</a>
+            <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/EvaluacionesAgendadasC.php">Evaluaciones agendadas</a>
+            <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AsignarSinodo.php">Asignar sínodo</a>
             <a href="/Posgrados_FIF/Interfaces/Acciones/Coordinador/AltaDocentes.php">Alta de docentes</a>
             <a href="">Seguimiento</a>
             <a class="cerrar-btn-telefono" href="/Posgrados_FIF/Interfaces/Acciones/Cerrar.php">Cerrar</a>

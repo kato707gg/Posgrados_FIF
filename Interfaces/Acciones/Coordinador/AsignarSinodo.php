@@ -30,82 +30,10 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../tablas.css">
     <title>Asignar Sinodo</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Evitar desplazamiento horizontal en todo el cuerpo */
-        }
-
-        :root {
-            --primary-color: rgb(26,115,232);
-            --secondary-color: #aaa;
-            --text-color: #3c4043;
-            --background-color: #fafcff;
-        }
-
-        .container-asignar-sinodo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 81vh;
-            margin: 2vh 2vw;
-            padding: 2vh 2vw;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9e9;
-        }
-
-        #table-container {
-            display: flex;
-            justify-content: center;
-            overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
-            overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
-            width: 100%;
-        }
-
-        table {
-            table-layout: fixed;
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
-        }
-
-        tr {
-            border-top: 0.1rem solid var(--primary-color);
-            border-bottom: 0.1rem solid var(--secondary-color);
-        }
-
-        th, td {
-            border-bottom: 0.0625rem solid var(--secondary-color);
-            padding: 1.25rem;
-        }
-
-        td {
-            display: table-cell;
-            text-align: center;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        th {
-            letter-spacing: .01785714em;
-            font-family: system-ui;
-            font-weight: 600;
-            font-size: 1.5rem;
-            color: var(--text-color);
-            padding-bottom: 2rem;
-            padding-top: 3.5rem;
-        }
-
-        h3 {
-            font-size: 2rem;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-        }
-
+        
         .asignar-button {
             font-size: 1.1rem;
             font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -118,12 +46,11 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
         }
 
         .asignar-button:hover {
-            background-color: #cfcfcf;
+            background-color: #1455bd;
         }
 
         .confirmar-icon {
             color: #123773;
-            margin: auto;
             font-size: 1.5rem;
             padding: 0.5rem 0.9rem;
             background-color: #ffffff;
@@ -156,8 +83,15 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 2rem;
+            width: 50%;
+            height: 80%;
             border-radius: 0.4rem;
             overflow-y: auto;
+            padding-bottom: 0;
+        }
+
+        .modal-table {
+            max-width: 100%;
         }
 
         .modal-table {
@@ -172,10 +106,10 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
         .container-confirmar-button {
             mask-image: 
-            linear-gradient(to bottom, transparent, black 10%, black 90%);
+            linear-gradient(to bottom, transparent, black 10%, black 100%);
             mask-composite: intersect;
             -webkit-mask-image: 
-            linear-gradient(to bottom, transparent, black 10%, black 90%);
+            linear-gradient(to bottom, transparent, black 10%, black 100%);
             -webkit-mask-composite: source-in;
             padding: 7vh 0;
             display: flex;
@@ -195,9 +129,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             border: none;
             cursor: pointer;
             border-radius: clamp(.4rem, .4vw, .4rem);
-            width: 30%;
         }
-
 
         .confirmar-button.disabled {
             background-color: grey;
@@ -223,42 +155,35 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             cursor: pointer;
         }
 
-        @media screen and (max-width: 1600px) {
-
-            .container-asignar-sinodo {
-                height: 79vh;
-            }
-
-        }
-
-        @media screen and (max-width: 820px) {
-            .container-asignar-sinodo {
-                height: 83.5vh;
-            }
-        }
-
         @media (max-width: 770px) {
-
-            table {
-                display: block;
-                white-space: nowrap;
-                width: 100%;
-                max-width: 90%;
-                max-height: 75%;
-            }
-
-            th, td {
-                font-size: 1rem;
-                padding: 0.75rem;
-                white-space: nowrap;
-            }
-
-            h3 {
-                font-size: 1.5rem;
-            }
-
             .modal-content {
-                width: 90%;
+                width: 80%;
+            }
+            input[type="checkbox" i] {
+                cursor: pointer;
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+            .confirmar-icon {
+                background-color: #118f1d;
+                color: white;
+                padding: 0.7rem 0.9rem;
+                border: none;
+                cursor: pointer;
+            }
+
+            .confirmar-icon::before {
+                font-family: "Google Sans", Roboto, Arial, sans-serif;
+                font-size: 1.1rem;
+                font-weight: 600;
+                content: 'Confirmar';
+            }
+
+            .confirmar-icon {
+                font-size: 0;  
+            }
+            .asignar-button {
+                margin-left: auto; /* Empuja el botón hacia la derecha */
             }
         }
 
@@ -267,7 +192,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 
 <body>
 
-<div class="container-asignar-sinodo">
+<div class="container-principal">
     <h3>Asignar sinodo:</h3>
     <div id="table-container">
         <table>
@@ -288,14 +213,17 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
                         echo "<tr>";
-                        echo "<td>" . $Fila ["exp"] . "</td>";
-                        echo "<td>" . $Nombre . "</td>";
+                        echo "<td data-label='Expediente'>" . $Fila ["exp"] . "</td>";
+                        echo "<td data-label='Nombre'>" . $Nombre . "</td>";
+                        
                         // Botones de asignar para cada sinodo
-                        for ($i = 1; $i <= 4; $i++) {
-                            echo "<td><button class='asignar-button sinodo-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
-                        }
-                        // Botón de confirmar que inserta en la base de datos
-                        echo "<td><button class='confirmar-icon' onclick='confirmarAsignacion(\"" . $Fila['exp'] . "\")'>&#x2714;</button></td>";
+                        echo "<td data-label='Sinodo 1 (Director)'><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
+                        echo "<td data-label='Sinodo 2'><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
+                        echo "<td data-label='Sinodo 3'><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
+                        echo "<td data-label='Sinodo 4 (Externo)'><button class='asignar-button' onclick='openModal(this)'>Asignar</button><div class='sinodo-container'></div></td>";
+                        
+                        // Botón de confirmar
+                        echo "<td data-label='Confirmar'><button class='confirmar-icon' onclick='confirmarAsignacion(\"" . $Fila['exp'] . "\")'>&#x2714;</button></td>";
                         echo "</tr>";
                     }
                 } else {
@@ -327,10 +255,10 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                     while ($Sinodo = $ResultadoSinodos->fetch_assoc()) {
                         $NombreSin = $Sinodo["nombre"] . " " . $Sinodo["a_paterno"] . " " . $Sinodo["a_materno"];
                         echo "<tr>";
-                        echo "<td>" . $Sinodo['clave'] . "</td>";
-                        echo "<td>" . $NombreSin . "</td>";
+                        echo "<td data-label='ID'>" . $Sinodo['clave'] . "</td>";
+                        echo "<td data-label='Nombre'>" . $NombreSin . "</td>";
                         // Cambiar el value del checkbox a la clave del sinodo
-                        echo "<td><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['clave'] ."' onclick='handleCheckbox(this, \"" . $NombreSin . "\")'></td>";
+                        echo "<td data-label='Seleccionar'><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['clave'] ."' onclick='handleCheckbox(this, \"" . $NombreSin . "\")'></td>";
                         echo "</tr>";
                     }
                 }
@@ -438,7 +366,7 @@ function confirmarAsignacion(exp) {
     if (sinodos.length === 4) {
         console.log(sinodos);
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "insertar_sinodos.php", true);
+        xhr.open("POST", "../insertar_sinodos.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
