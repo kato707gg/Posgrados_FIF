@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Manejo de archivo (si existe)
     if (isset($_FILES['entregable']) && $_FILES['entregable']['error'] == 0) {
-        $basePath = "../../docs/$exp_alumno/entregables";
+        $basePath = "Posgrados_FIF//Interfaces/Acciones//Alumno/docs/$exp_alumno/entregables";
 
         // Crear la carpeta si no existe
         if (!file_exists($basePath)) {

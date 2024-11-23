@@ -8,24 +8,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../tablas.css">
     <title>Posgrado FIF</title>
     <style> 
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .container-alta-docentes {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 81vh;
-            margin: 2vh 2vw;
-            padding: 2vh 2vw;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            background-color: #e9e9e9;
-        }
         .alta-docentes {
           width: 50%;
           top: 54%;
@@ -145,10 +130,6 @@
         }
 
         @media screen and (max-width: 1600px) {
-        
-        .container-alta-docentes {
-            height: 79vh;
-        }
 
         .alta-docentes {
             top: 56%;
@@ -179,12 +160,6 @@
             row-gap: 1rem;
           }
 
-        }
-
-        @media screen and (max-width: 820px) {
-            .container-alta-docentes {
-                height: 83.5vh;
-            }
         }
 
         @media screen and (max-width: 450px) {
@@ -219,9 +194,9 @@
     </style>
 </head>
   <body>
-  <div class="container-alta-docentes">
+  <div class="container-principal">
   <div class="alta-docentes" id="registrationOptions">
-        <h1>Alta de Docentes</h1>
+        <h3>Alta de Docentes</h3>
         <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;" id="box-1034">
         <form action="../Acciones/RegistroDocentes.php" method="POST">
             <div class="grid-container">

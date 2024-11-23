@@ -53,32 +53,10 @@ $Periodos = Ejecutar($Con, $SQL2);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../tablas.css">
     <title>Historial de Evaluaciones</title>
 </head>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-
-    :root {
-        --primary-color: rgb(26,115,232);
-        --secondary-color: #aaa;
-        --text-color: #3c4043;
-        --background-color: #fafcff;
-    }
-
-    .container-historial-evaluaciones {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 81vh;
-        margin: 2vh 2vw;
-        padding: 2vh 2vw;
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        background-color: #e9e9e9;      
-    }
 
     .buscar {
         font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -89,7 +67,8 @@ $Periodos = Ejecutar($Con, $SQL2);
         color: var(--text-color);
         border: 1px solid #ccc;
         padding: 0.5rem;
-        border-radius: clamp(.4rem, .4vw, .4rem);   
+        border-radius: clamp(.4rem, .4vw, .4rem);
+        width: 7vw;
     }
 
     /* Estilo placeholder en select */
@@ -109,72 +88,6 @@ $Periodos = Ejecutar($Con, $SQL2);
         display: none; /* Ocultar el primer option si es el placeholder */
     }
 
-    #table-container {
-        display: flex;
-        justify-content: center;
-        overflow-x: auto; /* Habilitar desplazamiento horizontal si es necesario */
-        overflow-y: auto; /* Habilitar desplazamiento vertical dentro del contenedor */
-        width: 100%;
-    }
-
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        max-width: 100%; /* Asegurar que la tabla no sobrepase el contenedor */
-    }
-
-    tr {
-        border-top: 0.1rem solid var(--primary-color);
-        border-bottom: 0.1rem solid var(--secondary-color);
-    }
-    
-    th, td {
-        border-bottom: 0.0625rem solid var(--secondary-color);
-        padding: 1.25rem;
-    }
-    th:nth-child(2), td:nth-child(2) {
-        width: 20vw;
-    }
-    th:not(:nth-child(2)), td:not(:nth-child(2)) {
-        width: 10vw;
-    }
-
-    td {
-        display: table-cell;
-        text-align: center;
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--text-color);
-    }
-
-    th {
-        letter-spacing: .01785714em;
-        font-family: system-ui;
-        font-weight: 600;
-        font-size: 1.5rem;
-        color: var(--text-color);
-        padding-bottom: 2rem;
-        padding-top: 3.5rem;
-    }
-
-    h1 {
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        text-align: center;
-    }
-
-    h3 {
-        font-size: 2rem;
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-    }
-
-    #title-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-    }
-
     .ver-observacion {
         font-size: 1rem;
         font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -190,44 +103,17 @@ $Periodos = Ejecutar($Con, $SQL2);
     .ver-observacion:hover {
         background-color: #cfcfcf;
     }
-    
-    @media screen and (max-width: 1600px) {
-
-        .container-historial-evaluaciones {
-            height: 79vh;
-        }
-
-    }
-
-    @media screen and (max-width: 820px) {
-        .container-historial-evaluaciones {
-            height: 83.5vh;
-        }
-    }
 
     @media (max-width: 770px) {
-        table {
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            font-size: 1.1rem;
-            padding: 0.75rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        button {
-            height: 2.5rem;
-            font-size: 0.9rem;
+        .ver-observacion {
+            color: white;
+            background-color: #123773;
         }
     }
 </style>
 
 <body>
-<div class="container-historial-evaluaciones">
+<div class="container-principal">
     <h3>Historial de evaluaciones:</h3>
     <div id="table-container">
         <table>
@@ -237,17 +123,15 @@ $Periodos = Ejecutar($Con, $SQL2);
                     <th>
                         Nombre
                         <br>
-                        <input class="buscar nombre" type="text" id="search-name" placeholder="Buscar por nombre...">
+                        <input class="buscar nombre" type="text" id="search-name" placeholder="Buscar...">
                     </th>
                     <th>Fecha</th>
                     <th>Aula</th>
-                    <th>Calificación</th>
-                    <th>Observaciones</th>
                     <th>
                         Periodo
                         <br>
                         <select class="buscar periodo" id="search-periodo">
-                            <option value="" disabled selected hidden>Seleccione un periodo</option>
+                            <option value="" disabled selected hidden>Seleccionar...</option>
                             <?php
                             if ($Periodos->num_rows > 0) {
                                 while ($row = $Periodos->fetch_assoc()) {
@@ -259,6 +143,9 @@ $Periodos = Ejecutar($Con, $SQL2);
                             ?>
                         </select>
                     </th>
+                    <th>Calificación</th>
+                    <th>Observaciones</th>
+                    
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -267,15 +154,15 @@ $Periodos = Ejecutar($Con, $SQL2);
                     while ($Fila = $Resultado->fetch_assoc()){
                         $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
                         echo "<tr data-expediente='" . $Fila['exp_alumno'] . "' data-nombre='" . $Nombre . "' data-periodo='" . $Fila['periodo'] . "'>";
-                        echo "<td>" . $Fila ["exp_alumno"] . "</td>";
-                        echo "<td>" . $Nombre . "</td>";
+                        echo "<td data-label='Expediente'>" . $Fila ["exp_alumno"] . "</td>";
+                        echo "<td data-label='Nombre'>" . $Nombre . "</td>";
                         $Fecha = $Fila["fecha_evaluacion"];
                         $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
-                        echo "<td>" . $FechaSola . "</td>";
-                        echo "<td>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
-                        echo "<td>" . $Fila["calificacion"] . "</td>";
-                        echo "<td><button class='ver-observacion'>Ver</button></td>";
-                        echo "<td>" . $Fila["periodo"] . "</td>";
+                        echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
+                        echo "<td data-label='Aula'>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+                        echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
+                        echo "<td data-label='Calificación'>" . $Fila["calificacion"] . "</td>";
+                        echo "<td data-label='Observaciones'><button class='ver-observacion'>Ver</button></td>";
                         echo "</tr>";
                     }
                 } else {
