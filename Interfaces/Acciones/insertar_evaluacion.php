@@ -11,6 +11,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_evaluacion = mysqli_real_escape_string($Con, $_POST['fecha_evaluacion']);
     $aula = mysqli_real_escape_string($Con, $_POST['aula']);
 
+    $archivoGuardado = "";
+
+    // Manejo de archivo (si existe)
+    if (isset($_FILES['entregable']) && $_FILES['entregable']['error'] == 0) {
+        $basePath = "../../docs/$exp_alumno/entregables";
+
+        // Crear la carpeta si no existe
+        if (!file_exists($basePath)) {
+            mkdir($basePath, 0777, true); // Crear carpetas con permisos adecuados
+        }
+
+        // Guardar el archivo
+        $fileName = basename($_FILES['entregable']['name']);
+        $targetPath = $basePath . '/' . $fileName;
+
+        if (move_uploaded_file($_FILES['entregable']['tmp_name'], $targetPath)) {
+            $archivoGuardado = $targetPath; // Ruta del archivo guardado
+        } else {
+            echo "Error al guardar el archivo.";
+            exit;
+        }
+    } else {
+        echo "No se seleccionó ningún archivo o hubo un error en la carga.";
+        exit;
+    }
+
+
     // Iniciar transacción
     mysqli_begin_transaction($Con);
 

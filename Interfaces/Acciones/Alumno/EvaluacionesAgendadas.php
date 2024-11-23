@@ -114,7 +114,7 @@ $Res = Ejecutar($Con, $SQL);
         var xhr = new XMLHttpRequest();
         
         // Configurar la solicitud
-        xhr.open('POST', 'eliminar_evaluacion.php', true);
+        xhr.open('POST', '../eliminar_evaluacion.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         
         // Definir lo que sucederá cuando la solicitud se complete

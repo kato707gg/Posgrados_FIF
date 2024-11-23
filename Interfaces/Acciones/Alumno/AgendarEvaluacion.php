@@ -188,11 +188,12 @@ $Res = Ejecutar($Con, $SQL);
     </div>
   </div>
 
-  <script>
-      function confirmarEvaluacion(expediente) {
-          const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
-          const horaSeleccionada = document.getElementById('hora-' + expediente).value;
-          const aula = document.getElementById('aula-' + expediente).value;
+    <script>
+        function confirmarEvaluacion(expediente) {
+            const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
+            const horaSeleccionada = document.getElementById('hora-' + expediente).value;
+            const aula = document.getElementById('aula-' + expediente).value;
+            const fileInput = document.getElementById('file-' + expediente);
 
           // Verificar que los campos no estén vacíos
           if (!fechaSeleccionada || !horaSeleccionada || !aula) {
@@ -227,6 +228,41 @@ $Res = Ejecutar($Con, $SQL);
               alert('Ocurrió un error al procesar la solicitud');
           };
       }
+            if (!fechaSeleccionada || !horaSeleccionada || !aula || !fileInput.files.length) {
+                alert('Por favor, completa todos los campos y selecciona un archivo.');
+                return;
+            }
+        
+            const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
+        
+            // Crear un objeto FormData
+            const formData = new FormData();
+            formData.append('exp', expediente);
+            formData.append('fecha_evaluacion', fechaHoraCombinada);
+            formData.append('aula', aula);
+            formData.append('entregable', fileInput.files[0]);
+        
+            // Crear una solicitud XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../insertar_evaluacion.php', true);
+        
+            // Manejo de la respuesta del servidor
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText); // Mostrar respuesta del servidor
+                    location.reload(); // Recargar la página
+                }
+            };
+        
+            // Manejo de errores de la solicitud
+            xhr.onerror = function () {
+                console.error('Error de red');
+                alert('Ocurrió un error al procesar la solicitud');
+            };
+        
+            // Enviar la solicitud con los datos
+            xhr.send(formData); // Enviar el FormData, que contiene todos los datos
+        }
 
       function uploadDocument(expediente) {
         const fileInput = document.getElementById('file-' + expediente);
@@ -247,27 +283,78 @@ $Res = Ejecutar($Con, $SQL);
 
                 // Habilitar el botón "Confirmar"
                 confirmBtn.disabled = false;
+            if (!fechaSeleccionada || !horaSeleccionada || !aula || !fileInput.files.length) {
+                alert('Por favor, completa todos los campos y selecciona un archivo.');
+                return;
             }
-        });
-    }
+        
+            const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
+        
+            // Crear un objeto FormData
+            const formData = new FormData();
+            formData.append('exp', expediente);
+            formData.append('fecha_evaluacion', fechaHoraCombinada);
+            formData.append('aula', aula);
+            formData.append('entregable', fileInput.files[0]);
+        
+            // Crear una solicitud XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '../insertar_evaluacion.php', true);
+        
+            // Manejo de la respuesta del servidor
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert(xhr.responseText); // Mostrar respuesta del servidor
+                    location.reload(); // Recargar la página
+                }
+            };
+        
+            // Manejo de errores de la solicitud
+            xhr.onerror = function () {
+                console.error('Error de red');
+                alert('Ocurrió un error al procesar la solicitud');
+            };
+        
+            // Enviar la solicitud con los datos
+            xhr.send(formData); // Enviar el FormData, que contiene todos los datos
+        }
 
-    function quitarArchivo(expediente) {
-        const fileInput = document.getElementById('file-' + expediente);
-        const uploadBtn = document.getElementById('upload-btn-' + expediente);
-        const quitarBtn = document.getElementById('quitar-' + expediente);
-        const confirmBtn = document.getElementById('confirm-btn-' + expediente);
+        function uploadDocument(expediente) {
+            const fileInput = document.getElementById('file-' + expediente);
+            const uploadBtn = document.getElementById('upload-btn-' + expediente);
+            const quitarBtn = document.getElementById('quitar-' + expediente);
+            const confirmBtn = document.getElementById('confirm-btn-' + expediente);
+            fileInput.click();
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    console.log('Archivo seleccionado:', file.name);
+                    // Cambiar apariencia del botón
+                    uploadBtn.classList.add('archivo-subido');
+                    quitarBtn.style.display = 'inline';
+                    // Habilitar el botón "Confirmar"
+                    confirmBtn.disabled = false;
+                }
+            });
+        }
 
-        // Limpiar el input file
-        fileInput.value = '';
+        function quitarArchivo(expediente) {
+            const fileInput = document.getElementById('file-' + expediente);
+            const uploadBtn = document.getElementById('upload-btn-' + expediente);
+            const quitarBtn = document.getElementById('quitar-' + expediente);
+            const confirmBtn = document.getElementById('confirm-btn-' + expediente);
 
-        // Restaurar apariencia original
-        uploadBtn.classList.remove('archivo-subido');
-        quitarBtn.style.display = 'none';
+            // Limpiar el input file
+            fileInput.value = '';
+
+            // Restaurar apariencia original
+            uploadBtn.classList.remove('archivo-subido');
+            quitarBtn.style.display = 'none';
 
             // Deshabilitar el botón "Confirmar"
             confirmBtn.disabled = true;
-    }
-  </script>
+        }
+    </script>
 
 </body>
 
