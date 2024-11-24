@@ -64,7 +64,6 @@ $Resultado = Ejecutar($Con, $SQL);
 </head>
 
 <style>
-
     .inputs {
         font-family: "Google Sans", Roboto, Arial, sans-serif;
         height: 2vh;
@@ -197,17 +196,21 @@ $Resultado = Ejecutar($Con, $SQL);
         .inputs {
             width: 16vw;
         }
+
         .modal-content {
             max-width: 80%;
         }
+
         .observacion-input {
             height: 6rem;
         }
+
         .observaciones {
             color: white;
             width: 20vw;
             background-color: #123773;
         }
+
         .confirmar-icon {
             background-color: #118f1d;
             color: white;
@@ -224,242 +227,299 @@ $Resultado = Ejecutar($Con, $SQL);
         }
 
         .confirmar-icon {
-            font-size: 0;  
+            font-size: 0;
         }
     }
 </style>
 
 <body>
-<div class="container-principal">
-<h3>Evaluaciones pendientes:</h3>
-    <div id="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Expediente</th>
-                    <th>Nombre</th>
-                    <th>Fecha</th>
-                    <th>Aula</th>
-                    <th>Entregable</th>
-                    <th>Calificación</th>
-                    <th>Observaciones</th>
-                    <th>Confirmar</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-<?php
+    <div class="container-principal">
+        <h3>Evaluaciones pendientes:</h3>
+        <div id="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expediente</th>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Aula</th>
+                        <th>Entregable</th>
+                        <th>Calificación</th>
+                        <th>Observaciones</th>
+                        <th>Confirmar</th>
 
-if ($Resultado->num_rows > 0) {
-    while ($Fila = $Resultado->fetch_assoc()) {
-        $Expediente = $Fila['exp_alumno'];
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 
-        // Obtener lista de archivos en la carpeta de entregables
-        $entregables = [];
-        $dir = "Posgrados_FIF/docs/$Expediente/entregables/";
-        if (is_dir($dir)) {
-            $files = scandir($dir);
-            foreach ($files as $file) {
-                if ($file !== '.' && $file !== '..') {
-                    $entregables[] = "<a href='$dir$file' target='_blank'>$file</a>";
+                    if ($Resultado->num_rows > 0) {
+                        while ($Fila = $Resultado->fetch_assoc()) {
+                            $Expediente = $Fila['exp_alumno'];
+
+                            // Obtener lista de archivos en la carpeta de entregables
+                            $entregables = [];
+                            $dir = "../Posgrados_FIF/Interfaces/Acciones/Alumno/docs/$Expediente/entregables/";
+                            if (is_dir($dir)) {
+                                $files = scandir($dir);
+                                foreach ($files as $file) {
+                                    if ($file !== '.' && $file !== '..') {
+                                        $entregables[] = "<a href='$dir$file' target='_blank'>$file</a>";
+                                    }
+                                }
+                            }
+                            // Generar contenido para la columna "Entregable"
+                            $entregablesContent = empty($entregables) ? "No disponible" : implode(", ", $entregables);
+
+                            // Generar nombre completo"
+                            $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
+
+                            // Separar fecha y hora
+                            $Fecha = $Fila["fecha_evaluacion"];
+                            $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
+
+                            if ((int)substr($FechaSola, 5, 2) < 6) {
+                                $Periodo = substr($FechaSola, 0, 4) . "-" . "2";
+                            } else {
+                                $Periodo = substr($FechaSola, 0, 4) . "-" . "1";
+                            }
+
+                            echo "<input type='hidden' id='periodo_" . $Fila['exp_alumno'] . "' value='" . $Periodo . "'>";
+                            echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
+                            echo "<td data-label='Expediente'>" . $Fila["exp_alumno"] . "</td>";
+                            echo "<td data-label='Nombre'>" . $Nombre . "</td>";
+                            echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
+                            echo "<td data-label='Aula'>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
+                            echo "<td data-label='Entregable'>" . $entregablesContent . "</td>";
+                            if ($esDirector) {
+                                echo "<td data-label='Calificación'>N/A</td>";
+                            } else {
+                                echo "<td data-label='Calificación'>";
+                                echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")' oninput='limitDigits(this, 4)'>";
+                                echo "</td>";
+                            }
+
+                            if ($esDirector) {
+                                echo "<td data-label='Observaciones'><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", true)'>Agregar</button></td>";
+                            } else {
+                                echo "<td data-label='Observaciones'><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", false)'>Agregar</button></td>";
+                            }
+
+                            echo "<td data-label='Acción'><button class='confirmar-icon' id='btn_" . $Expediente . "' onclick='actualizarEvaluacion(\"" . $Expediente . "\")' disabled>&#x2714;</button></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='8'>No se encontraron evaluaciones pendientes</td></tr>";
+                    }
+
+                    Cerrar($Con);
+
+                    ?>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div id="modalObservaciones" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Observaciones y recomendaciones</h3>
+            <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;" id="box-1034">
+            <div id="observacionesContent">
+                <!-- El contenido se llenará dinámicamente -->
+            </div>
+            <button onclick="guardarObservaciones()" class="confirmar-button">Guardar</button>
+        </div>
+    </div>
+
+    <script>
+        function checkFields(expediente) {
+            const btn = document.getElementById('btn_' + expediente);
+            const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
+            const fecha = fila.querySelector('td:nth-child(3)').innerText;
+            const aula = fila.querySelector('td:nth-child(4)').innerText;
+
+            if (esDirectorModal) {
+                // Para director: solo verificar observaciones
+                const obs1 = document.getElementById('obs1_' + expediente)?.value;
+                const obs2 = document.getElementById('obs2_' + expediente)?.value;
+                const obs3 = document.getElementById('obs3_' + expediente)?.value;
+                const obs4 = document.getElementById('obs4_' + expediente)?.value;
+
+                if (obs1 && obs2 && obs3 && obs4 && fecha !== "Pendiente" && aula !== "Pendiente") {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = true;
+                }
+            } else {
+                // Para no director: verificar calificación y observación
+                const calificacion = document.getElementById('calificacion_' + expediente)?.value;
+                const observacion = document.getElementById('observacion_' + expediente)?.value;
+
+                if (calificacion && observacion && fecha !== "Pendiente" && aula !== "Pendiente") {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = true;
                 }
             }
         }
-        // Generar contenido para la columna "Entregable"
-        $entregablesContent = empty($entregables) ? "No disponible" : implode(", ", $entregables);
 
-        // Generar nombre completo"
-        $Nombre = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
 
-        // Separar fecha y hora
-        $Fecha = $Fila["fecha_evaluacion"];
-        $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
 
-        if ((int)substr($FechaSola, 5, 2) < 6) {
-            $Periodo = substr($FechaSola, 0, 4) . "-" . "2"; 
-        } else {
-            $Periodo = substr($FechaSola, 0, 4) . "-" . "1"; 
-        }
+        function actualizarEvaluacion(expediente) {
+            const periodo = document.getElementById('periodo_' + expediente).value;
+            let formData = new FormData();
 
-        echo "<input type='hidden' id='periodo_" . $Fila['exp_alumno'] . "' value='" . $Periodo . "'>";
-        echo "<tr data-expediente='" . $Fila['exp_alumno'] . "'>";
-        echo "<td data-label='Expediente'>" . $Fila["exp_alumno"] . "</td>";
-        echo "<td data-label='Nombre'>" . $Nombre . "</td>";
-        echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
-        echo "<td data-label='Aula'>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
-        echo "<td data-label='Entregable'>" . $entregablesContent . "</td>";
-        echo "<td data-label='Calificación'>";
-        echo "<input type='number' class='inputs' name='calificacion_" . $Fila['exp_alumno'] . "' id='calificacion_" . $Fila['exp_alumno'] . "' step='0.01' min='0' max='10' placeholder='Calificación...' required onchange='checkFields(\"" . $Fila['exp_alumno'] . "\")' oninput='limitDigits(this, 4)'>";
-        echo "</td>";
+            formData.append('expediente', expediente);
+            formData.append('periodo', periodo);
+            formData.append('esDirector', esDirectorModal);
 
-        if ($esDirector) {
-            echo "<td data-label='Observaciones'><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", true)'>Agregar</button></td>";
-        } else {
-            echo "<td data-label='Observaciones'><button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", false)'>Agregar</button></td>";
-        }
+            if (!esDirectorModal) {
+                const calificacion = document.getElementById('calificacion_' + expediente).value;
+                formData.append('calificacion', calificacion);
+            }
 
-        echo "<td data-label='Acción'><button class='confirmar-icon' id='btn_" . $Expediente . "' onclick='actualizarEvaluacion(\"" . $Expediente . "\")' disabled>&#x2714;</button></td>";
-        echo "</tr>";
-    }
-    
-}else {
-    echo "<tr><td colspan='8'>No se encontraron evaluaciones pendientes</td></tr>";
-}        
+            if (esDirectorModal) {
+                // Para director: obtener las cuatro observaciones
+                const obs1 = document.getElementById('obs1_' + expediente)?.value || '';
+                const obs2 = document.getElementById('obs2_' + expediente)?.value || '';
+                const obs3 = document.getElementById('obs3_' + expediente)?.value || '';
+                const obs4 = document.getElementById('obs4_' + expediente)?.value || '';
 
-Cerrar($Con);
-
-?>
-</tbody>
-
-        </table>
-    </div>
-</div>
-
-<div id="modalObservaciones" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h3>Observaciones y recomendaciones</h3>
-        <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;" id="box-1034">
-        <div id="observacionesContent">
-            <!-- El contenido se llenará dinámicamente -->
-        </div>
-        <button onclick="guardarObservaciones()" class="confirmar-button">Guardar</button>
-    </div>
-</div>
-
-<script>
-function checkFields(expediente) {
-    const calificacion = document.getElementById('calificacion_' + expediente).value;
-    const observacion = document.getElementById('observacion_' + expediente).value;
-    const btn = document.getElementById('btn_' + expediente);
-
-    const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
-    const fecha = fila.querySelector('td:nth-child(3)').innerText;
-    const aula = fila.querySelector('td:nth-child(4)').innerText;
-
-    if (calificacion && observacion && fecha !== "Pendiente" && aula !== "Pendiente") {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
-}
-
-function opcionDirector(expediente) {
-    alert("Opciones adicionales para el director para el expediente: " + expediente);
-}
-
-function actualizarEvaluacion(expediente) {
-    const calificacion = document.getElementById('calificacion_' + expediente).value;
-    const observacion = document.getElementById('observacion_' + expediente).value;
-    const periodo = document.getElementById('periodo_' + expediente).value;
-
-    // Crear una nueva instancia de XMLHttpRequest
-    const xhr = new XMLHttpRequest();
-
-    // Configurar la solicitud
-    xhr.open('POST', '../actualizar_detalle_evaluaciones.php', true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    // Función a ejecutar cuando la solicitud cambie de estado
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
-            console.log(fila);  // Para verificar si la fila fue seleccionada correctamente
-            if (fila) {
-                fila.remove();
-                alert('Evaluación actualizada exitosamente');
+                formData.append('observacion', obs4);
+                formData.append('d_observacion1', obs1);
+                formData.append('d_observacion2', obs2);
+                formData.append('d_observacion3', obs3);
             } else {
-                console.error('No se encontró la fila para el expediente: ' + expediente);
+                // Para no director: obtener observación única
+                const observacion = document.getElementById('observacion_' + expediente)?.value || '';
+                formData.append('observacion', observacion);
+            }
+
+            fetch('../actualizar_detalle_evaluaciones.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.includes('success')) {
+                        const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
+                        if (fila) {
+                            fila.remove();
+                            alert('Evaluación actualizada exitosamente');
+                        }
+                    } else {
+                        console.error('Error en la respuesta:', data);
+                        alert('Ocurrió un error al actualizar la evaluación');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ocurrió un error al actualizar la evaluación');
+                });
+        }
+
+        function limitDigits(input, maxDigits) {
+            if (input.value.length > maxDigits) {
+                input.value = input.value.slice(0, maxDigits);
             }
         }
-    };
 
+        let expedienteActual = '';
+        let esDirectorModal = false;
 
-    // Enviar los datos a actualizar
-    xhr.send("expediente=" + expediente + "&calificacion=" + calificacion + "&observacion=" + encodeURIComponent(observacion) +"&periodo=" + encodeURIComponent(periodo));
+        function abrirModal(expediente, esDirector) {
+            expedienteActual = expediente;
+            esDirectorModal = esDirector;
+            const modal = document.getElementById('modalObservaciones');
+            const contenido = document.getElementById('observacionesContent');
 
-    // Configurar manejo de errores
-    xhr.onerror = function() {
-        console.error('Error de red');
-        alert('Ocurrió un error al actualizar la evaluación');
-    };
-}
+            // Recuperar las observaciones existentes desde los inputs ocultos
+            const existingObservations = document.getElementById('observacion_' + expediente)?.value || '';
 
-function limitDigits(input, maxDigits) {
-    if (input.value.length > maxDigits) {
-        input.value = input.value.slice(0, maxDigits);
-    }
-}
+            contenido.innerHTML = '';
 
-let expedienteActual = '';
-let esDirectorModal = false;
+            if (esDirector) {
+                // Dividir las observaciones existentes (separadas por "|")
+                const obsSections = existingObservations.split('|');
 
-function abrirModal(expediente, esDirector) {
-    expedienteActual = expediente;
-    esDirectorModal = esDirector;
-    const modal = document.getElementById('modalObservaciones');
-    const contenido = document.getElementById('observacionesContent');
-    
-    contenido.innerHTML = '';
-    
-    if (esDirector) {
-        contenido.innerHTML += `
-            <div>
-                <label class='label-observaciones'>Sobre Avance gradual:</label>
-                <textarea class="observacion-input" id="obs1_${expediente}" rows="3"></textarea>
-            </div>
-            <div>
-                <label class='label-observaciones'>Sobre entregable y resultados esperados de acuerdo con el semestre a evaluar:</label>
-                <textarea class="observacion-input" id="obs2_${expediente}" rows="3"></textarea>
-            </div>
-            <div>
-                <label class='label-observaciones'>Sobre el Avance del Proyecto:</label>
-                <textarea class="observacion-input" id="obs3_${expediente}" rows="3"></textarea>
-            </div>
-            <div>
-                <label class='label-observaciones'>Comentario Individual:</label>
-                <textarea class="observacion-input" id="obs4_${expediente}" rows="3"></textarea>
-            </div>`;
-    } else {
-        // 1 campo para otros roles
-        contenido.innerHTML = `
-            <div>
-                <textarea class="observacion-input" id="obs_${expediente}" rows="3"></textarea>
-            </div>`;
-    }
-    
-    modal.style.display = "block";
-}
+                contenido.innerHTML += `
+        <div>
+            <label class='label-observaciones'>Sobre Avance gradual:</label>
+            <textarea class="observacion-input" id="obs1_${expediente}" rows="3">${obsSections[0] || ''}</textarea>
+        </div>
+        <div>
+            <label class='label-observaciones'>Sobre entregable y resultados esperados de acuerdo con el semestre a evaluar:</label>
+            <textarea class="observacion-input" id="obs2_${expediente}" rows="3">${obsSections[1] || ''}</textarea>
+        </div>
+        <div>
+            <label class='label-observaciones'>Sobre el Avance del Proyecto:</label>
+            <textarea class="observacion-input" id="obs3_${expediente}" rows="3">${obsSections[2] || ''}</textarea>
+        </div>
+        <div>
+            <label class='label-observaciones'>Comentario Individual:</label>
+            <textarea class="observacion-input" id="obs4_${expediente}" rows="3">${obsSections[3] || ''}</textarea>
+        </div>`;
+            } else {
+                // Una sola área de texto para no directores
+                contenido.innerHTML = `
+        <div>
+            <textarea class="observacion-input" id="obs_${expediente}" rows="3">${existingObservations}</textarea>
+        </div>`;
+            }
 
-function guardarObservaciones() {
-    let observaciones = '';
-    
-    if (esDirectorModal) {
-        // Concatenar las 5 observaciones para director
-        for (let i = 1; i <= 5; i++) {
-            const obs = document.getElementById(`obs${i}_${expedienteActual}`).value;
-            observaciones += obs + '|';
+            modal.style.display = "block";
         }
-        observaciones = observaciones.slice(0, -1); // Remover último separador
-    } else {
-        // Una sola observación
-        observaciones = document.getElementById(`obs_${expedienteActual}`).value;
-    }
-    
-    document.getElementById('observacion_' + expedienteActual).value = observaciones;
-    checkFields(expedienteActual);
-    cerrarModal();
-}
 
-function cerrarModal() {
-    const modal = document.getElementById('modalObservaciones');
-    modal.style.display = "none";
-}
+        function guardarObservaciones() {
+            let observacionInput = document.getElementById('observacion_' + expedienteActual);
+            if (!observacionInput) {
+                // Crear el input oculto si no existe
+                observacionInput = document.createElement('input');
+                observacionInput.type = 'hidden';
+                observacionInput.id = 'observacion_' + expedienteActual;
+                document.body.appendChild(observacionInput);
+            }
 
-// Cerrar modal al hacer clic en la X
-document.querySelector('.close').onclick = cerrarModal;
+            if (esDirectorModal) {
+                // Recuperar y concatenar las observaciones en una cadena separada por "|"
+                const obs1 = document.getElementById(`obs1_${expedienteActual}`)?.value || '';
+                const obs2 = document.getElementById(`obs2_${expedienteActual}`)?.value || '';
+                const obs3 = document.getElementById(`obs3_${expedienteActual}`)?.value || '';
+                const obs4 = document.getElementById(`obs4_${expedienteActual}`)?.value || '';
 
-</script>
+                observacionInput.value = [obs1, obs2, obs3, obs4].join('|'); // Guardar todas las observaciones juntas
+            } else {
+                // Para no directores, guardar la observación única
+                const obsInput = document.getElementById(`obs_${expedienteActual}`);
+                if (obsInput) {
+                    observacionInput.value = obsInput.value;
+                } else {
+                    console.error("No se encontró el campo de observación para expediente: " + expedienteActual);
+                }
+            }
+
+            // Llamar a checkFields solo si los elementos necesarios existen
+            if (observacionInput && observacionInput.value) {
+                checkFields(expedienteActual); // Validación o actualización en la base de datos
+            } else {
+                console.warn("No se guardaron observaciones porque no existen datos.");
+            }
+
+            cerrarModal();
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modalObservaciones');
+            modal.style.display = "none";
+        }
+
+
+        // Cerrar modal al hacer clic en la X
+        document.querySelector('.close').onclick = cerrarModal;
+    </script>
 
 </body>
+
 </html>
