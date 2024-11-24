@@ -13,21 +13,31 @@ $fechaDate = $data['day'];
 $year = substr($fechaActual, 3, 1); // "2024-11-19"
 
 
-function obtenerNombreMes($mesNum) {
+function obtenerNombreMes($mesNum)
+{
     $meses = [
-        1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
-        5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
-        9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+        1 => 'Enero',
+        2 => 'Febrero',
+        3 => 'Marzo',
+        4 => 'Abril',
+        5 => 'Mayo',
+        6 => 'Junio',
+        7 => 'Julio',
+        8 => 'Agosto',
+        9 => 'Septiembre',
+        10 => 'Octubre',
+        11 => 'Noviembre',
+        12 => 'Diciembre'
     ];
     return $meses[(int)$mesNum];
 }
 $mesNum =  $data['month'];
 $mesNombre =  obtenerNombreMes($mesNum);
 
-if (session_status()== PHP_SESSION_NONE){
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include ("../conexion.php");
+include("../conexion.php");
 
 
 $id_alumno = $_SESSION['id'];
@@ -39,7 +49,7 @@ $SQL = "SELECT d.nombre, d.a_paterno, d.a_materno, de.observacion
     WHERE a.exp_alumno = '$id_alumno'";
 
 
-$SQL2= "SELECT c.nombre AS coor_nombre,
+$SQL2 = "SELECT c.nombre AS coor_nombre,
         c.a_paterno AS coor_paterno,  
         c.a_materno AS coor_materno, 
         e.nombre, e.a_paterno, e.a_materno,
@@ -50,16 +60,50 @@ $SQL2= "SELECT c.nombre AS coor_nombre,
         INNER JOIN evaluaciones ev ON a.exp_alumno =  ev.exp_alumno
         WHERE a.exp_alumno = '$id_alumno'";
 
+
+$SQL3 = "SELECT 
+            de.d_observacion1,
+            de.d_observacion2,
+            de.d_observacion3,
+            de.observacion AS observacion_general,
+            CONCAT(d.nombre, ' ', d.a_paterno, ' ', d.a_materno) AS nombre_sinodo,
+            de.observacion AS observacion_sinodo
+        FROM 
+            detalle_evaluaciones de
+        JOIN 
+            evaluaciones e ON de.id_evaluacion = e.id
+        JOIN 
+            asignaciones a ON e.exp_alumno = a.exp_alumno
+        JOIN 
+            docentes d ON de.id_sinodo = d.clave
+        WHERE 
+            e.exp_alumno = '$id_alumno' AND 
+            de.id_evaluacion = e.id;
+";
+
 $Con = Conectar();
 $Resultado = Ejecutar($Con, $SQL);
 $Resultado2 = Ejecutar($Con, $SQL2);
-if (mysqli_num_rows($Resultado2) > 0){
+$Resultado3 = Ejecutar($Con, $SQL3);
+if (mysqli_num_rows($Resultado2) > 0) {
     $Fila = mysqli_fetch_array($Resultado2);
     $Nom_Coordinador =  $Fila['coor_nombre'] . " " . $Fila['coor_paterno'] . " " . $Fila['coor_materno'];
     $Nom_Alumno = $Fila['nombre'] . " " . $Fila['a_paterno'] . " " . $Fila['a_materno'];
     $Cal_Final = $Fila['cal_final'];
+}
+
+if (mysqli_num_rows($Resultado3) > 0){
+    $Fila = mysqli_fetch_array($Resultado3);
+    $obs1 =$Fila['d_observacion1'];
+    $obs2 =$Fila['d_observacion2'];
+    $obs3 =$Fila['d_observacion3'];
+    $obs =$Fila['observacion_general'];
+    $nomSinodo = $Fila['nombre_sinodo'];
+    $obssinodo = $Fila['observacion_sinodo'];
 
 }
+
+Cerrar($Con);
 
 
 require('fpdf.php');
@@ -100,9 +144,9 @@ $pdf->Ln(10);
 
 // Saludo
 $pdf->SetFont('Arial', '', 12);
-$pdf->Cell(0, $lineHeight, utf8_decode('Dr.'." ". $Nom_Coordinador), 0, 1);
+$pdf->Cell(0, $lineHeight, utf8_decode('Dr.' . " " . $Nom_Coordinador), 0, 1);
 $pdf->Cell(0, $lineHeight, utf8_decode('Coordinador del programa de la Maestría en Ciencias de la Computación'), 0, 1);
-$pdf-> Ln(12);
+$pdf->Ln(12);
 $pdf->SetFont('Arial', 'B', 12);
 
 $pdf->Cell(0, $lineHeight, utf8_decode('P r e s e n t e'), 0, 1);
@@ -112,44 +156,34 @@ $pdf->SetFont('Arial', '', 12);
 
 // Cuerpo principal
 $pdf->MultiCell(0, $lineHeight, utf8_decode("Por este medio, le informamos que el comité académico del estudiante $Nom_Alumno\n"
-                                . "con número de expediente $id_alumno, se reunió de manera virtual, para realizar la evaluación\n"
-                                . "del avance del proyecto de investigación.\n\n"
-                                . "De acuerdo con lo planteado en el cronograma de trabajo y a los requerimientos del _____ semestre\n"
-                                . "del programa del Doctorado en Ciencias de la Computación del cual se tienen los siguientes resultados:"), 0, 'J');
+    . "con número de expediente $id_alumno, se reunió de manera virtual, para realizar la evaluación\n"
+    . "del avance del proyecto de investigación.\n\n"
+    . "De acuerdo con lo planteado en el cronograma de trabajo y a los requerimientos del _____ semestre\n"
+    . "del programa del Doctorado en Ciencias de la Computación del cual se tienen los siguientes resultados:"), 0, 'J');
 $pdf->Ln($lineHeight);
 
 // Secciones de evaluación
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode('Sobre Avance gradual'), 0, 1);
 $pdf->SetFont('Arial', '', 10);
-$pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n__________________________________________________________________\n"
-                                . "__________________________________________________________________\n". 
-                                "__________________________________________________________________\n"
-                                ."__________________________________________________________________\n"
-                                . "__________________________________________________________________\n\n"), 0, 'J');
+$pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n" . $obs1), 0, 'J');
+$pdf->Ln(10); // Espacio entre secciones
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode("Sobre entregable y resultados esperados de acuerdo con el semestre a evaluar"), 0, 1);
-$pdf->Cell(0,$lineHeight, utf8_decode("(ver anexo)"),0,1);
+$pdf->Cell(0, $lineHeight, utf8_decode("(ver anexo)"), 0, 1);
 $pdf->SetFont('Arial', '', 10);
-$pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n__________________________________________________________________\n"
-                                . "__________________________________________________________________\n"
-                                . "__________________________________________________________________\n"
-                                . "__________________________________________________________________\n"
-                                . "__________________________________________________________________\n\n\n\n\n\n"), 0, 'J');
-
-
+$pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n" . $obs2), 0, 'J');
+$pdf->Ln(10); // Espacio entre secciones
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode('Sobre el Avance del Proyecto'), 0, 1);
 $pdf->SetFont('Arial', '', 10);
-$pdf->MultiCell(0, 6, utf8_decode("(Avances en la metodología y pertinencia en la estrategia experimental)\n\n"
-                                . "Observaciones y recomendaciones:\n\n"
-                                . "__________________________________________________________________\n"
-                                . "__________________________________________________________________\n"
-                                . "__________________________________________________________________\n\n"), 0, 'J');
+$pdf->MultiCell(0, $lineHeight, utf8_decode("(Avances en la metodología y pertinencia en la estrategia experimental)\n\n"
+    . "Observaciones y recomendaciones:\n\n" . $obs3), 0, 'J');
+$pdf->Ln(10); // Espacio entre secciones
 
-                            
+
 
 $pdf->Ln(10);                                // Calificación
 $pdf->SetFont('Arial', 'B', 12);
@@ -158,38 +192,47 @@ $pdf->Ln($lineHeight);
 
 // Comité
 $pdf->SetFont('Arial', 'B', 12);
-$columna =80;
-$pdf->Cell($columna, $lineHeight, utf8_decode('INTEGRANTES DEL COMITÉ'),1,0, 'C');
+$columna = 80;
+$pdf->Cell($columna, $lineHeight, utf8_decode('INTEGRANTES DEL COMITÉ'), 1, 0, 'C');
 $pdf->Cell($columna, $lineHeight, utf8_decode('COMENTARIO INDIVIDUAL'), 1, 1, 'C');
 
 
 
-
+// Configuración de las columnas
 $colWidth = 80; // Ancho de cada columna
-$lineHeight = 35; // Altura de la celda
+$lineHeight = 35; // Altura fija de cada fila
+$fontHeight = 8; // Altura aproximada del texto en puntos
 
-// Bucle para 4 filas de la tabla
-for ($i = 0; $i < 4; $i++) {
-    // Columna 1: Nombre y espacio para firma
-    $x1 = $pdf->GetX(); // Obtener la posición actual en X
-    $y1 = $pdf->GetY(); // Obtener la posición actual en Y
-    
-    // Dibujar celda de la primera columna
-    $pdf->Cell($colWidth, $lineHeight, '', 1, 0); // Celda vacía con borde
-    
-    // Posicionar el texto en la parte inferior de la celda (nombre y firma)
-    $pdf->SetXY($x1, $y1 + $lineHeight - 8); // Ajustar 8 unidades desde el fondo
-    $pdf->Cell($colWidth, 8, utf8_decode('Nombre y Firma'), 0, 0, 'C');
-    
-    // Columna 2: Observaciones (sin texto)
-    $pdf->SetXY($x1 + $colWidth, $y1); // Ajustar X para dibujar la segunda celda en la misma fila
-    $pdf->Cell($colWidth, $lineHeight, '', 1, 0); // Celda vacía con borde
-    
-    // Restablecer la posición para la próxima fila
-    $pdf->Ln($lineHeight); // Mover a la siguiente línea después de ambas celdas
+// Configuración de la fuente para las filas
+$pdf->SetFont('Arial', '', 10);
+
+// Verificar si hay sinodales en el resultado
+if (mysqli_num_rows($Resultado) > 0) {
+    while ($sinodo = mysqli_fetch_array($Resultado)) {
+        // Obtener el nombre completo del sinodal y su comentario
+        $nombreSinodo = utf8_decode($sinodo['nombre'] . ' ' . $sinodo['a_paterno'] . ' ' . $sinodo['a_materno']);
+        $comentario = utf8_decode($sinodo['observacion']);
+
+        // Posición inicial de la celda
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+
+        // Columna 1: Nombre (ajustar texto hacia abajo)
+        $pdf->Cell($colWidth, $lineHeight, '', 1, 0); // Crear celda vacía con borde
+        $pdf->SetXY($x, $y + $lineHeight - $fontHeight - 2); // Ajustar texto hacia abajo
+        $pdf->Cell($colWidth, $fontHeight, $nombreSinodo, 0, 0, 'C'); // Agregar texto dentro de la celda
+
+        // Volver a la posición inicial para la siguiente columna
+        $pdf->SetXY($x + $colWidth, $y);
+
+        // Columna 2: Comentario Individual
+        $pdf->Cell($colWidth, $lineHeight, $comentario, 1, 1, 'C'); // '1' al final para cambiar de línea
+    }
+} else {
+    // Si no hay sinodales, mostrar un mensaje vacío en la tabla
+    $pdf->Cell($colWidth, $lineHeight, utf8_decode('Sin información de sinodales'), 1, 0, 'C');
+    $pdf->Cell($colWidth, $lineHeight, utf8_decode('Sin comentarios'), 1, 1, 'C');
 }
-
 
 // Generar el PDF
 $pdf->Output('I', 'ActaSeminarioTutoral.pdf'); // 'I' para mostrar en el navegador, 'F' para guardar en servidor
-?>
