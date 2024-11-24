@@ -1,46 +1,132 @@
 <?php
-// Iniciar la sesión
+// Segundo archivo (actualizar_detalle_evaluaciones.php)
 session_start();
-
-// Incluir el archivo de conexión
 include '../../conexion.php';
-
-// Conectar a la base de datos
 $Con = Conectar();
 
-// Verificar si se ha enviado una solicitud POST con los parámetros necesarios
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente']) && isset($_POST['calificacion']) && isset($_POST['observacion']) && isset($_POST['periodo'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente'])) {
     $expediente = $_POST['expediente'];
-    $calificacion = $_POST['calificacion'];
-    $observacion = $_POST['observacion'];
-    $periodo = $_POST ['periodo'];
-
-    // Verificar si la variable de sesión 'id' está definida
+    $periodo = isset($_POST['periodo']) ? $_POST['periodo'] : '';
+    $esDirector = isset($_POST['esDirector']) && $_POST['esDirector'] === 'true';
+    
     if (isset($_SESSION['id'])) {
         $id_sinodo = $_SESSION['id'];
         
-        // Prepara la consulta SQL para actualizar los detalles de la evaluación
-        $SQL = "
-            UPDATE detalle_evaluaciones
-            SET calificacion = '$calificacion', observacion = '$observacion', periodo = '$periodo'
-            WHERE id_sinodo = '$id_sinodo' AND id_evaluacion = (SELECT id FROM evaluaciones WHERE exp_alumno = '$expediente')
-        ";
+        // Verificar si ya existe un registro
+        $checkSQL = "SELECT id_evaluacion FROM detalle_evaluaciones 
+                    WHERE id_sinodo = ? AND 
+                    id_evaluacion = (SELECT id FROM evaluaciones WHERE exp_alumno = ?)";
+        
+        $stmt = $Con->prepare($checkSQL);
+        $stmt->bind_param("ss", $id_sinodo, $expediente);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        echo $SQL; // Para depuración
+        if ($esDirector) {
+            // Manejo para director (sin calificación)
+            if ($result->num_rows > 0) {
+                $SQL = "UPDATE detalle_evaluaciones 
+                       SET d_observacion1 = ?,
+                           d_observacion2 = ?,
+                           d_observacion3 = ?,
+                           observacion = ?,
+                           periodo = ? 
+                       WHERE id_sinodo = ? AND 
+                       id_evaluacion = (SELECT id FROM evaluaciones WHERE exp_alumno = ?)";
 
-        // Ejecutar la consulta
-        if (Ejecutar($Con, $SQL)) {
-            // Si la inserción es exitosa
-            echo "Evaluación actualizada exitosamente";
+                $stmt = $Con->prepare($SQL);
+                $d_obs1 = $_POST['d_observacion1'] ?? '';
+                $d_obs2 = $_POST['d_observacion2'] ?? '';
+                $d_obs3 = $_POST['d_observacion3'] ?? '';
+                $observacion = $_POST['observacion'] ?? '';
+                $stmt->bind_param(
+                    "sssssss",
+                    $d_obs1,
+                    $d_obs2,
+                    $d_obs3,
+                    $observacion,
+                    $periodo,
+                    $id_sinodo,
+                    $expediente
+                );
+            } else {
+                $SQL = "INSERT INTO detalle_evaluaciones 
+                       (id_sinodo, id_evaluacion, d_observacion1, d_observacion2, d_observacion3, observacion, periodo) 
+                       SELECT ?, id, ?, ?, ?, ?, ? 
+                       FROM evaluaciones 
+                       WHERE exp_alumno = ?";
+
+                $stmt = $Con->prepare($SQL);
+                $d_obs1 = $_POST['d_observacion1'] ?? '';
+                $d_obs2 = $_POST['d_observacion2'] ?? '';
+                $d_obs3 = $_POST['d_observacion3'] ?? '';
+                $observacion = $_POST['observacion'] ?? '';
+                $stmt->bind_param(
+                    "sssssss",
+                    $id_sinodo,
+                    $d_obs1,
+                    $d_obs2,
+                    $d_obs3,
+                    $observacion,
+                    $periodo,
+                    $expediente
+                );
+            }
         } else {
-            // Si hay un error al ejecutar la consulta
-            echo "Error al actualizar la evaluación";
-        } 
+            // Manejo para no director (con calificación)
+            $calificacion = isset($_POST['calificacion']) ? $_POST['calificacion'] : 0;
+            
+            if ($result->num_rows > 0) {
+                $SQL = "UPDATE detalle_evaluaciones 
+                       SET calificacion = ?, 
+                           observacion = ?,
+                           periodo = ? 
+                       WHERE id_sinodo = ? AND 
+                       id_evaluacion = (SELECT id FROM evaluaciones WHERE exp_alumno = ?)";
+
+                $stmt = $Con->prepare($SQL);
+                $observacion = $_POST['observacion'] ?? '';
+                $stmt->bind_param(
+                    "dssss",
+                    $calificacion,
+                    $observacion,
+                    $periodo,
+                    $id_sinodo,
+                    $expediente
+                );
+            } else {
+                $SQL = "INSERT INTO detalle_evaluaciones 
+                       (id_sinodo, id_evaluacion, calificacion, observacion, periodo) 
+                       SELECT ?, id, ?, ?, ? 
+                       FROM evaluaciones 
+                       WHERE exp_alumno = ?";
+
+                $stmt = $Con->prepare($SQL);
+                $observacion = $_POST['observacion'] ?? '';
+                $stmt->bind_param(
+                    "sdsss",
+                    $id_sinodo,
+                    $calificacion,
+                    $observacion,
+                    $periodo,
+                    $expediente
+                );
+            }
+        }
+
+        if ($stmt->execute()) {
+            echo "success";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
     } else {
-        echo "ID de sínodo no encontrado en la sesión.";
+        echo "Error: ID de sínodo no encontrado en la sesión";
     }
+
     Cerrar($Con);
 } else {
-    echo "Datos incompletos para actualizar la evaluación.";
+    echo "Error: Datos incompletos";
 }
 ?>

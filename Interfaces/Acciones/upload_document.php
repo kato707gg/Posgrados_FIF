@@ -20,7 +20,7 @@ if (!isset($_FILES['file']) || !isset($_POST['documentType'])) {
 $userId = $_SESSION['id'];
 
 // Definir la ruta base para los documentos
-$baseDir = '/Posgrados_FIF/Interfaces/Acciones/Alumno/docs/';
+$baseDir = '../../docs';
 
 // Crear el directorio base si no existe
 if (!file_exists($baseDir)) {

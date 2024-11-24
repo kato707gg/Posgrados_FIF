@@ -25,13 +25,11 @@ if ($Resultado) {
         $idEvaluacion = $fila['id'];
         $promedioFinal = $fila['promedio_final'];
 
-        // Redondeamos el promedio a 2 decimales, por ejemplo:
+        
         $promedioFinalRedondeado = round($promedioFinal, 2);
 
-        // Consulta para actualizar el campo cal_final con el promedio calculado
+        
         $SQL_UPDATE = "UPDATE evaluaciones SET cal_final = '$promedioFinalRedondeado' WHERE id = '$idEvaluacion' AND exp_alumno = '$clave_alumno'";
-
-        // Ejecutar la consulta de actualización
         mysqli_query($Con, $SQL_UPDATE);
     }
 }
@@ -111,7 +109,7 @@ if ($Resultado) {
                         echo "<td data-label='Número de evaluación'>" . $fila['id'] . "</td>";
                         echo "<td data-label='Fecha'>" . date("Y-m-d", strtotime($fila['fecha_evaluacion'])) . "</td>";
                         echo "<td data-label='Calificación Final'>" . round($fila['promedio_final'], 2) . "</td>";  // Mostrando la calificación final
-                        echo "<td data-label='Acta de seminario'><button class='generar-pdf' onclick=\"mostrarDetalles(" . $fila['id'] . ")\">📄</button></td>";
+                        echo "<td data-label='Acta de seminario'><a href='../../../libraries/ActaSeminarioTutoral.php?id=" . $fila['id'] . "' target='_blank' class='generar-pdf'>📄</a></td>";
                         echo "</tr>";
                     }
                     
