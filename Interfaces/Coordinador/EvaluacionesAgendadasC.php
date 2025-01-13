@@ -1,16 +1,15 @@
 <?php
-  include('../../Header/MenuA.php');
- if(session_status()===PHP_SESSION_NONE){
-  session_start();
- }
+  include('../Header/MenuC.php');
+?>
 
-
-include('../../../conexion.php');
+<?php
+include('../../Config/conexion.php');
 $Con = Conectar();
-$id = $_SESSION['id'];
 
 $SQL = "
-    SELECT exp_alumno, fecha_evaluacion, aula FROM evaluaciones WHERE exp_alumno = '$id'
+    SELECT ev.exp_alumno, e.nombre, e.a_paterno, e.a_materno, ev.fecha_evaluacion, ev.aula
+    FROM evaluaciones ev
+    JOIN estudiantes e ON ev.exp_alumno = e.exp;
 ";
 
 $Res = Ejecutar($Con, $SQL);
@@ -21,7 +20,7 @@ $Res = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Evaluaciones Agendadas</title>
     <style>
 
@@ -60,6 +59,7 @@ $Res = Ejecutar($Con, $SQL);
             font-size: 0;  
           }
         }
+        
     </style>
 </head>
 
@@ -67,9 +67,11 @@ $Res = Ejecutar($Con, $SQL);
   <div class="container-principal">
     <h3>Evaluaciones Agendadas:</h3>
     <div id="table-container">
-          <table>
+      <table>
         <thead>
           <tr>
+            <th>Expediente</th>
+            <th>Nombre</th>
             <th>Fecha</th>
             <th>Hora</th>
             <th>Aula</th>
@@ -80,28 +82,26 @@ $Res = Ejecutar($Con, $SQL);
           <?php
           if ($Res->num_rows > 0){
             while($Fila = $Res->fetch_assoc()){
+              $NombreCom = $Fila["nombre"] . " " . $Fila["a_paterno"] . " " . $Fila["a_materno"];
               $exp = $Fila["exp_alumno"];
-              $fechaCompleta = $Fila['fecha_evaluacion'];
-              
-              // Dividimos la fecha y la hora
-              $fecha = date("Y-m-d", strtotime($fechaCompleta));
-              $hora = date("H:i:s", strtotime($fechaCompleta));
-
+              $fecha = date('Y-m-d', strtotime($Fila['fecha_evaluacion']));
+              $hora = date('H:i', strtotime($Fila['fecha_evaluacion']));
               echo "<tr id='fila-" . $exp . "'>";
+              echo "<td data-label='Expediente'>" . $exp . "</td>";
+              echo "<td data-label='Nombre'>" . $NombreCom . "</td>";
               echo "<td data-label='Fecha'>" . $fecha . "</td>";
               echo "<td data-label='Hora'>" . $hora . "</td>";
               echo "<td data-label='Aula'>" . $Fila['aula'] . "</td>";
               echo "<td data-label='Eliminar'><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }
-          } else {
-            echo "<tr><td colspan='4'>No se encontraron evaluaciones agendadas</td></tr>";
+          }else{
+            echo "<tr><td colspan = '6'>No se encontraron evaluaciones agendadas </td></tr>";
           }
           Cerrar($Con);
           ?>
         </tbody>
       </table>
-
     </div>
   </div>
 
@@ -114,7 +114,7 @@ $Res = Ejecutar($Con, $SQL);
         var xhr = new XMLHttpRequest();
         
         // Configurar la solicitud
-        xhr.open('POST', '../eliminar_evaluacion.php', true);
+        xhr.open('POST', '../Acciones globales/eliminar_evaluacion.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         
         // Definir lo que sucederá cuando la solicitud se complete

@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Incluir el archivo de conexión
-include '../../conexion.php';
+include '../../Config/conexion.php';
 
 // Conectar a la base de datos
 $Con = Conectar();

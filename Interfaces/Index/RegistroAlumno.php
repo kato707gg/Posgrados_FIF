@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $NombreC = "$ApellidoP $ApellidoM $Nombre";
 
     // Conectar a la base de datos
-    include("conexion.php");
+    include("../../Config/conexion.php");
     $Con = Conectar();
     if (!$Con) {
         die(json_encode(["status" => "error", "message" => "Error de conexión: " . mysqli_connect_error()]));

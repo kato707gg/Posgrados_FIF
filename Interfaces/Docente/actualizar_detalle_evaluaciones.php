@@ -1,7 +1,7 @@
 <?php
 // Segundo archivo (actualizar_detalle_evaluaciones.php)
 session_start();
-include '../../conexion.php';
+include '../../Config/conexion.php';
 $Con = Conectar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['expediente'])) {

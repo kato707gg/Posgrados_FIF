@@ -1,5 +1,5 @@
 <?php
-include('../../Header/MenuD.php');
+include('../Header/MenuD.php');
 
 // Verificar si ya hay una sesión activa
 if (session_status() === PHP_SESSION_NONE) {
@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Incluir el archivo de conexión
-include '../../../conexion.php';
+include('../../Config/conexion.php');
 
 // Conectar a la base de datos
 $Con = Conectar();
@@ -53,7 +53,7 @@ $Resultado = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Evaluaciones Pendientes</title>
     <style>
         .inputs {
@@ -65,7 +65,7 @@ $Resultado = Ejecutar($Con, $SQL);
             font-weight: 500;
             color: var(--text-color);
             border: 1px solid #ccc;
-            padding: 1rem 0.5rem;
+            padding: 0.8rem 0.9rem;
             border-radius: clamp(.4rem, .4vw, .4rem);
         }
 
@@ -86,18 +86,26 @@ $Resultado = Ejecutar($Con, $SQL);
         }
 
         .confirmar-icon {
-            color: #123773;
+            color: #ffffff;
             font-size: 1.5rem;
             padding: 0.5rem 0.9rem;
-            background-color: #ffffff;
+            background-color: #123773;
             border: none;
             cursor: pointer;
             border-radius: clamp(.4rem, .4vw, .4rem);
             border-bottom: 0.0625rem solid var(--secondary-color);
         }
 
+        .confirmar-icon:disabled {
+            cursor: not-allowed;
+        }
+
         .confirmar-icon:hover {
-            background-color: #cfcfcf;
+            background-color: #1455bd;
+        }
+
+        .confirmar-icon:disabled:hover {
+            background-color: #123773;
         }
 
         .modal {
@@ -109,6 +117,12 @@ $Resultado = Ejecutar($Con, $SQL);
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
         }
 
         .modal-content {
@@ -116,7 +130,7 @@ $Resultado = Ejecutar($Con, $SQL);
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0.7);
             padding: 2rem;
             border-radius: 0.4rem;
             overflow-y: auto;
@@ -124,6 +138,13 @@ $Resultado = Ejecutar($Con, $SQL);
             max-width: 35%;
             max-height: 70%;
             overflow-x: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
 
         .close {
@@ -153,11 +174,11 @@ $Resultado = Ejecutar($Con, $SQL);
         }
 
         .observacion-input {
+            color: #555;
             font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 500;
             width: 98%;
-            height: 4rem;
             margin: .5rem 0 1rem;
             padding: 0.5rem;
             border: 1px solid #ddd;
@@ -251,7 +272,7 @@ $Resultado = Ejecutar($Con, $SQL);
 
                             // Obtener lista de archivos en la carpeta de entregables
                             $entregables = [];
-                            $dir = "../Posgrados_FIF/Interfaces/Acciones/Alumno/docs/$Expediente/entregables/";
+                            $dir = "../Posgrados_FIF/Interfaces/Alumno/docs/$Expediente/entregables/";
                             if (is_dir($dir)) {
                                 $files = scandir($dir);
                                 foreach ($files as $file) {
@@ -287,7 +308,7 @@ $Resultado = Ejecutar($Con, $SQL);
                             // Modificar la visualización de calificación según el rol
                             echo "<td data-label='Calificación'>";
                             if ($esDirector) {
-                                echo "N/A";
+                                echo "No asignable";
                             } else {
                                 echo "<input type='number' class='inputs' name='calificacion_" . $Expediente . "' 
                                       id='calificacion_" . $Expediente . "' step='0.01' min='0' max='10' 
@@ -333,6 +354,11 @@ $Resultado = Ejecutar($Con, $SQL);
     </div>
 
     <script>
+        // Iniciar con el botón guardar del modal deshabilitado
+        /* const confirmarButton = document.querySelector('.confirmar-button');
+        confirmarButton.classList.add('disabled');
+        confirmarButton.disabled = true; */
+        
         function actualizarEvaluacion(expediente) {
             const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
             const fecha = fila.querySelector('td:nth-child(3)').innerText;
@@ -368,7 +394,7 @@ $Resultado = Ejecutar($Con, $SQL);
             }
 
             // Enviar la solicitud al servidor
-            fetch('../actualizar_detalle_evaluaciones.php', {
+            fetch('actualizar_detalle_evaluaciones.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -444,34 +470,37 @@ $Resultado = Ejecutar($Con, $SQL);
                 contenido.innerHTML = `
                     <div>
                         <label class='label-observaciones'>Sobre Avance gradual:</label>
-                        <textarea class="observacion-input" id="obs1_${expediente}" rows="3" 
+                        <textarea class="observacion-input" id="obs1_${expediente}" rows="5" 
                           onchange="checkFields('${expediente}')">${obsSections[0] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Sobre entregable y resultados esperados:</label>
-                        <textarea class="observacion-input" id="obs2_${expediente}" rows="3" 
+                        <textarea class="observacion-input" id="obs2_${expediente}" rows="5" 
                           onchange="checkFields('${expediente}')">${obsSections[1] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Sobre el Avance del Proyecto:</label>
-                        <textarea class="observacion-input" id="obs3_${expediente}" rows="3" 
+                        <textarea class="observacion-input" id="obs3_${expediente}" rows="5" 
                           onchange="checkFields('${expediente}')">${obsSections[2] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Comentario Individual:</label>
-                        <textarea class="observacion-input" id="obs4_${expediente}" rows="3" 
+                        <textarea class="observacion-input" id="obs4_${expediente}" rows="5" 
                           onchange="checkFields('${expediente}')">${obsSections[3] || ''}</textarea>
                     </div>`;
             } else {
                 // Formato para sínodo
                 contenido.innerHTML = `
                     <div>
-                        <textarea class="observacion-input" id="obs_${expediente}" rows="3" 
-                          onchange="checkFields('${expediente}')">${existingObservations}</textarea>
+                        <textarea class="observacion-input" id="obs_${expediente}" rows="5" 
+                          onchange="checkFields('${expediente}')" required>${existingObservations}</textarea>
                     </div>`;
             }
 
             modal.style.display = "block";
+            // Forzar un reflow para que la transición funcione
+            modal.offsetHeight;
+            modal.classList.add('show');
         }
 
         function guardarObservaciones() {
@@ -498,7 +527,12 @@ $Resultado = Ejecutar($Con, $SQL);
         }
 
         function cerrarModal() {
-            document.getElementById('modalObservaciones').style.display = "none";
+            const modal = document.getElementById('modalObservaciones');
+            modal.classList.remove('show');
+            // Esperar a que termine la animación antes de ocultar el modal
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300); // Este tiempo debe coincidir con la duración de la transición en CSS
         }
 
         // Event listeners
@@ -515,3 +549,13 @@ $Resultado = Ejecutar($Con, $SQL);
 </body>
 
 </html>
+
+Adipisicing consequat pariatur incididunt reprehenderit non aliqua adipisicing aute nulla. Occaecat laborum nulla in aliqua ipsum amet. Pariatur incididunt in laboris pariatur anim et pariatur exercitation est. Elit esse fugiat exercitation pariatur ad anim. Irure sint in irure aliquip officia anim veniam tempor consectetur fugiat commodo.
+
+Non in voluptate do laborum consectetur aliquip nostrud commodo aliqua elit proident nostrud ullamco excepteur. Qui ad adipisicing aute cupidatat duis tempor in. Voluptate reprehenderit dolore officia duis adipisicing velit dolor sint qui culpa occaecat tempor qui non. Elit anim esse ipsum consequat voluptate nisi labore duis pariatur proident exercitation occaecat aliquip. Nulla cillum sint est minim. Mollit esse voluptate dolore duis sunt ex non magna ipsum laboris. Reprehenderit cillum dolor duis dolore.
+
+Incididunt laboris culpa do nostrud consequat ea et Lorem proident ea pariatur. Nisi ipsum id aliquip amet nisi ex Lorem cillum ullamco nulla. Magna aute sit velit labore in sint voluptate eiusmod nisi et anim mollit ullamco aliquip. Officia elit sunt sint occaecat eiusmod exercitation aliqua est nulla. Dolore incididunt reprehenderit reprehenderit Lorem mollit exercitation cupidatat.
+
+Ea ut mollit dolor fugiat consequat duis occaecat enim ea. Cupidatat elit eiusmod esse ea dolore culpa velit mollit ea labore. Dolor velit consectetur veniam dolore duis irure ipsum aliqua minim reprehenderit eu cupidatat eiusmod adipisicing. Aute sit proident aliquip sunt nostrud mollit ut aute. Labore duis in mollit cupidatat exercitation consequat enim ex sunt sit laborum sunt ex.
+
+Officia cupidatat commodo ad aliquip sit aliquip in. Non culpa occaecat nisi laboris aliquip sunt quis ullamco fugiat. Ad eiusmod enim nisi Lorem quis qui aliqua in. Fugiat ea amet eu minim est ullamco. Proident quis id consequat sunt cillum exercitation incididunt ipsum laborum fugiat anim nostrud. Nulla amet laborum mollit deserunt. Reprehenderit pariatur eiusmod proident eu deserunt commodo id laboris.

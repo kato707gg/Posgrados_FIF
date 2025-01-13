@@ -1,5 +1,5 @@
 <?php
-include '../../conexion.php';
+include '../../Config/conexion.php';
 
 $Con = Conectar();
 $id_evaluacion = $_GET['id_evaluacion'];

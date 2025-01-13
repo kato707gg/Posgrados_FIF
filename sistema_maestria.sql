@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2024 a las 01:19:26
+-- Tiempo de generación: 13-01-2025 a las 08:25:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,9 +42,9 @@ CREATE TABLE `asignaciones` (
 --
 
 INSERT INTO `asignaciones` (`id`, `exp_alumno`, `director`, `sinodo2`, `sinodo3`, `externo`, `clave_coordinador`) VALUES
-(34, 1, 4321, 1234, 33333, 54321, 567575),
-(35, 2, 4321, 1234, 12345, 33333, 567575),
-(36, 3, 4321, 1234, 12345, 114090, 567575);
+(45, 301574, 54321, 111111, 114090, 222222, 567575),
+(47, 1, 0, 1234, 4321, 12345, 567575),
+(48, 2, 1234, 4321, 12345, 33333, 567575);
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,11 @@ INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
 (222222, 'ESPINOZA22', 'D'),
 (33333, 'DELGADO33', 'D'),
 (444444, 'BLANKED44', 'D'),
-(128976, 'SANTIAGO65', 'A');
+(128976, 'SANTIAGO65', 'A'),
+(301627, 'PACHECO77', 'A'),
+(23423, 'HERNANDEZ23', 'D'),
+(301579, 'HERNANDEZ65', 'A'),
+(25245, 'HERNANDEZ45', 'D');
 
 -- --------------------------------------------------------
 
@@ -131,22 +135,25 @@ CREATE TABLE `detalle_evaluaciones` (
   `id_sinodo` bigint(20) NOT NULL,
   `calificacion` double NOT NULL,
   `observacion` varchar(500) DEFAULT NULL,
-  `periodo` varchar(7) NOT NULL
+  `periodo` varchar(7) NOT NULL,
+  `d_observacion1` varchar(300) DEFAULT NULL,
+  `d_observacion2` varchar(300) DEFAULT NULL,
+  `d_observacion3` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_evaluaciones`
 --
 
-INSERT INTO `detalle_evaluaciones` (`id_detalle`, `id_evaluacion`, `id_sinodo`, `calificacion`, `observacion`, `periodo`) VALUES
-(41, 25, 4321, 0, NULL, ''),
-(42, 25, 1234, 10, 'Bien', '2024-2'),
-(43, 25, 33333, 0, NULL, ''),
-(44, 25, 54321, 0, NULL, ''),
-(45, 28, 4321, 0, NULL, ''),
-(46, 28, 1234, 10, 'ASDAD', '2025-2'),
-(47, 28, 12345, 10, 'sdasda', '2025-2'),
-(48, 28, 33333, 0, NULL, '');
+INSERT INTO `detalle_evaluaciones` (`id_detalle`, `id_evaluacion`, `id_sinodo`, `calificacion`, `observacion`, `periodo`, `d_observacion1`, `d_observacion2`, `d_observacion3`) VALUES
+(121, 47, 54321, 0, 'Nostrud magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.746764', '2025-2', 'Nostrud magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor ad', 'Nostrud magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor ad', 'Nostrud magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor ad'),
+(122, 47, 111111, 7.8, 'Sytilugiluyt magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
+(123, 47, 114090, 9, 'Hyurfytdyd magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
+(124, 47, 222222, 7.7, 'Vhwdyi magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
+(134, 51, 1234, 0, NULL, '', NULL, NULL, NULL),
+(135, 51, 4321, 0, NULL, '', NULL, NULL, NULL),
+(136, 51, 12345, 0, NULL, '', NULL, NULL, NULL),
+(137, 51, 33333, 0, NULL, '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -167,6 +174,7 @@ CREATE TABLE `docentes` (
 --
 
 INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) VALUES
+(0, 'Sin sínodo', '', '', 'A'),
 (1234, 'ARTURO MAURICIO', 'IBARRA', 'CORONA', 'A'),
 (4321, 'ERNESTO', 'RUBALCABA', 'DURAN', 'A'),
 (12345, 'CARLOS ALBERTO', 'OLMOS', 'TREJO', 'A'),
@@ -176,6 +184,21 @@ INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) V
 (114090, 'JAVIER', 'PAULIN', 'MARTINEZ', 'A'),
 (222222, 'JULIO', 'ESPINOZA', 'PAZ', 'A'),
 (444444, 'HUGO', 'BLANKED', 'J', 'A');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documentos_alumno`
+--
+
+CREATE TABLE `documentos_alumno` (
+  `id` int(11) NOT NULL,
+  `exp_alumno` bigint(20) DEFAULT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
+  `nombre_archivo` varchar(255) DEFAULT NULL,
+  `ruta` varchar(255) DEFAULT NULL,
+  `fecha_subida` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -208,7 +231,9 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 (114589, 'HANNA PAOLA', 'VELEZQUEZ', 'SUAREZ', 5985233178, 'h@gmail.com', 'MCC'),
 (128976, 'VIRGINIA', 'SANTIAGO', 'PABLO', 4411200465, 'vicky_changuito@hotmail.com', 'MCC'),
 (301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
+(301579, 'DIEGO', 'HERNANDEZ', 'SANCHEZ', 4424322665, 'katoh707@gmail.com', 'DITE'),
 (301612, 'YARETZI', 'AA', '123123', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
+(301627, 'MARIA FERNANDA', 'PACHECO', 'SANCHEZ', 4426532877, 'mpacheco@alumnos.uaq.mx', 'DCC'),
 (456789, 'SIUL FERNANDO', 'MARTINEZ', 'MANCERA', 9874561237, 's@gmail.com', 'DCC');
 
 -- --------------------------------------------------------
@@ -230,8 +255,8 @@ CREATE TABLE `evaluaciones` (
 --
 
 INSERT INTO `evaluaciones` (`id`, `exp_alumno`, `fecha_evaluacion`, `cal_final`, `aula`) VALUES
-(25, 1, '2024-11-19 17:37:00', 0, 'A13'),
-(28, 2, '2025-02-19 19:22:00', 0, 'A10');
+(47, 301574, '2025-01-10 09:32:00', 8.17, 'A1'),
+(51, 2, '2025-01-14 12:45:00', 0, 'A2');
 
 --
 -- Índices para tablas volcadas
@@ -270,6 +295,13 @@ ALTER TABLE `docentes`
   ADD PRIMARY KEY (`clave`);
 
 --
+-- Indices de la tabla `documentos_alumno`
+--
+ALTER TABLE `documentos_alumno`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exp_alumno` (`exp_alumno`);
+
+--
 -- Indices de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
@@ -290,19 +322,25 @@ ALTER TABLE `evaluaciones`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+
+--
+-- AUTO_INCREMENT de la tabla `documentos_alumno`
+--
+ALTER TABLE `documentos_alumno`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluaciones`
 --
 ALTER TABLE `evaluaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Restricciones para tablas volcadas
@@ -324,6 +362,12 @@ ALTER TABLE `asignaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
   ADD CONSTRAINT `detalle_evaluaciones_ibfk_1` FOREIGN KEY (`id_sinodo`) REFERENCES `docentes` (`clave`);
+
+--
+-- Filtros para la tabla `documentos_alumno`
+--
+ALTER TABLE `documentos_alumno`
+  ADD CONSTRAINT `documentos_alumno_ibfk_1` FOREIGN KEY (`exp_alumno`) REFERENCES `estudiantes` (`exp`);
 
 --
 -- Filtros para la tabla `evaluaciones`

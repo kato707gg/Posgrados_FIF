@@ -1,9 +1,9 @@
 <?php
-  include('../../Header/MenuA.php');
+  include('../Header/MenuA.php');
   if(session_status()===PHP_SESSION_NONE){
     session_start();
    }
-include('../../../conexion.php');
+include('../../Config/conexion.php');
 $Con = Conectar();
 $id = $_SESSION['id'];
 
@@ -23,7 +23,7 @@ $Res = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Agendar Evaluación</title>
     <style>
 
@@ -138,8 +138,13 @@ $Res = Ejecutar($Con, $SQL);
                 font-size: 0;  
             }
 
-            .asignar-button {
-                margin-left: auto; /* Empuja el botón hacia la derecha */
+            .quitar-archivo::before {
+                font-size: 1.5rem;
+                content: '❌';
+            }
+
+            .quitar-archivo {
+                font-size: 0;  /* Oculta el texto original */
             }
         }
     </style>
@@ -213,7 +218,7 @@ $Res = Ejecutar($Con, $SQL);
         
             // Crear una solicitud XMLHttpRequest
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '../insertar_evaluacion.php', true);
+            xhr.open('POST', '../../../Posgrados_FIF/insertar_evaluacion.php', true);
         
             // Manejo de la respuesta del servidor
             xhr.onreadystatechange = function () {

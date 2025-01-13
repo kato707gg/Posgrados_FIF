@@ -46,7 +46,18 @@ document.querySelector('form[action="RegistroAlumno.php"]').addEventListener('su
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.text().then(text => {
+            console.log('Response text:', text);
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                throw new Error('Invalid JSON response: ' + text);
+            }
+        });
+    })
     .then(data => {
         const popup = document.getElementById('popup');
         const popupText = document.getElementById('popup-text');
@@ -59,44 +70,38 @@ document.querySelector('form[action="RegistroAlumno.php"]').addEventListener('su
             operationSuccess = true; // Marca la operación como exitosa
             // Mostrar el mensaje y el botón de copiar
             popupText.innerText = data.message;
-            copyButton.style.display = 'block'; // Muestra el botón de copiar
-
-            // Manejar la funcionalidad de copiado
-            copyButton.addEventListener('click', function() {
-                navigator.clipboard.writeText(data.copyText)
-                    .then(() => {
-                        alert('Credenciales copiadas al portapapeles');
-                    })
-                    .catch(err => {
-                        console.error('Error al copiar:', err);
-                    });
-            });
-
+            copyButton.style.display = 'block';
+            window.copyText = data.copyText; // Guardamos el texto para copiar
         } else if (data.status === 'exists') {
             // Mostrar el mensaje de que la cuenta ya existe sin el botón de copiar
             popupText.innerText = data.message;
-
-        } else if (data.status === 'error') {
-            // Mostrar el mensaje de error
-            popupText.innerText = data.message;
+        } else {
+            popupText.innerText = data.message || 'Error desconocido al registrar la cuenta';
         }
 
         // Mostrar el popup
         popup.style.display = 'block';
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un problema al registrar la cuenta.');
+        console.error('Error completo:', error);
+        const popup = document.getElementById('popup');
+        const popupText = document.getElementById('popup-text');
+        popupText.innerText = 'Error al procesar la solicitud: ' + error.message;
+        popup.style.display = 'block';
     });
 });
 
 function copyToClipboard() {
-    const text = document.getElementById("popup-text").innerText;
-    navigator.clipboard.writeText(data.copyText).then(function() {
-        alert("Texto copiado al portapapeles");
-    }, function(err) {
-        alert("Error al copiar el texto: ", err);
-    });
+    if (window.copyText) {
+        navigator.clipboard.writeText(window.copyText)
+            .then(() => {
+                alert("Credenciales copiadas al portapapeles");
+            })
+            .catch(err => {
+                console.error('Error al copiar:', err);
+                alert("Error al copiar el texto");
+            });
+    }
 }
 
 function closePopup() {
@@ -114,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     togglePassword.addEventListener('click', function (e) {
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
-        this.querySelector('img').src = type === 'password' ? 'eye-icon.png' : 'eye-slash-icon.png';
+        this.querySelector('img').src = type === 'password' ? '../../Imagenes/eye-icon.png' : '../../Imagenes/eye-slash-icon.png';
     });
 
     // Función para mostrar el ícono solo si hay texto

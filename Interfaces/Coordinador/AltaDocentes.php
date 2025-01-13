@@ -1,5 +1,5 @@
 <?php
-  include('../../Header/MenuC.php');
+  include('../Header/MenuC.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Posgrado FIF</title>
     <style> 
         .alta-docentes {
@@ -198,7 +198,7 @@
   <div class="alta-docentes" id="registrationOptions">
         <h3>Alta de Docentes</h3>
         <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;" id="box-1034">
-        <form action="../Acciones/RegistroDocentes.php" method="POST">
+        <form action="../Coordinador/RegistroDocentes.php" method="POST">
             <div class="grid-container">
                 <div>
                     <label for="expediente">Clave</label>
@@ -240,12 +240,12 @@
     </div>
     <script>
         let operationSuccess = false; // Variable global para el estado de la operación
-        document.querySelector('form[action="../Acciones/RegistroDocentes.php"]').addEventListener('submit', function(event) {
+        document.querySelector('form[action="../Coordinador/RegistroDocentes.php"]').addEventListener('submit', function(event) {
             event.preventDefault(); // Evita el envío del formulario de la manera tradicional
 
             const formData = new FormData(this);
 
-            fetch('../Acciones/RegistroDocentes.php', {
+            fetch('../Coordinador/RegistroDocentes.php', {
                 method: 'POST',
                 body: formData
             })
@@ -294,18 +294,22 @@
         });
 
         function copyToClipboard() {
-            const text = document.getElementById("popup-text").innerText;
-            navigator.clipboard.writeText(data.copyText).then(function() {
-                alert("Texto copiado al portapapeles");
-            }, function(err) {
-                alert("Error al copiar el texto: ", err);
-            });
+            if (window.copyText) {
+                navigator.clipboard.writeText(window.copyText)
+                    .then(() => {
+                        alert("Credenciales copiadas al portapapeles");
+                    })
+                    .catch(err => {
+                        console.error('Error al copiar:', err);
+                        alert("Error al copiar el texto");
+                    });
+            }
         }
 
         function closePopup() {
             document.getElementById("popup").style.display = "none";
             // Limpiar todos los campos del formulario
-            document.querySelector('form[action="../Acciones/RegistroDocentes.php"]').reset(); // {{ edit_1 }}
+            document.querySelector('form[action="../Coordinador/RegistroDocentes.php"]').reset();
         }
     </script>
   </body>

@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener datos del formulario y limpiar las entradas
     $Clave = trim($_POST['clave']);
@@ -13,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ApellidoP=trim($ApellidoP);
 
     // Convertir a mayúsculas y quitar acentos
-    include("../../LimpiaCadenas.php");
+    include("../Index/LimpiaCadenas.php");
     $Nombre = strtoupper(eliminar_acentos($Nombre));
     $ApellidoP = strtoupper(eliminar_acentos($ApellidoP));
     $ApellidoM = strtoupper(eliminar_acentos($ApellidoM));
@@ -25,20 +27,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $NombreC = "$ApellidoP $ApellidoM $Nombre";
 
     // Conectar a la base de datos
-    include("../../conexion.php");
+    include("../../Config/conexion.php");
     $Con = Conectar();
     if (!$Con) {
         die(json_encode(["status" => "error", "message" => "Error de conexión: " . mysqli_connect_error()]));
     }
 
-    header('Content-Type: application/json');
-    $response = [];
-
     // Verificar si el expediente ya existe
     $SQL1 = "SELECT * FROM docentes WHERE clave = ?";
     $stmt1 = mysqli_prepare($Con, $SQL1);
     mysqli_stmt_bind_param($stmt1, 's', $Clave);  
-    mysqli_stmt_execute($stmt1);
+    
+    if (!$stmt1->execute()) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error en la consulta: ' . mysqli_error($Con)
+        ]);
+        exit;
+    }
+
     $Result = mysqli_stmt_get_result($stmt1);
 
     if (mysqli_num_rows($Result) == 0) {
@@ -49,34 +56,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                  VALUES (?, ?, 'D')";
 
         $stmt2 = mysqli_prepare($Con, $SQL2);
-        mysqli_stmt_bind_param($stmt2, 'issss', $Clave, $Nombre, $ApellidoP, $ApellidoM, $Status);
-
         $stmt3 = mysqli_prepare($Con, $SQL3);
+
+        if (!$stmt2 || !$stmt3) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error al preparar las consultas: ' . mysqli_error($Con)
+            ]);
+            exit;
+        }
+
+        mysqli_stmt_bind_param($stmt2, 'issss', $Clave, $Nombre, $ApellidoP, $ApellidoM, $Status);
         mysqli_stmt_bind_param($stmt3, 'is', $Clave, $Password);
 
         if (mysqli_stmt_execute($stmt2) && mysqli_stmt_execute($stmt3)) {
-            $response['status'] = 'success';
-            $response['message'] = "Cuenta registrada correctamente.\n\n" .
-                                   "Bienvenido $NombreC.\n" .
-                                   "Tus credenciales de acceso son:\n" .
-                                   "Usuario: $Clave\n" .
-                                   "Password: $Password\n\n" .
-                                   "Recuerda guardar tus credenciales para acceder al sistema.";
-            
-            $response['copyText'] = "Tus credenciales de acceso son:\n" .
-                                    "Usuario: $Clave\n" .
-                                    "Password: $Password";
+            echo json_encode([
+                'status' => 'success',
+                'message' => "Cuenta registrada correctamente.\n\n" .
+                           "Bienvenido $NombreC.\n" .
+                           "Tus credenciales de acceso son:\n" .
+                           "Usuario: $Clave\n" .
+                           "Password: $Password\n\n" .
+                           "Recuerda guardar tus credenciales para acceder al sistema.",
+                'copyText' => "Tus credenciales de acceso son:\n" .
+                            "Usuario: $Clave\n" .
+                            "Password: $Password"
+            ]);
         } else {
-            $response['status'] = 'error';
-            $response['message'] = "Error al registrar la cuenta: " . mysqli_error($Con);
+            echo json_encode([
+                'status' => 'error',
+                'message' => "Error al registrar la cuenta: " . mysqli_error($Con)
+            ]);
         }
     } else {
-        $response['status'] = 'exists';
-        $response['message'] = "La cuenta ya ha sido registrada anteriormente.\n\n" .
-                               "Para recuperar tus credenciales de acceso, envía un correo a: francisco.javier.paulin@uaq.mx";
+        echo json_encode([
+            'status' => 'exists',
+            'message' => "La cuenta ya ha sido registrada anteriormente.\n\n" .
+                       "Para recuperar tus credenciales de acceso, envía un correo a: francisco.javier.paulin@uaq.mx"
+        ]);
     }
-
-    echo json_encode($response);
 
     // Cerrar la conexión
     mysqli_close($Con);

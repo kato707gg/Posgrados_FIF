@@ -37,7 +37,7 @@ $mesNombre =  obtenerNombreMes($mesNum);
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include("../conexion.php");
+include("../Config/conexion.php");
 
 
 $id_alumno = $_SESSION['id'];
@@ -110,10 +110,6 @@ require('fpdf.php');
 
 // Establecer márgenes (izquierdo, superior, derecho)
 
-
-
-
-
 // Crear una clase personalizada que hereda de FPDF
 class PDF extends FPDF
 {
@@ -131,9 +127,10 @@ class PDF extends FPDF
 // Crear instancia de la clase PDF personalizada
 $pdf = new PDF();
 $pdf->AddPage();
-$pdf->SetMargins(25, 30, 25);
+$pdf->SetMargins(25, 40, 25);
+
 // Definir el interlineado deseado (altura de la celda)
-$lineHeight = 6;  // Puedes ajustar este valor según tus necesidades
+$lineHeight = 6;
 
 $pdf->Ln(30);
 
@@ -165,27 +162,27 @@ $pdf->Ln($lineHeight);
 // Secciones de evaluación
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode('Sobre Avance gradual'), 0, 1);
-$pdf->SetFont('Arial', '', 10);
+$pdf->SetFont('Arial', '', 12);
 $pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n" . $obs1), 0, 'J');
 $pdf->Ln(10); // Espacio entre secciones
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode("Sobre entregable y resultados esperados de acuerdo con el semestre a evaluar"), 0, 1);
 $pdf->Cell(0, $lineHeight, utf8_decode("(ver anexo)"), 0, 1);
-$pdf->SetFont('Arial', '', 10);
+$pdf->SetFont('Arial', '', 12);
 $pdf->MultiCell(0, $lineHeight, utf8_decode("Observaciones y recomendaciones:\n\n" . $obs2), 0, 'J');
 $pdf->Ln(10); // Espacio entre secciones
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode('Sobre el Avance del Proyecto'), 0, 1);
-$pdf->SetFont('Arial', '', 10);
+$pdf->SetFont('Arial', '', 12);
 $pdf->MultiCell(0, $lineHeight, utf8_decode("(Avances en la metodología y pertinencia en la estrategia experimental)\n\n"
     . "Observaciones y recomendaciones:\n\n" . $obs3), 0, 'J');
-$pdf->Ln(10); // Espacio entre secciones
+$pdf->Ln(5); // Espacio entre secciones
 
 
 
-$pdf->Ln(10);                                // Calificación
+$pdf->Ln(10);// Calificación
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, $lineHeight, utf8_decode("Calificación: $Cal_Final"), 0, 1);
 $pdf->Ln($lineHeight);
@@ -196,42 +193,55 @@ $columna = 80;
 $pdf->Cell($columna, $lineHeight, utf8_decode('INTEGRANTES DEL COMITÉ'), 1, 0, 'C');
 $pdf->Cell($columna, $lineHeight, utf8_decode('COMENTARIO INDIVIDUAL'), 1, 1, 'C');
 
-
-
 // Configuración de las columnas
 $colWidth = 80; // Ancho de cada columna
-$lineHeight = 35; // Altura fija de cada fila
-$fontHeight = 8; // Altura aproximada del texto en puntos
+$minHeight = 30; // Altura mínima de cada fila
+$fontHeight = 4; // Altura de cada línea de texto
 
-// Configuración de la fuente para las filas
 $pdf->SetFont('Arial', '', 10);
 
-// Verificar si hay sinodales en el resultado
 if (mysqli_num_rows($Resultado) > 0) {
     while ($sinodo = mysqli_fetch_array($Resultado)) {
-        // Obtener el nombre completo del sinodal y su comentario
         $nombreSinodo = utf8_decode($sinodo['nombre'] . ' ' . $sinodo['a_paterno'] . ' ' . $sinodo['a_materno']);
         $comentario = utf8_decode($sinodo['observacion']);
 
-        // Posición inicial de la celda
-        $x = $pdf->GetX();
-        $y = $pdf->GetY();
+        // Calcular altura necesaria para el comentario
+        $pdf->SetFont('Arial', '', 10);
+        $comentarioHeight = $pdf->GetStringWidth($comentario) / $colWidth * $fontHeight;
+        $cellHeight = max($minHeight, $comentarioHeight + 10);
 
-        // Columna 1: Nombre (ajustar texto hacia abajo)
-        $pdf->Cell($colWidth, $lineHeight, '', 1, 0); // Crear celda vacía con borde
-        $pdf->SetXY($x, $y + $lineHeight - $fontHeight - 2); // Ajustar texto hacia abajo
-        $pdf->Cell($colWidth, $fontHeight, $nombreSinodo, 0, 0, 'C'); // Agregar texto dentro de la celda
+        // Verificar si hay espacio suficiente en la página
+        if ($pdf->GetY() + $cellHeight > $pdf->GetPageHeight() - 30) {
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell($columna, $lineHeight, utf8_decode('INTEGRANTES DEL COMITÉ'), 1, 0, 'C');
+            $pdf->Cell($columna, $lineHeight, utf8_decode('COMENTARIO INDIVIDUAL'), 1, 1, 'C');
+            $pdf->SetFont('Arial', '', 10);
+        }
 
-        // Volver a la posición inicial para la siguiente columna
-        $pdf->SetXY($x + $colWidth, $y);
+        // Guardar posición inicial
+        $startY = $pdf->GetY();
+        $startX = $pdf->GetX();
 
-        // Columna 2: Comentario Individual
-        $pdf->Cell($colWidth, $lineHeight, $comentario, 1, 1, 'C'); // '1' al final para cambiar de línea
+        // Dibujar celdas con la altura calculada
+        $pdf->Cell($colWidth, $cellHeight, '', 1, 0);
+        $pdf->SetXY($startX + $colWidth, $startY);
+        $pdf->Cell($colWidth, $cellHeight, '', 1, 0);
+
+        // Nombre centrado verticalmente
+        $pdf->SetXY($startX, $startY + ($cellHeight/2) - 2);
+        $pdf->Cell($colWidth, 5, $nombreSinodo, 0, 0, 'C');
+
+        // Comentario con MultiCell
+        $pdf->SetXY($startX + $colWidth + 1, $startY + 2);
+        $pdf->MultiCell($colWidth - 2, $fontHeight, $comentario, 0, 'L');
+
+        // Mover a la siguiente línea
+        $pdf->SetXY($startX, $startY + $cellHeight);
     }
 } else {
-    // Si no hay sinodales, mostrar un mensaje vacío en la tabla
-    $pdf->Cell($colWidth, $lineHeight, utf8_decode('Sin información de sinodales'), 1, 0, 'C');
-    $pdf->Cell($colWidth, $lineHeight, utf8_decode('Sin comentarios'), 1, 1, 'C');
+    $pdf->Cell($colWidth, $minHeight, utf8_decode('Sin información de sinodales'), 1, 0, 'C');
+    $pdf->Cell($colWidth, $minHeight, utf8_decode('Sin comentarios'), 1, 1, 'C');
 }
 
 // Generar el PDF

@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión
-include '../../conexion.php';
+include 'Config/conexion.php';
 
 // Conectar a la base de datos
 $Con = Conectar();
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Manejo de archivo (si existe)
     if (isset($_FILES['entregable']) && $_FILES['entregable']['error'] == 0) {
-        $basePath = "Posgrados_FIF//Interfaces/Acciones//Alumno/docs/$exp_alumno/entregables";
+        $basePath = "Entregables/$exp_alumno";
 
         // Crear la carpeta si no existe
         if (!file_exists($basePath)) {
@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "No se seleccionó ningún archivo o hubo un error en la carga.";
         exit;
     }
-
 
     // Iniciar transacción
     mysqli_begin_transaction($Con);

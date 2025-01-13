@@ -1,10 +1,10 @@
 <?php
-  include('../../Header/MenuC.php');
+  include('../Header/MenuC.php');
 ?>
 
 <?php
 // Incluir el archivo de conexión
-include '../../../conexion.php';
+include '../../Config/conexion.php';
 
 // Conectar a la base de datos
 $Con = Conectar();
@@ -30,7 +30,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Asignar Sinodo</title>
     <style>
         
@@ -74,6 +74,12 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
         }
 
         .modal-content {
@@ -81,13 +87,20 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0.7);
             padding: 2rem;
             width: 50%;
             height: 80%;
             border-radius: 0.4rem;
             overflow-y: auto;
             padding-bottom: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
 
         .modal-table {
@@ -324,8 +337,13 @@ function handleCheckbox(checkbox, nombreSinodo) {
 // Función para abrir el modal
 function openModal(button) {
     currentButton = button;
-    const exp = button.closest('tr').querySelector('td:first-child').textContent; // Obtener el expediente de la fila actual
-    document.getElementById("sinodoModal").style.display = "block";
+    const modal = document.getElementById("sinodoModal");
+    const exp = button.closest('tr').querySelector('td:first-child').textContent;// Obtener el expediente de la fila actual
+    
+    modal.style.display = "block";
+    // Forzar un reflow para que la transición funcione
+    modal.offsetHeight;
+    modal.classList.add('show');
 
     confirmarButton.classList.add('disabled');
     confirmarButton.disabled = true;
@@ -361,7 +379,12 @@ function confirmSelection() {
             currentButton.style.display = 'none'; // Ocultar el botón de Asignar
             sinodoContainer.textContent = currentButton.sinodoNombre; // Mostrar el sínodo asignado (nombre)
             sinodoContainer.dataset.sinodoClave = selectedSinodo; // Almacenar la clave en un data attribute
-            document.getElementById("sinodoModal").style.display = "none"; // Cerrar el modal
+            
+            const modal = document.getElementById("sinodoModal");
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300);
 
             // Guardar el sínodo asignado en el objeto del estudiante actual
             if (!sinodosSeleccionadosPorEstudiante[exp]) {
@@ -386,7 +409,7 @@ function confirmarAsignacion(exp) {
     if (sinodos.length === 4) {
         console.log(sinodos);
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "../insertar_sinodos.php", true);
+        xhr.open("POST", "../Coordinador/insertar_sinodos.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -404,17 +427,67 @@ function confirmarAsignacion(exp) {
 // Función para cerrar el modal
 let closeModalButton = document.querySelector('.close');
 closeModalButton.onclick = function() {
-    document.getElementById("sinodoModal").style.display = "none";
+    const modal = document.getElementById("sinodoModal");
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 300);
 }
 
 // Cerrar el modal si se hace clic fuera del contenido
 window.onclick = function(event) {
     let modal = document.getElementById("sinodoModal");
     if (event.target === modal) {
-        modal.style.display = "none";
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 300);
     }
 }
 </script>
 
 </body>
+</html><?php
+  include('../../Header/MenuC.php');
+?>
+
+<?php
+// Incluir el archivo de conexión
+include '../../../Config/conexion.php';
+
+// Conectar a la base de datos
+$Con = Conectar();
+
+// Consulta SQL para obtener los datos de los estudiantes
+$SQL = "
+    SELECT e.exp, e.nombre, e.a_paterno, e.a_materno 
+    FROM estudiantes e 
+    INNER JOIN coordinadores c ON e.programa = c.programa 
+    LEFT JOIN asignaciones a ON e.exp = a.exp_alumno 
+    WHERE a.exp_alumno IS NULL
+";
+
+$Resultado = Ejecutar($Con, $SQL);
+
+$SQLSinodos = "SELECT clave, nombre, a_paterno, a_materno FROM docentes"; // Consulta para obtener los sinodos
+$ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <title>Asignar Sinodo</title>
+    <style>
+        /* Estilos aquí */
+    </style>
+</head>
+
+<body>
+    <!-- Contenido aquí -->
+</body>
+
 </html>

@@ -1,5 +1,5 @@
 <?php
-  include('../../Header/MenuA.php');
+  include('../Header/MenuA.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Documentos</title>
 </head>
 
@@ -257,26 +257,17 @@
                 formData.append('file', fileInput.files[0]);
                 formData.append('documentType', documentType.value);
 
-                // Mostrar algún indicador de carga si lo deseas
                 uploadBtn.disabled = true;
                 uploadBtn.textContent = 'Subiendo...';
 
-                fetch('../upload_document.php', {
+                fetch('upload_document.php', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Actualizar la tabla con el nuevo documento
-                        let documents = JSON.parse(localStorage.getItem('documents') || '[]');
-                        documents.push({
-                            date: data.data.date,
-                            type: data.data.type,
-                            fileName: data.data.fileName,
-                            fileURL: data.data.path
-                        });
-                        localStorage.setItem('documents', JSON.stringify(documents));
+                        // Actualizar la tabla directamente
                         updateDocumentsTable();
 
                         // Limpiar el formulario
@@ -294,7 +285,6 @@
                     alert('Error al subir el archivo');
                 })
                 .finally(() => {
-                    // Restaurar el botón
                     uploadBtn.disabled = false;
                     uploadBtn.textContent = 'Subir archivo';
                 });
@@ -302,26 +292,33 @@
         }
 
         function updateDocumentsTable() {
-            const tableBody = document.getElementById('documents-table-body');
-            const documents = JSON.parse(localStorage.getItem('documents') || '[]');
-            
-            tableBody.innerHTML = '';
-            documents.forEach(doc => {
-                const row = tableBody.insertRow();
-                
-                // Agregar data-label a cada celda
-                const dateCell = row.insertCell(0);
-                dateCell.setAttribute('data-label', 'Fecha');
-                dateCell.textContent = doc.date;
-                
-                const typeCell = row.insertCell(1);
-                typeCell.setAttribute('data-label', 'Tipo');
-                typeCell.textContent = doc.type;
-                
-                const viewCell = row.insertCell(2);
-                viewCell.setAttribute('data-label', 'Vista');
-                viewCell.innerHTML = `<span class="ver-doc" onclick="viewDocument('${doc.fileURL}')">👁</span>`;
-            });
+            fetch('../Acciones globales/get_documents.php')
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        const tableBody = document.getElementById('documents-table-body');
+                        tableBody.innerHTML = '';
+                        
+                        result.data.forEach(doc => {
+                            const row = tableBody.insertRow();
+                            
+                            const dateCell = row.insertCell(0);
+                            dateCell.setAttribute('data-label', 'Fecha');
+                            dateCell.textContent = doc.date;
+                            
+                            const typeCell = row.insertCell(1);
+                            typeCell.setAttribute('data-label', 'Tipo');
+                            typeCell.textContent = doc.type;
+                            
+                            const viewCell = row.insertCell(2);
+                            viewCell.setAttribute('data-label', 'Vista');
+                            viewCell.innerHTML = `
+                                <span class="ver-doc" onclick="viewDocument('${doc.fileURL}')">👁</span>
+                            `;
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         function viewDocument(fileURL) {

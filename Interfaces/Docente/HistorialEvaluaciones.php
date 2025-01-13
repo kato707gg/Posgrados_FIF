@@ -1,12 +1,12 @@
 <?php
-include('../../Header/MenuD.php');
+include('../Header/MenuD.php');
 // Verificar si ya hay una sesión activa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 // Incluir el archivo de conexión
-include '../../../conexion.php';
+include '../../Config/conexion.php';
 
 // Conectar a la base de datos
 $Con = Conectar();
@@ -53,7 +53,7 @@ $Periodos = Ejecutar($Con, $SQL2);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../tablas.css">
+    <link rel="stylesheet" href="../../CSS/tablas.css">
     <title>Historial de Evaluaciones</title>
 </head>
 <style>
@@ -126,7 +126,6 @@ $Periodos = Ejecutar($Con, $SQL2);
                         <input class="buscar nombre" type="text" id="search-name" placeholder="Buscar...">
                     </th>
                     <th>Fecha</th>
-                    <th>Aula</th>
                     <th>
                         Periodo
                         <br>
@@ -159,7 +158,6 @@ $Periodos = Ejecutar($Con, $SQL2);
                         $Fecha = $Fila["fecha_evaluacion"];
                         $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
                         echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
-                        echo "<td data-label='Aula'>" . (!empty($Fila["aula"]) ? $Fila["aula"] : "Pendiente") . "</td>";
                         echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
                         echo "<td data-label='Calificación'>" . $Fila["calificacion"] . "</td>";
                         echo "<td data-label='Observaciones'><button class='ver-observacion'>Ver</button></td>";

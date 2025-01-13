@@ -59,7 +59,7 @@
   <body>
     <div class="container-escudo">
         <div class="texto">
-            <img src="../../EscudoFIF.PNG" alt="Escudo FIF">
+            <img src="../../Imagenes/EscudoFIF.PNG" alt="Escudo FIF">
             <h1> B I E N V E N I D O </h1>
             <h2> (Alumno)  </h2>
         </div>
