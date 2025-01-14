@@ -184,7 +184,7 @@ $Res = Ejecutar($Con, $SQL);
               echo "</tr>";
             }
           }else{
-            echo "<tr><td colspan = '6'>No se encontraron evaluaciones</td></tr>";
+            echo "<tr><td colspan='5'>No se encontraron evaluaciones</td></tr>";
           }
           Cerrar($Con);
           ?>
@@ -283,6 +283,5 @@ $Res = Ejecutar($Con, $SQL);
     </script>
 
 </body>
-
 
 </html>

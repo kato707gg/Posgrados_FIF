@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 6232.6 7921.7">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <style>
+      .st0 {
+        letter-spacing: .4em;
+      }
+
+      .st1 {
+        letter-spacing: .2em;
+      }
+
+      .st2 {
+        letter-spacing: .2em;
+      }
+
+      .st3 {
+        letter-spacing: .2em;
+      }
+
+      .st4 {
+        letter-spacing: 0em;
+      }
+
+      .st5 {
+        letter-spacing: 0em;
+      }
+
+      .st6 {
+        letter-spacing: 0em;
+      }
+
+      .st7 {
+        letter-spacing: .2em;
+      }
+
+      .st8 {
+        letter-spacing: .1em;
+      }
+
+      .st9 {
+        letter-spacing: .2em;
+      }
+
+      .st10 {
+        letter-spacing: .2em;
+      }
+
+      .st11 {
+        letter-spacing: 0em;
+      }
+
+      .st12 {
+        letter-spacing: .1em;
+      }
+
+      .st13 {
+        letter-spacing: .2em;
+      }
+
+      .st14 {
+        letter-spacing: 0em;
+      }
+
+      .st15, .st16, .st17, .st18, .st19, .st20 {
+        stroke: #123773;
+        stroke-miterlimit: 4;
+      }
+
+      .st15, .st17 {
+        stroke-width: 1.6px;
+      }
+
+      .st15, .st19 {
+        fill: #fff;
+      }
+
+      .st21 {
+        letter-spacing: .2em;
+      }
+
+      .st22 {
+        letter-spacing: .2em;
+      }
+
+      .st23 {
+        letter-spacing: .2em;
+      }
+
+      .st24 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 50.2px;
+        font-weight: 700;
+      }
+
+      .st24, .st25, .st26 {
+        isolation: isolate;
+      }
+
+      .st25 {
+        font-size: 42.5px;
+      }
+
+      .st25, .st26 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st27 {
+        letter-spacing: .2em;
+      }
+
+      .st16, .st17, .st18 {
+        fill: none;
+      }
+
+      .st16, .st20 {
+        stroke-width: 3.1px;
+      }
+
+      .st26 {
+        font-size: 46.3px;
+      }
+
+      .st28 {
+        letter-spacing: 0em;
+      }
+
+      .st29 {
+        letter-spacing: .1em;
+      }
+
+      .st30 {
+        letter-spacing: .2em;
+      }
+
+      .st31 {
+        letter-spacing: .3em;
+      }
+
+      .st32 {
+        letter-spacing: .2em;
+      }
+
+      .st18, .st19 {
+        stroke-width: 4.7px;
+      }
+
+      .st33 {
+        letter-spacing: .1em;
+      }
+
+      .st34 {
+        letter-spacing: .2em;
+      }
+
+      .st35 {
+        letter-spacing: 0em;
+      }
+
+      .st36 {
+        letter-spacing: 0em;
+      }
+
+      .st37 {
+        letter-spacing: 0em;
+      }
+
+      .st20 {
+        fill: #123773;
+      }
+    </style>
+  </defs>
+  <g>
+    <g id="cluster_x5F_Módulos_de_Usuario">
+      <path class="st19" d="M2085.4,2068.7h382.1c3.6,1.4,6.5,5,7.6,9.6l21.2,71.2h1120.6c4.2,0,7.6,4.3,7.6,9.6v258.8c0,5.3-3.4,9.6-7.6,9.6h-1531.6c-4.2,0-7.6-4.3-7.6-9.6h0v-339.7c0-5.3,3.4-9.6,7.6-9.6"/>
+      <line class="st18" x1="2077.9" y1="2149.5" x2="2496.4" y2="2149.5"/>
+      <text class="st24" transform="translate(2090 2123.5) scale(.8 1)"><tspan x="0" y="0">Módulos</tspan><tspan class="st14" x="206.3" y="0"> </tspan><tspan x="221.7" y="0">de</tspan><tspan class="st4" x="280.2" y="0"> </tspan><tspan x="295.7" y="0">Usuario</tspan></text>
+    </g>
+    <g id="cluster_x5F_Funciones_Principales">
+      <path class="st19" d="M1949.3,4183.5h427.6c3.6,1.4,6.5,5,7.6,9.6l21.2,71.2h1323.8c4.2,0,7.6,4.3,7.6,9.6h0v722c0,5.3-3.4,9.6-7.6,9.6h-1780.3c-4.2,0-7.6-4.3-7.6-9.6v-802.9c0-5.3,3.4-9.6,7.6-9.6"/>
+      <line class="st18" x1="1941.7" y1="4264.3" x2="2405.8" y2="4264.3"/>
+      <text class="st24" transform="translate(1953.9 4238.3) scale(.8 1)"><tspan x="0" y="0">Funciones</tspan><tspan class="st2" x="250.9" y="0"> </tspan><tspan x="272.6" y="0">Principales</tspan></text>
+    </g>
+    <g id="cluster_x5F_Funciones_de_Alumno">
+      <path class="st19" d="M764.7,2901.1v-253.4c0-5.3,3.4-9.6,7.6-9.6"/>
+      <path class="st19" d="M2669.3,2901.1v86.3c0,5.3-3.4,9.6-7.6,9.6H772.3c-4.2,0-7.6-4.3-7.6-9.6v-86.3"/>
+      <path class="st19" d="M772.3,2638h421.6c3.6,1.4,6.5,5,7.6,9.6l21.2,71.2h1439.1c4.2,0,7.6,4.3,7.6,9.6h0v172.6"/>
+      <line class="st18" x1="764.7" y1="2718.9" x2="1222.7" y2="2718.9"/>
+      <text class="st24" transform="translate(776.8 2692.8) scale(.8 1)"><tspan x="0" y="0">Funciones</tspan><tspan class="st28" x="250.9" y="0"> </tspan><tspan x="269.1" y="0">de</tspan><tspan class="st28" x="327.7" y="0"> </tspan><tspan x="345.9" y="0">Alumno</tspan></text>
+    </g>
+    <g id="cluster_x5F_Funciones_de_Coordinador">
+      <path class="st19" d="M1862.6,3404.2h512.6c3.6,1.4,6.5,5,7.6,9.6l21.2,71.2h1378.4c4.2,0,7.6,4.3,7.6,9.6h0v258.8c0,5.3-3.4,9.6-7.6,9.6h-1919.8c-4.2,0-7.6-4.3-7.6-9.6v-339.7c0-5.3,3.4-9.6,7.6-9.6"/>
+      <line class="st18" x1="1855" y1="3485" x2="2404" y2="3485"/>
+      <text class="st24" transform="translate(1867.1 3459) scale(.8 1)"><tspan x="0" y="0">Funciones</tspan><tspan class="st33" x="250.9" y="0"> </tspan><tspan x="269.9" y="0">de</tspan><tspan class="st33" x="328.5" y="0"> </tspan><tspan x="347.4" y="0">Coordinador</tspan></text>
+    </g>
+    <g id="cluster_x5F_Funciones_de_Docente">
+      <path class="st19" d="M3783.1,2634h430.7c3.6,1.4,6.5,5,7.6,9.6l21.2,71.2h826.5c4.2,0,7.6,4.3,7.6,9.6h0v258.8c0,5.3-3.4,9.6-7.6,9.6h-1285.9c-4.2,0-7.6-4.3-7.6-9.6v-339.7c0-5.3,3.4-9.6,7.6-9.6"/>
+      <line class="st18" x1="3775.5" y1="2714.9" x2="4242.5" y2="2714.9"/>
+      <text class="st24" transform="translate(3787.6 2688.8) scale(.8 1)"><tspan x="0" y="0">Funciones</tspan><tspan class="st6" x="250.9" y="0"> </tspan><tspan x="269.3" y="0">de</tspan><tspan class="st6" x="327.9" y="0"> </tspan><tspan x="346.3" y="0">Docente</tspan></text>
+    </g>
+    <g id="elem_Auth">
+      <path class="st15" d="M2681.6,1667.3h327.1c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-327.1c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="2955.9" y="1686.6" width="45.5" height="38.6"/>
+      <rect class="st15" x="2949.8" y="1694.3" width="12.1" height="7.7"/>
+      <rect class="st15" x="2949.8" y="1709.7" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2719.3 1787.9) scale(.8 1)"><tspan class="st11" x="0" y="0">Autenticació</tspan><tspan x="256" y="0">n</tspan></text>
+    </g>
+    <g id="elem_Alumno">
+      <path class="st15" d="M2135.7,2196.1h363.5c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-363.5c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="2446.4" y="2215.4" width="45.5" height="38.6"/>
+      <rect class="st15" x="2440.3" y="2223.1" width="12.1" height="7.7"/>
+      <rect class="st15" x="2440.3" y="2238.5" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2173.4 2316.7) scale(.8 1)"><tspan x="0" y="0">Módulo</tspan><tspan class="st8" x="151.9" y="0"> </tspan><tspan x="171" y="0">Alumno</tspan></text>
+    </g>
+    <g id="elem_Coord">
+      <path class="st15" d="M2622.5,2196.1h445.4c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-445.4c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3015" y="2215.4" width="45.5" height="38.6"/>
+      <rect class="st15" x="3009" y="2223.1" width="12.1" height="7.7"/>
+      <rect class="st15" x="3009" y="2238.5" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2660.2 2316.7) scale(.8 1)"><tspan x="0" y="0">Módulo</tspan><tspan class="st31" x="151.9" y="0"> </tspan><tspan x="177.4" y="0">Coordinador</tspan></text>
+    </g>
+    <g id="elem_Docente">
+      <path class="st15" d="M3191.2,2193.3h375.6c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-375.6c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3513.9" y="2212.6" width="45.5" height="38.6"/>
+      <rect class="st15" x="3507.9" y="2220.3" width="12.1" height="7.7"/>
+      <rect class="st15" x="3507.9" y="2235.7" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(3228.8 2313.9) scale(.8 1)"><tspan x="0" y="0">Módulo</tspan><tspan class="st12" x="151.9" y="0"> </tspan><tspan x="171" y="0">Docente</tspan></text>
+    </g>
+    <g id="elem_Eval">
+      <path class="st15" d="M2631.9,4774h487.8c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-487.8c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3066.9" y="4793.3" width="45.5" height="38.6"/>
+      <rect class="st15" x="3060.9" y="4801.1" width="12.1" height="7.7"/>
+      <rect class="st15" x="3060.9" y="4816.5" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(3270.1 4894.7) scale(.8 1)"><tspan x="0" y="0">Sistema</tspan><tspan class="st9" x="167.3" y="0"> </tspan><tspan x="187.8" y="0">de</tspan><tspan class="st9" x="239.3" y="0"> </tspan><tspan x="259.8" y="0">Evaluación</tspan></text>
+    </g>
+    <g id="elem_Doc">
+      <path class="st15" d="M1998.1,4774h512.1c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-512.1c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="2457.3" y="4793.3" width="45.5" height="38.6"/>
+      <rect class="st15" x="2451.3" y="4801.1" width="12.1" height="7.7"/>
+      <rect class="st15" x="2451.3" y="4816.5" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2035.7 4894.7) scale(.8 1)"><tspan x="0" y="0">Gestión</tspan><tspan class="st34" x="159.6" y="0"> </tspan><tspan x="182.7" y="0">de</tspan><tspan class="st21" x="234.2" y="0"> </tspan><tspan x="257.2" y="0">Documentos</tspan></text>
+    </g>
+    <g id="elem_Sinodo">
+      <path class="st17" d="M3243.1,4774h436.3c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-436.3c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3626.5" y="4793.3" width="45.5" height="38.6"/>
+      <rect class="st15" x="3620.4" y="4801.1" width="12.1" height="7.7"/>
+      <rect class="st15" x="3620.4" y="4816.5" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2674.2 4894.7) scale(.8 1)"><tspan x="0" y="0">Gestión</tspan><tspan class="st29" x="159.6" y="0"> </tspan><tspan x="179.4" y="0">de</tspan><tspan class="st29" x="231" y="0"> </tspan><tspan x="250.8" y="0">Sínodos</tspan></text>
+    </g>
+    <g id="elem_Reporte">
+      <path class="st15" d="M2625.9,4310.8h500c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-500c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3073" y="4330.1" width="45.5" height="38.6"/>
+      <rect class="st15" x="3066.9" y="4337.9" width="12.1" height="7.7"/>
+      <rect class="st15" x="3066.9" y="4353.3" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2663.6 4431.5) scale(.8 1)"><tspan x="0" y="0">Generador</tspan><tspan class="st13" x="221.4" y="0"> </tspan><tspan x="241.9" y="0">de</tspan><tspan class="st13" x="293.4" y="0"> </tspan><tspan x="313.8" y="0">Reportes</tspan></text>
+    </g>
+    <g id="elem_Horarios">
+      <path class="st15" d="M2096.4,2765.4h515.1c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-515.1c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="2558.6" y="2784.7" width="45.5" height="38.6"/>
+      <rect class="st15" x="2552.6" y="2792.4" width="12.1" height="7.7"/>
+      <rect class="st15" x="2552.6" y="2807.8" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2134 2886) scale(.8 1)"><tspan x="0" y="0">Visualizador</tspan><tspan class="st23" x="252.3" y="0"> </tspan><tspan x="273.4" y="0">de</tspan><tspan class="st23" x="324.9" y="0"> </tspan><tspan x="346.1" y="0">Horarios</tspan></text>
+    </g>
+    <g id="elem_SubirDoc">
+      <path class="st15" d="M821,2765.4h500c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-500c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="1268.2" y="2784.7" width="45.5" height="38.6"/>
+      <rect class="st15" x="1262.1" y="2792.4" width="12.1" height="7.7"/>
+      <rect class="st15" x="1262.1" y="2807.8" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(858.7 2886) scale(.8 1)"><tspan x="0" y="0">Subida</tspan><tspan class="st1" x="144.2" y="0"> </tspan><tspan x="167.2" y="0">de</tspan><tspan class="st10" x="218.8" y="0"> </tspan><tspan x="241.8" y="0">Documentos</tspan></text>
+    </g>
+    <g id="elem_HistEval">
+      <path class="st15" d="M1442.8,2765.4h530.3c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-530.3c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="1920.2" y="2784.7" width="45.5" height="38.6"/>
+      <rect class="st15" x="1914.2" y="2792.4" width="12.1" height="7.7"/>
+      <rect class="st15" x="1914.2" y="2807.8" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(1480.5 2886) scale(.8 1)"><tspan x="0" y="0">Historial</tspan><tspan class="st21" x="167.3" y="0"> </tspan><tspan x="190.3" y="0">de</tspan><tspan class="st21" x="241.8" y="0"> </tspan><tspan x="264.9" y="0">Evaluaciones</tspan></text>
+    </g>
+    <g id="elem_GestDoc">
+      <path class="st15" d="M3276.1,3531.6h457.5c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-457.5c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3680.8" y="3550.9" width="45.5" height="38.6"/>
+      <rect class="st15" x="3674.7" y="3558.6" width="12.1" height="7.7"/>
+      <rect class="st15" x="3674.7" y="3574" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(3313.8 3652.2) scale(.8 1)"><tspan x="0" y="0">Gestión</tspan><tspan class="st30" x="159.6" y="0"> </tspan><tspan x="180.1" y="0">de</tspan><tspan class="st27" x="231.6" y="0"> </tspan><tspan x="252.1" y="0">Docentes</tspan></text>
+    </g>
+    <g id="elem_AsigSin">
+      <path class="st15" d="M2662,3531.6h490.9c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-490.9c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="3100" y="3550.9" width="45.5" height="38.6"/>
+      <rect class="st15" x="3093.9" y="3558.6" width="12.1" height="7.7"/>
+      <rect class="st15" x="3093.9" y="3574" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(2699.6 3652.2) scale(.8 1)"><tspan x="0" y="0">Asignación</tspan><tspan class="st32" x="226.6" y="0"> </tspan><tspan x="247.7" y="0">de</tspan><tspan class="st32" x="299.2" y="0"> </tspan><tspan x="320.2" y="0">Sínodos</tspan></text>
+    </g>
+    <g id="elem_ProgEval">
+      <path class="st15" d="M1911.4,3531.6h627.3c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-627.3c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="2485.9" y="3550.9" width="45.5" height="38.6"/>
+      <rect class="st15" x="2479.8" y="3558.6" width="12.1" height="7.7"/>
+      <rect class="st15" x="2479.8" y="3574" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(1949 3652.2) scale(.8 1)"><tspan x="0" y="0">Programación</tspan><tspan class="st22" x="288.3" y="0"> </tspan><tspan x="312.6" y="0">de</tspan><tspan class="st22" x="364.1" y="0"> </tspan><tspan x="388.4" y="0">Evaluaciones</tspan></text>
+    </g>
+    <g id="elem_EvalPend">
+      <path class="st15" d="M3831.8,2761.4h530.3c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-530.3c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="4309.3" y="2780.7" width="45.5" height="38.6"/>
+      <rect class="st15" x="4303.2" y="2788.4" width="12.1" height="7.7"/>
+      <rect class="st15" x="4303.2" y="2803.9" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(3869.5 2882.1) scale(.8 1)"><tspan x="0" y="0">Evaluaciones</tspan><tspan class="st0" x="275.5" y="0"> </tspan><tspan x="308.6" y="0">Pendientes</tspan></text>
+    </g>
+    <g id="elem_RegEval">
+      <path class="st15" d="M4485.4,2761.4h533.3c4.3,0,7.8,3.5,7.8,7.8v153.4c0,4.3-3.5,7.8-7.8,7.8h-533.3c-4.3,0-7.8-3.5-7.8-7.8v-153.4c0-4.3,3.5-7.8,7.8-7.8Z"/>
+      <rect class="st15" x="4965.9" y="2780.7" width="45.5" height="38.6"/>
+      <rect class="st15" x="4959.8" y="2788.4" width="12.1" height="7.7"/>
+      <rect class="st15" x="4959.8" y="2803.9" width="12.1" height="7.7"/>
+      <text class="st26" transform="translate(4523.1 2882.1) scale(.8 1)"><tspan x="0" y="0">Registro</tspan><tspan class="st3" x="172.5" y="0"> </tspan><tspan x="194.8" y="0">de</tspan><tspan class="st7" x="246.4" y="0"> </tspan><tspan x="268.7" y="0">Evaluaciones</tspan></text>
+    </g>
+    <g id="link_Auth_Alumno">
+      <path id="Auth-backto-Alumno" class="st16" d="M2748.3,1851.6c-98.8,97.6-249.2,246-348.1,343.8"/>
+      <polygon class="st20" points="2762.7 1837.4 2733.7 1846.5 2750.7 1849.3 2748.6 1870.9 2762.7 1837.4"/>
+      <text class="st25" transform="translate(2645 1996.6) scale(.8 1)"><tspan x="0" y="0">requiere</tspan></text>
+    </g>
+    <g id="link_Auth_Coord">
+      <path id="Auth-backto-Coord" class="st16" d="M2845.2,1860.6v334"/>
+      <polygon class="st20" points="2845.2 1837.4 2833 1872.2 2845.2 1856.7 2857.3 1872.2 2845.2 1837.4"/>
+      <text class="st25" transform="translate(2848.2 1996.6) scale(.8 1)"><tspan x="0" y="0">requiere</tspan></text>
+    </g>
+    <g id="link_Auth_Docente">
+      <path id="Auth-backto-Docente" class="st16" d="M2943,1851.5c100,97.6,252.1,246.1,352.2,343.9"/>
+      <polygon class="st20" points="2928.6 1837.4 2942.9 1870.8 2940.6 1849.2 2957.6 1846.3 2928.6 1837.4"/>
+      <text class="st25" transform="translate(3096.9 1996.6) scale(.8 1)"><tspan x="0" y="0">requiere</tspan></text>
+    </g>
+    <g id="link_Alumno_Horarios">
+      <polygon class="st20" points="2376.3 2761.9 2386.6 2733.4 2374.1 2745.3 2358 2730.7 2376.3 2761.9"/>
+      <text class="st25" transform="translate(2363.4 2533.1) scale(.8 1)"><tspan class="st36" x="0" y="0">acced</tspan><tspan x="115.3" y="0">e</tspan></text>
+    </g>
+    <g id="link_Alumno_SubirDoc">
+      <polygon class="st20" points="1158.5 2763 1187.9 2755.8 1171 2752 1174 2730.5 1158.5 2763"/>
+      <text class="st25" transform="translate(1694.9 2533.1) scale(.8 1)"><tspan x="0" y="0">utiliza</tspan></text>
+    </g>
+    <g id="link_Alumno_HistEval">
+      <polygon class="st20" points="1810.5 2762.3 1838.3 2750.7 1820.9 2749.5 1820.2 2727.9 1810.5 2762.3"/>
+      <text class="st25" transform="translate(2030.6 2533.1) scale(.8 1)"><tspan x="0" y="0">consulta</tspan></text>
+    </g>
+    <g id="link_SubirDoc_Doc">
+      <text class="st25" transform="translate(1055.9 3204) scale(.8 1)"><tspan x="0" y="0">gestiona</tspan></text>
+    </g>
+    <g id="link_HistEval_Eval">
+      <text class="st25" transform="translate(1525.2 3193.9) scale(.8 1)"><tspan x="0" y="0">consulta</tspan></text>
+    </g>
+    <g id="link_Coord_GestDoc">
+      <polygon class="st20" points="3410.8 3527.8 3419.2 3492.6 3408.1 3511.3 3392.6 3503.6 3410.8 3527.8"/>
+      <text class="st25" transform="translate(3363.8 3212.9) scale(.8 1)"><tspan x="0" y="0">administra</tspan></text>
+    </g>
+    <g id="link_Coord_AsigSin">
+      <polygon class="st20" points="2907.3 3528.2 2918.7 3492.5 2906.4 3510.5 2892.7 3500.1 2907.3 3528.2"/>
+      <text class="st25" transform="translate(2905.7 3204) scale(.8 1)"><tspan x="0" y="0">gestiona</tspan></text>
+    </g>
+    <g id="link_Coord_ProgEval">
+      <polygon class="st20" points="2407.1 3529.2 2438.2 3523.1 2421.6 3518.8 2428 3498 2407.1 3529.2"/>
+      <text class="st25" transform="translate(2508.6 3204) scale(.8 1)"><tspan x="0" y="0">programa</tspan></text>
+    </g>
+    <g id="link_AsigSin_Sinodo">
+      <text class="st25" transform="translate(3235.2 3868.6) scale(.8 1)"><tspan x="0" y="0">actualiza</tspan></text>
+    </g>
+    <g id="link_ProgEval_Eval">
+      <text class="st25" transform="translate(2416.1 3868.6) scale(.8 1)"><tspan class="st5" x="0" y="0">configur</tspan><tspan x="153.9" y="0">a</tspan></text>
+    </g>
+    <g id="link_Docente_EvalPend">
+      <polygon class="st20" points="3821.2 2846.3 3802.2 2816.9 3807.6 2837.6 3791.4 2844.5 3821.2 2846.3"/>
+      <text class="st25" transform="translate(3556 2645.4) scale(.8 1)"><tspan class="st37" x="0" y="0">revis</tspan><tspan x="92.2" y="0">a</tspan></text>
+    </g>
+    <g id="link_Docente_RegEval">
+      <path id="Docente-to-RegEval" class="st16" d="M3573.2,2285.1c1151.2,46.6,1217,476.1,1217,476.1"/>
+      <polygon class="st20" points="4789.8 2757.6 4793.6 2722 4784.9 2741.8 4768.4 2736.5 4789.8 2757.6"/>
+      <text class="st25" transform="translate(4394.2 2508) scale(.8 1)"><tspan class="st35" x="0" y="0">registr</tspan><tspan x="119.2" y="0">a</tspan></text>
+    </g>
+    <g id="link_EvalPend_Eval">
+      <text class="st25" transform="translate(4151.5 3205.6) scale(.8 1)"><tspan x="0" y="0">consulta</tspan></text>
+    </g>
+    <g id="link_RegEval_Eval">
+      <text class="st25" transform="translate(4841.6 3204) scale(.8 1)"><tspan x="0" y="0">actualiza</tspan></text>
+    </g>
+    <g id="link_Reporte_Eval">
+      <path id="Reporte-to-Eval" class="st16" d="M2875.9,4481.1v268.6"/>
+      <polygon class="st20" points="2875.9 4772.8 2888 4738.1 2875.9 4753.5 2863.7 4738.1 2875.9 4772.8"/>
+      <text class="st25" transform="translate(2878.9 4647.9) scale(.8 1)"><tspan x="0" y="0">obtiene datos</tspan></text>
+    </g>
+    <g id="link_Reporte_Sinodo">
+      <path id="Reporte-to-Sinodo" class="st16" d="M2980.5,4481.1c106.2,82.6,254.2,197.8,360.5,280.5"/>
+      <polygon class="st20" points="3356.5 4773.6 3339.5 4742.3 3343.5 4763.5 3326.9 4768.7 3356.5 4773.6"/>
+      <text class="st25" transform="translate(3206.4 4647.9) scale(.8 1)"><tspan x="0" y="0">obtiene datos</tspan></text>
+    </g>
+    <g id="link_Reporte_Doc">
+      <path id="Reporte-to-Doc" class="st16" d="M2764.7,4481.1c-112.8,82.6-270.7,198.3-383.6,281"/>
+      <polygon class="st20" points="2365.4 4773.6 2395.1 4769.7 2378.5 4764 2383 4742.9 2365.4 4773.6"/>
+      <text class="st25" transform="translate(2584.7 4647.9) scale(.8 1)"><tspan x="0" y="0">obtiene datos</tspan></text>
+    </g>
+  </g>
+  <path class="st16" d="M4260.4,3629.8"/>
+  <line class="st16" x1="2127.9" y1="2283.4" x2="1171.2" y2="2751.7"/>
+  <line class="st16" x1="2135.7" y1="2365.1" x2="1818.1" y2="2753.8"/>
+  <line class="st16" x1="2317.5" y1="2365.1" x2="2376.7" y2="2765.4"/>
+  <path class="st16" d="M2418,3521.9s174.7-104.6,281.6-392.2c105-282.5,142.2-748,141.2-764.6"/>
+  <line class="st16" x1="2842.7" y1="2365.1" x2="2907.4" y2="3531.6"/>
+  <path class="st16" d="M2844,2365.1l186.7,231c186.8,231.3,310.2,507.2,358,800.6l20,122.5"/>
+  <path class="st16" d="M2290.8,3521.9"/>
+  <path class="st16" d="M3379,2362.3l49,119.9c55.4,135.7,158.5,246.5,289.9,311.5l106.2,52.6"/>
+  <path d="M3686.9,4870.6"/>
+  <path d="M4768.4,2934.4"/>
+  <path class="st16" d="M3152.8,3700.6h0c130.7,337.4,126.8,712.1-11,1046.7l-14.2,34.5"/>
+  <path class="st16" d="M1055.9,2934.4s-315.6,2150.2,934.4,1947.9"/>
+  <path class="st16" d="M3499,4774s346.6-722-568.6-695.5c-376.1,10.9-683.7,1.5-915.6-13.2-288.2-18.3-513.4-255.9-516.2-544.6-2.7-282.7-5-582.3-5-582.3"/>
+  <path class="st16" d="M2225,3700.6l32.8,40.2c122.2,149.8,294.5,250.3,485.1,283l311.7,56"/>
+  <path class="st16" d="M4118.3,2930.5l-6.7,585.6c-5.5,478.4-145.2,945.7-403.1,1348.6h0s0,0,0,0c1284.8,30.5,1081.3-1930.3,1081.3-1930.3l-.4-4"/>
+  <polygon class="st20" points="3500.2 4771.4 3525.9 4746.7 3506.5 4756.2 3497.1 4741.5 3500.2 4771.4"/>
+  <polygon class="st20" points="3690 4874.9 3725.5 4872.4 3704.5 4867.3 3706.8 4850 3690 4874.9"/>
+</svg>

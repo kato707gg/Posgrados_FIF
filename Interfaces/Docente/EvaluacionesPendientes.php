@@ -272,7 +272,7 @@ $Resultado = Ejecutar($Con, $SQL);
 
                             // Obtener lista de archivos en la carpeta de entregables
                             $entregables = [];
-                            $dir = "../Posgrados_FIF/Interfaces/Alumno/docs/$Expediente/entregables/";
+                            $dir = "../../Entregables/$Expediente/";
                             if (is_dir($dir)) {
                                 $files = scandir($dir);
                                 foreach ($files as $file) {
@@ -549,13 +549,3 @@ $Resultado = Ejecutar($Con, $SQL);
 </body>
 
 </html>
-
-Adipisicing consequat pariatur incididunt reprehenderit non aliqua adipisicing aute nulla. Occaecat laborum nulla in aliqua ipsum amet. Pariatur incididunt in laboris pariatur anim et pariatur exercitation est. Elit esse fugiat exercitation pariatur ad anim. Irure sint in irure aliquip officia anim veniam tempor consectetur fugiat commodo.
-
-Non in voluptate do laborum consectetur aliquip nostrud commodo aliqua elit proident nostrud ullamco excepteur. Qui ad adipisicing aute cupidatat duis tempor in. Voluptate reprehenderit dolore officia duis adipisicing velit dolor sint qui culpa occaecat tempor qui non. Elit anim esse ipsum consequat voluptate nisi labore duis pariatur proident exercitation occaecat aliquip. Nulla cillum sint est minim. Mollit esse voluptate dolore duis sunt ex non magna ipsum laboris. Reprehenderit cillum dolor duis dolore.
-
-Incididunt laboris culpa do nostrud consequat ea et Lorem proident ea pariatur. Nisi ipsum id aliquip amet nisi ex Lorem cillum ullamco nulla. Magna aute sit velit labore in sint voluptate eiusmod nisi et anim mollit ullamco aliquip. Officia elit sunt sint occaecat eiusmod exercitation aliqua est nulla. Dolore incididunt reprehenderit reprehenderit Lorem mollit exercitation cupidatat.
-
-Ea ut mollit dolor fugiat consequat duis occaecat enim ea. Cupidatat elit eiusmod esse ea dolore culpa velit mollit ea labore. Dolor velit consectetur veniam dolore duis irure ipsum aliqua minim reprehenderit eu cupidatat eiusmod adipisicing. Aute sit proident aliquip sunt nostrud mollit ut aute. Labore duis in mollit cupidatat exercitation consequat enim ex sunt sit laborum sunt ex.
-
-Officia cupidatat commodo ad aliquip sit aliquip in. Non culpa occaecat nisi laboris aliquip sunt quis ullamco fugiat. Ad eiusmod enim nisi Lorem quis qui aliqua in. Fugiat ea amet eu minim est ullamco. Proident quis id consequat sunt cillum exercitation incididunt ipsum laborum fugiat anim nostrud. Nulla amet laborum mollit deserunt. Reprehenderit pariatur eiusmod proident eu deserunt commodo id laboris.

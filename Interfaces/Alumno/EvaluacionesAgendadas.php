@@ -73,6 +73,7 @@ $Res = Ejecutar($Con, $SQL);
             <th>Fecha</th>
             <th>Hora</th>
             <th>Aula</th>
+            <th>Entregables</th>
             <th>Eliminar</th>
           </tr>
         </thead>
@@ -87,15 +88,29 @@ $Res = Ejecutar($Con, $SQL);
               $fecha = date("Y-m-d", strtotime($fechaCompleta));
               $hora = date("H:i:s", strtotime($fechaCompleta));
 
+              // Obtener lista de archivos en la carpeta de entregables
+              $entregables = [];
+              $dir = "../../Entregables/$exp/";
+              if (is_dir($dir)) {
+                  $files = scandir($dir);
+                  foreach ($files as $file) {
+                      if ($file !== '.' && $file !== '..') {
+                          $entregables[] = "<a href='$dir$file' target='_blank'>$file</a>";
+                      }
+                  }
+              }
+              $entregablesContent = empty($entregables) ? "No disponible" : implode(", ", $entregables);
+
               echo "<tr id='fila-" . $exp . "'>";
               echo "<td data-label='Fecha'>" . $fecha . "</td>";
               echo "<td data-label='Hora'>" . $hora . "</td>";
               echo "<td data-label='Aula'>" . $Fila['aula'] . "</td>";
+              echo "<td data-label='Entregables'>" . $entregablesContent . "</td>";
               echo "<td data-label='Eliminar'><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
               echo "</tr>";
             }
           } else {
-            echo "<tr><td colspan='4'>No se encontraron evaluaciones agendadas</td></tr>";
+            echo "<tr><td colspan='5'>No se encontraron evaluaciones agendadas</td></tr>";
           }
           Cerrar($Con);
           ?>

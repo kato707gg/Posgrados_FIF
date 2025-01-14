@@ -1,0 +1,89 @@
+@startuml SSAP_Componentes
+
+' Configuración de página para tamaño carta
+skinparam dpi 300
+
+' Estilos personalizados
+skinparam componentStyle uml2
+skinparam {
+    ComponentFontSize 12
+    PackageFontSize 13
+    ArrowFontSize 11
+    ComponentFontName Arial
+    PackageFontName Arial
+    DefaultFontName Arial
+    
+    BackgroundColor white
+    ComponentBackgroundColor white
+    PackageBackgroundColor white
+    
+    ComponentBorderColor #123773
+    PackageBorderColor #123773
+    ArrowColor #123773
+}
+
+package "Sistema de Seguimiento Académico de Posgrado FIF UAQ" {
+    [Autenticación] as Auth
+
+    package "Módulos de Usuario" {
+        [Módulo Alumno] as Alumno
+        [Módulo Coordinador] as Coord
+        [Módulo Docente] as Docente
+    }
+
+    package "Funciones Principales" {
+        [Sistema de Evaluación] as Eval
+        [Gestión de Documentos] as Doc
+        [Gestión de Sínodos] as Sinodo
+        [Generador de Reportes] as Reporte
+    }
+
+    package "Funciones de Alumno" {
+        [Visualizador de Horarios] as Horarios
+        [Subida de Documentos] as SubirDoc
+        [Historial de Evaluaciones] as HistEval
+    }
+
+    package "Funciones de Coordinador" {
+        [Gestión de Docentes] as GestDoc
+        [Asignación de Sínodos] as AsigSin
+        [Programación de Evaluaciones] as ProgEval
+    }
+
+    package "Funciones de Docente" {
+        [Evaluaciones Pendientes] as EvalPend
+        [Registro de Evaluaciones] as RegEval
+    }
+
+    ' Relaciones de Autenticación
+    Auth <-- Alumno : "requiere"
+    Auth <-- Coord : "requiere"
+    Auth <-- Docente : "requiere"
+
+    ' Relaciones de Alumno
+    Alumno --> Horarios : "accede"
+    Alumno --> SubirDoc : "utiliza"
+    Alumno --> HistEval : "consulta"
+    SubirDoc --> Doc : "gestiona"
+    HistEval --> Eval : "consulta"
+
+    ' Relaciones de Coordinador
+    Coord --> GestDoc : "administra"
+    Coord --> AsigSin : "gestiona"
+    Coord --> ProgEval : "programa"
+    AsigSin --> Sinodo : "actualiza"
+    ProgEval --> Eval : "configura"
+
+    ' Relaciones de Docente
+    Docente --> EvalPend : "revisa"
+    Docente --> RegEval : "registra"
+    EvalPend --> Eval : "consulta"
+    RegEval --> Eval : "actualiza"
+
+    ' Relaciones de Reportes
+    Reporte --> Eval : "obtiene datos"
+    Reporte --> Sinodo : "obtiene datos"
+    Reporte --> Doc : "obtiene datos"
+}
+
+@enduml

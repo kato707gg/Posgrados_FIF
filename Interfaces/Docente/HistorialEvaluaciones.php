@@ -110,6 +110,68 @@ $Periodos = Ejecutar($Con, $SQL2);
             background-color: #123773;
         }
     }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+        opacity: 1;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.7);
+        padding: 2rem;
+        border-radius: 0.4rem;
+        width: 80%;
+        max-width: 500px;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .modal.show .modal-content {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    .close {
+        position: absolute;
+        top: 0;
+        right: .6rem;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #observacionContent {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: 1rem;
+        color: var(--text-color);
+        line-height: 1.5;
+        margin-top: 1rem;
+    }
 </style>
 
 <body>
@@ -160,7 +222,7 @@ $Periodos = Ejecutar($Con, $SQL2);
                         echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
                         echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
                         echo "<td data-label='Calificación'>" . $Fila["calificacion"] . "</td>";
-                        echo "<td data-label='Observaciones'><button class='ver-observacion'>Ver</button></td>";
+                        echo "<td data-label='Observaciones'><button class='ver-observacion' data-observacion='" . htmlspecialchars($Fila["observacion"]) . "'>Ver</button></td>";
                         echo "</tr>";
                     }
                 } else {
@@ -170,6 +232,15 @@ $Periodos = Ejecutar($Con, $SQL2);
                 ?>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div id="modalObservaciones" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Observaciones y Recomendaciones</h3>
+        <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;">
+        <div id="observacionContent"></div>
     </div>
 </div>
 
@@ -204,6 +275,42 @@ $Periodos = Ejecutar($Con, $SQL2);
             this.style.color = '#757575'; // Mantiene el color tenue si no hay selección
         }
     });
+
+    // Obtener todos los botones de ver observación
+    const botonesObservacion = document.querySelectorAll('.ver-observacion');
+    const modal = document.getElementById('modalObservaciones');
+    const observacionContent = document.getElementById('observacionContent');
+
+    // Agregar evento click a cada botón
+    botonesObservacion.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const observacion = boton.getAttribute('data-observacion');
+            observacionContent.textContent = observacion;
+            modal.style.display = "block";
+            // Forzar un reflow para que la transición funcione
+            modal.offsetHeight;
+            modal.classList.add('show');
+        });
+    });
+
+    // Cerrar modal con el botón X
+    document.querySelector('.close').onclick = () => {
+        cerrarModal();
+    };
+
+    // Cerrar modal al hacer clic fuera
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    };
+
+    function cerrarModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 300); // Este tiempo debe coincidir con la duración de la transición en CSS
+    }
 </script>
 
 </body>
