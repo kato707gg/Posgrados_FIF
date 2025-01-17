@@ -1,13 +1,18 @@
 <?php
 session_start();
+require_once('auth.php');
+verificarSesion('A');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/styles.css">  
+    <link rel="stylesheet" href="../../CSS/header.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
+    <script src="../../JS/transitions.js"></script>
     <title>Alumno</title>
 </head>
 <body>
@@ -35,7 +40,7 @@ session_start();
         </ul>
     </div>
     <div class="container-usuario">
-        <a class="usuario">Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado'); ?></a>
+        <a class="usuario">Usuario: <?php echo htmlspecialchars(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado'); ?></a>
     </div>
     <div class="container-cerrar-btn">
         <a class="cerrar-btn" href="../Header/Cerrar.php"><button type="button">Cerrar</button></a>
@@ -52,7 +57,7 @@ session_start();
         <div id="mySidebar" class="sidebar">
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
-            <a>Usuario: <?php echo(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
+            <a>Usuario: <?php echo htmlspecialchars(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Alumno/AgendarEvaluacion.php">Agendar Evaluación</a>
             <a href="../Alumno/EvaluacionesAgendadas.php">Evaluaciones Agendadas</a>
             <a href="../Alumno/MisEvaluaciones.php">Mis evaluaciones</a>

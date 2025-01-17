@@ -1,0 +1,118 @@
+@import '../../CSS/variables.css';
+
+.btn {
+    font-family: var(--font-family-main);
+    padding: var(--padding-base);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+
+/* ====================================
+   2. VARIANTES
+==================================== */
+.btn-primary {
+    font-size: var(--font-size-xl);
+    background-color: var(--primary-button-color);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-button-hover);
+}
+
+.btn-secondary {
+    font-size: var(--font-size-base);
+    background-color: var(--secondary-button-color);
+    color: var(--primary-button-color);
+    border-bottom: var(--border-button);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--secondary-button-hover);
+}
+
+.btn-eliminar {
+    background-color: white;
+    font-size: var(--font-size-base);
+}
+
+.btn-eliminar:hover:not(:disabled) {
+    background-color: var(--secondary-button-hover);
+}
+
+/* ====================================
+   3. TAMAÑOS
+==================================== */
+.btn-sm {
+    padding: 0.5rem 0.8rem;
+    font-size: var(--font-size-sm);
+}
+
+.btn-lg {
+    padding: 0.8rem 1.5rem;
+    font-size: var(--font-size-lg);
+}
+
+/* ====================================
+   4. ESTADOS
+==================================== */
+.btn-secondary.accion-completada {
+    background-color: #cfcfcf;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+} 
+
+/* ====================================
+   5. MEDIA QUERIES
+==================================== */
+@media (max-width: 770px) {
+
+    .btn-primary, .btn-eliminar{
+        background-color: #118f1d;
+        color: white;
+        padding: 0.7rem 0.9rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-eliminar {
+        background-color: var(--delete-button-color);
+    }
+
+    .btn-primary::before, .btn-eliminar::before{
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-bold);
+        content: 'Confirmar';
+    }
+
+    .btn-primary {
+        font-size: 0;  
+    }
+
+    .btn-eliminar {
+        font-size: 0;  
+    }
+
+    .btn-secondary {
+        background-color: #123773;
+        color: white;
+        padding: 0.7rem 0.9rem;
+        border: none;
+    }
+
+    .btn-secondary::before {
+        font-family: "Google Sans", Roboto, Arial, sans-serif;
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-base);
+    }
+
+    .btn-secondary {
+        font-size: 0;  
+    }
+}

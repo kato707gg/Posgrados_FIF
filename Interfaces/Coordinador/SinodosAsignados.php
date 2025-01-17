@@ -39,45 +39,10 @@ $Res = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Sinodos Asignados</title>
-    <style>
-        .eliminar-icon {
-            color: #123773;
-            font-size: 1rem;
-            padding: 0.7rem 0.9rem 0.75rem;
-            background-color: #ffffff;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .eliminar-icon:hover {
-            background-color: #cfcfcf;
-        }
-
-        @media (max-width: 770px) {
-            .eliminar-icon {
-                background-color: red;
-                color: white;
-                padding: 0.7rem 0.9rem;
-                border: none;
-                cursor: pointer;
-            }
-
-            .eliminar-icon::before {
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
-                font-size: 1.1rem;
-                font-weight: 600;
-                content: 'Eliminar';
-            }
-
-            .eliminar-icon {
-                font-size: 0;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -106,7 +71,7 @@ $Res = Ejecutar($Con, $SQL);
                             echo "<td data-label='Sinodo 2'>" . $Fila['ap_sinodo2'] . " " . $Fila['nombre_sinodo2'] . "</td>";
                             echo "<td data-label='Sinodo 3'>" . $Fila['ap_sinodo3'] . " " . $Fila['nombre_sinodo3'] . "</td>";
                             echo "<td data-label='Sinodo Externo'>" . $Fila['ap_externo'] . " " . $Fila['nombre_externo'] . "</td>";
-                            echo "<td data-label='Eliminar'><button class='eliminar-icon' onclick='eliminarAsignacion(\"" . $exp . "\")'>❌</button></td>";
+                            echo "<td data-label='Eliminar'><button class='btn btn-eliminar' onclick='eliminarAsignacion(\"" . $exp . "\")'>❌</button></td>";
                             echo "</tr>";
                         }
                     } else {

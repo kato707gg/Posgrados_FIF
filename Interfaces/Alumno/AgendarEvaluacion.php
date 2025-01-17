@@ -23,61 +23,11 @@ $Res = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Agendar Evaluación</title>
     <style>
-
-        .input-container input {
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-color);
-            border: 1px solid #ccc;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            width: 7vw;
-        }
-
-        .input-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .subir-entregable {
-            color: #123773;
-            font-size: 1.5rem;
-            padding: 0.5rem 0.9rem;
-            background-color: #ffffff;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .subir-entregable:hover {
-            background-color: #cfcfcf;
-        }
-
-        .confirmar-icon {
-            color: #123773;
-            font-size: 1.5rem;
-            padding: 0.5rem 0.9rem;
-            background-color: #ffffff;
-            border: none;
-            cursor: pointer;
-            border-radius: 0.4rem;
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .confirmar-icon:hover {
-            background-color: #cfcfcf;
-        }
-
-        .subir-entregable.archivo-subido {
-            background-color: #cfcfcf; /* Verde claro para indicar archivo subido */
-        }
-
         .quitar-archivo {
             color: red;
             margin-left: 10px;
@@ -88,61 +38,13 @@ $Res = Ejecutar($Con, $SQL);
         }
 
         @media (max-width: 770px) {
-            .modal-content {
-                width: 80%;
-            }
-            .input-container input {
-                width: 27vw;
-            }
-            input[type="checkbox" i] {
-                cursor: pointer;
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-            .confirmar-icon {
-                background-color: #118f1d;
-                color: white;
-                padding: 0.7rem 0.9rem;
-                border: none;
-                cursor: pointer;
-            }
-
-            .confirmar-icon::before {
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
-                font-size: 1.1rem;
-                font-weight: 600;
-                content: 'Confirmar';
-            }
-
-            .confirmar-icon {
-                font-size: 0;  
-            }
-
-            .subir-entregable {
-                background-color: #123773;
-                color: white;
-                padding: 0.7rem 0.9rem;
-                border: none;
-                cursor: pointer;
-                width: 31vw;
-            }
-
-            .subir-entregable::before {
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
-                font-size: 1.1rem;
-                font-weight: 500;
+            .btn-secondary::before {
                 content: 'Adjuntar';
             }
-
-            .subir-entregable {
-                font-size: 0;  
-            }
-
             .quitar-archivo::before {
                 font-size: 1.5rem;
                 content: '❌';
             }
-
             .quitar-archivo {
                 font-size: 0;  /* Oculta el texto original */
             }
@@ -170,17 +72,17 @@ $Res = Ejecutar($Con, $SQL);
             while($Fila = $Res->fetch_assoc()){
               $exp = $Fila["exp"];
               echo "<tr>";
-              echo "<td data-label='Fecha'><div class='input-container'><input type='date' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
-              echo "<td data-label='Hora'><div class='input-container'><input type='time' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
-              echo "<td data-label='Aula'><div class='input-container'><input type='text' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
+              echo "<td data-label='Fecha'><div'><input type='date' class='inputs' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
+              echo "<td data-label='Hora'><div'><input type='time' class='inputs' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
+              echo "<td data-label='Aula'><div'><input type='text' class='inputs' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td data-label='Entregable'>
                       <input type='file' id='file-" . $exp . "' style='display: none;' accept='.pdf,.docx,.xlsx'>
                       <div style='display: flex; align-items: center; justify-content: center;'>
-                          <button id='upload-btn-" . $exp . "' class='subir-entregable' onclick='uploadDocument(\"" . $exp . "\")'>📁</button>
+                          <button id='upload-btn-" . $exp . "' class='btn btn-secondary' onclick='uploadDocument(\"" . $exp . "\")'>📁</button>
                           <span id='quitar-" . $exp . "' class='quitar-archivo' onclick='quitarArchivo(\"" . $exp . "\")'>Quitar archivo &times</span>
                       </div>
                     </td>";
-              echo "<td data-label='Confirmar'><button id='confirm-btn-" . $exp . "' class='confirmar-icon' onclick='confirmarEvaluacion(\"" . $exp . "\")' disabled>✔</button></td>";
+              echo "<td data-label='Confirmar'><button id='confirm-btn-" . $exp . "' class='btn btn-primary' onclick='confirmarEvaluacion(\"" . $exp . "\")' disabled>✔</button></td>";
               echo "</tr>";
             }
           }else{
@@ -253,7 +155,7 @@ $Res = Ejecutar($Con, $SQL);
                 console.log('Archivo seleccionado:', file.name);
 
                 // Cambiar apariencia del botón
-                uploadBtn.classList.add('archivo-subido');
+                uploadBtn.classList.add('accion-completada');
                 quitarBtn.style.display = 'inline';
 
                 // Habilitar el botón "Confirmar"
@@ -273,7 +175,7 @@ $Res = Ejecutar($Con, $SQL);
             fileInput.value = '';
 
             // Restaurar apariencia original
-            uploadBtn.classList.remove('archivo-subido');
+            uploadBtn.classList.remove('accion-completada');
             quitarBtn.style.display = 'none';
 
             // Deshabilitar el botón "Confirmar"

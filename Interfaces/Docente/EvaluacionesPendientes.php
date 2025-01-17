@@ -53,194 +53,22 @@ $Resultado = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/modales.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Evaluaciones Pendientes</title>
     <style>
         .inputs {
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            height: 2vh;
-            border-bottom: 1px solid #636363;
-            outline: none;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-color);
-            border: 1px solid #ccc;
-            padding: 0.8rem 0.9rem;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-        }
-
-        .observaciones {
-            font-size: 1rem;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.8rem 0.9rem;
-            background-color: #ffffff;
-            border: none;
-            cursor: pointer;
-            color: var(--text-color);
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .observaciones:hover {
-            background-color: #cfcfcf;
-        }
-
-        .confirmar-icon {
-            color: #ffffff;
-            font-size: 1.5rem;
-            padding: 0.5rem 0.9rem;
-            background-color: #123773;
-            border: none;
-            cursor: pointer;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .confirmar-icon:disabled {
-            cursor: not-allowed;
-        }
-
-        .confirmar-icon:hover {
-            background-color: #1455bd;
-        }
-
-        .confirmar-icon:disabled:hover {
-            background-color: #123773;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal.show {
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            padding: 2rem;
-            border-radius: 0.4rem;
-            overflow-y: auto;
-            width: 100%;
-            max-width: 35%;
-            max-height: 70%;
-            overflow-x: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .modal.show .modal-content {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-
-        .close {
-            position: absolute;
-            top: 0;
-            right: .6rem;
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .label-observaciones {
-            letter-spacing: .01785714em;
-            font-family: system-ui;
-            font-weight: 600;
-            font-size: 1.5rem;
-            color: var(--text-color);
-        }
-
-        .observacion-input {
-            color: #555;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            width: 98%;
-            margin: .5rem 0 1rem;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            resize: none;
-        }
-
-        .confirmar-button {
-            display: flex;
-            font-size: 1.3rem;
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            padding: 0.7rem 3rem;
-            background-color: #123773;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            margin: auto;
-        }
-
-        .confirmar-button.disabled {
-            background-color: grey;
-            cursor: not-allowed;
-            opacity: 0.6;
+            width: 5vw;
         }
 
         @media (max-width: 770px) {
             .inputs {
-                width: 16vw;
-            }
-
-            .modal-content {
-                max-width: 80%;
-            }
-
-            .observacion-input {
-                height: 6rem;
-            }
-
-            .observaciones {
-                color: white;
                 width: 20vw;
-                background-color: #123773;
             }
-
-            .confirmar-icon {
-                background-color: #118f1d;
-                color: white;
-                padding: 0.7rem 0.9rem;
-                border: none;
-                cursor: pointer;
-            }
-
-            .confirmar-icon::before {
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
-                font-size: 1.1rem;
-                font-weight: 600;
-                content: 'Confirmar';
-            }
-
-            .confirmar-icon {
-                font-size: 0;
+            .btn-secondary::before {
+                content: 'Adjuntar';
             }
         }
     </style>
@@ -293,9 +121,9 @@ $Resultado = Ejecutar($Con, $SQL);
                             $FechaSola = !empty($Fecha) ? date('Y-m-d', strtotime($Fecha)) : "Pendiente";
 
                             if ((int)substr($FechaSola, 5, 2) < 6) {
-                                $Periodo = substr($FechaSola, 0, 4) . "-" . "2";
-                            } else {
                                 $Periodo = substr($FechaSola, 0, 4) . "-" . "1";
+                            } else {
+                                $Periodo = substr($FechaSola, 0, 4) . "-" . "2";
                             }
 
                             echo "<tr data-expediente='" . $Expediente . "'>";
@@ -319,13 +147,13 @@ $Resultado = Ejecutar($Con, $SQL);
                             echo "</td>";
 
                             echo "<td data-label='Observaciones'>
-                                  <button class='observaciones' onclick='abrirModal(\"" . $Expediente . "\", " . ($esDirector ? 'true' : 'false') . ")'>
+                                  <button class='btn btn-secondary' onclick='abrirModal(\"" . $Expediente . "\", " . ($esDirector ? 'true' : 'false') . ")'>
                                     Agregar
                                   </button>
                                   <input type='hidden' id='observacion_" . $Expediente . "' value=''>
                                   </td>";
                             echo "<td data-label='Acción'>
-                                  <button class='confirmar-icon' id='btn_" . $Expediente . "' 
+                                  <button class='btn btn-primary' id='btn_" . $Expediente . "' 
                                     onclick='actualizarEvaluacion(\"" . $Expediente . "\")' disabled>&#x2714;</button>
                                   </td>";
                             echo "</tr>";
@@ -342,22 +170,18 @@ $Resultado = Ejecutar($Con, $SQL);
     </div>
 
     <div id="modalObservaciones" class="modal">
-        <div class="modal-content">
+        <div class="modal-content medium">
             <span class="close">&times;</span>
             <h3>Observaciones y recomendaciones</h3>
             <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;">
             <div id="observacionesContent">
                 <!-- El contenido se llenará dinámicamente -->
             </div>
-            <button onclick="guardarObservaciones()" class="confirmar-button">Guardar</button>
+            <button onclick="guardarObservaciones()" class="guardar-button">Guardar</button>
         </div>
     </div>
 
     <script>
-        // Iniciar con el botón guardar del modal deshabilitado
-        /* const confirmarButton = document.querySelector('.confirmar-button');
-        confirmarButton.classList.add('disabled');
-        confirmarButton.disabled = true; */
         
         function actualizarEvaluacion(expediente) {
             const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
@@ -371,7 +195,7 @@ $Resultado = Ejecutar($Con, $SQL);
             if (fecha !== "Pendiente") {
                 const mes = parseInt(fecha.split('-')[1]);
                 const año = fecha.split('-')[0];
-                periodo = año + "-" + (mes < 6 ? "2" : "1");
+                periodo = año + "-" + (mes < 6 ? "1" : "2");
             }
 
             // Preparar los datos para enviar

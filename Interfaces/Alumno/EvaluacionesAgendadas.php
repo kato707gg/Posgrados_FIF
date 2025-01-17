@@ -10,7 +10,13 @@ $Con = Conectar();
 $id = $_SESSION['id'];
 
 $SQL = "
-    SELECT exp_alumno, fecha_evaluacion, aula FROM evaluaciones WHERE exp_alumno = '$id'
+    SELECT e.exp_alumno, e.fecha_evaluacion, e.aula, e.id,
+           (SELECT COUNT(*) 
+            FROM detalle_evaluaciones de 
+            WHERE de.id_evaluacion = e.id 
+            AND de.calificacion IS NOT NULL) as tiene_calificaciones
+    FROM evaluaciones e 
+    WHERE e.exp_alumno = '$id'
 ";
 
 $Res = Ejecutar($Con, $SQL);
@@ -21,46 +27,10 @@ $Res = Ejecutar($Con, $SQL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Evaluaciones Agendadas</title>
-    <style>
-
-        .eliminar-icon {
-            color: #123773;
-            font-size: 1rem;
-            padding: 0.7rem 0.9rem 0.75rem;
-            background-color: #ffffff;
-            border: none;
-            cursor: pointer;
-            border-radius: clamp(.4rem, .4vw, .4rem);
-            border-bottom: 0.0625rem solid var(--secondary-color);
-        }
-
-        .eliminar-icon:hover {
-            background-color: #cfcfcf;
-        }
-
-        @media (max-width: 770px) {
-          .eliminar-icon {
-            background-color: red;
-            color: white;
-            padding: 0.7rem 0.9rem;
-            border: none;
-            cursor: pointer;
-          }
-
-          .eliminar-icon::before {
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            content: 'Confirmar';
-          }
-
-          .eliminar-icon {
-            font-size: 0;  
-          }
-        }
-    </style>
 </head>
 
 <body>
@@ -106,7 +76,11 @@ $Res = Ejecutar($Con, $SQL);
               echo "<td data-label='Hora'>" . $hora . "</td>";
               echo "<td data-label='Aula'>" . $Fila['aula'] . "</td>";
               echo "<td data-label='Entregables'>" . $entregablesContent . "</td>";
-              echo "<td data-label='Eliminar'><button class='eliminar-icon' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
+              if ($Fila['tiene_calificaciones'] > 0) {
+                  echo "<td data-label='Eliminar'>No disponible</td>";
+              } else {
+                  echo "<td data-label='Eliminar'><button class='btn btn-eliminar' onclick='eliminarEvaluacion(\"" . $exp . "\")'>❌</button></td>";
+              }
               echo "</tr>";
             }
           } else {
@@ -141,6 +115,7 @@ $Res = Ejecutar($Con, $SQL);
               fila.remove();
             }
             alert('Evaluación eliminada exitosamente.');
+            location.reload();
           } else {
             alert('Hubo un error al eliminar la evaluación.');
           }

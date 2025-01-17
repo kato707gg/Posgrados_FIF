@@ -8,7 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+        <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Documentos</title>
 </head>
 
@@ -27,6 +29,7 @@
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
+        height: 3rem;
     }
 
     label {
@@ -40,23 +43,23 @@
         width: 13rem;
         border: 1px solid #ccc;
         border-radius: 0.4rem;
-        line-height: 1.5rem;
+        height: 100%;
     }
 
     #file-label {
         font-size: 1rem;
-        display: inline-block;
+        display: flex;
         width: 13rem;
-        padding: 0.7rem 1rem;
+        padding: 0 1rem;
         border: 1px solid #ccc;
         border-radius: 0.4rem 0 0 0.4rem;
         cursor: not-allowed;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        line-height: 1.5rem;
-        vertical-align: middle;
+        height: 100%;
         background-color: white;
+        align-items: center;
     }
 
     #clear-file-btn {
@@ -65,7 +68,8 @@
         margin-left: 10px;
         color: red;
         cursor: pointer;
-        line-height: 1.5rem;
+        height: 100%;
+        align-items: center;
     }
 
     #upload-btn {
@@ -78,7 +82,7 @@
         cursor: not-allowed;
         border-radius: 0 0.4rem 0.4rem 0;
         vertical-align: middle;
-        line-height: 1.62rem;
+        height: 100%;
         transition: background-color 0.3s ease;
     }
 
@@ -99,19 +103,6 @@
         cursor: pointer;
         pointer-events: auto;
     }
-    .ver-doc {
-        color: #123773;
-        font-size: 2rem;
-        padding: 0.25rem 0.7rem;
-        background-color: #ffffff;
-        border: none;
-        cursor: pointer;
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        border-bottom: 0.0625rem solid var(--secondary-color);
-    }
-    .ver-doc:hover {
-        background-color: #cfcfcf;
-    }
 
 
     @media (max-width: 770px) {
@@ -125,23 +116,11 @@
         #document-type {
             width: 12rem;
         }
-        .ver-doc {
-            background-color: #123773;
-            color: white;
-            padding: 0.7rem 0.9rem;
-            border: none;
-            cursor: pointer;
+        .btn-primary {
+            background-color: var(--primary-button-color);
         }
-
-        .ver-doc::before {
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
+        .btn-primary::before {
             content: 'Ver archivo';
-        }
-
-        .ver-doc {
-            font-size: 0;  
         }
     }
 </style>
@@ -230,7 +209,7 @@
                 fileLabel.innerText = fileInput.files[0].name;
                 uploadBtn.classList.add("enabled"); // Cambiar el color del botón a verde
                 uploadBtn.classList.remove("option-selected"); // Remueve el color azul
-                clearFileBtn.style.display = "inline-block"; // Mostrar el botón de quitar archivo
+                clearFileBtn.style.display = "flex"; // Mostrar el botón de quitar archivo
             }
         }
 
@@ -299,23 +278,32 @@
                         const tableBody = document.getElementById('documents-table-body');
                         tableBody.innerHTML = '';
                         
-                        result.data.forEach(doc => {
+                        if (result.data.length === 0) {
+                            // Si no hay documentos, mostrar mensaje
                             const row = tableBody.insertRow();
-                            
-                            const dateCell = row.insertCell(0);
-                            dateCell.setAttribute('data-label', 'Fecha');
-                            dateCell.textContent = doc.date;
-                            
-                            const typeCell = row.insertCell(1);
-                            typeCell.setAttribute('data-label', 'Tipo');
-                            typeCell.textContent = doc.type;
-                            
-                            const viewCell = row.insertCell(2);
-                            viewCell.setAttribute('data-label', 'Vista');
-                            viewCell.innerHTML = `
-                                <span class="ver-doc" onclick="viewDocument('${doc.fileURL}')">👁</span>
-                            `;
-                        });
+                            const cell = row.insertCell(0);
+                            cell.colSpan = 3;
+                            cell.textContent = 'No se encontraron documentos';
+                        } else {
+                            // Si hay documentos, mostrar la tabla normal
+                            result.data.forEach(doc => {
+                                const row = tableBody.insertRow();
+                                
+                                const dateCell = row.insertCell(0);
+                                dateCell.setAttribute('data-label', 'Fecha');
+                                dateCell.textContent = doc.date;
+                                
+                                const typeCell = row.insertCell(1);
+                                typeCell.setAttribute('data-label', 'Tipo');
+                                typeCell.textContent = doc.type;
+                                
+                                const viewCell = row.insertCell(2);
+                                viewCell.setAttribute('data-label', 'Vista');
+                                viewCell.innerHTML = `
+                                    <span class="btn btn-primary" onclick="viewDocument('${doc.fileURL}')">👁</span>
+                                `;
+                            });
+                        }
                     }
                 })
                 .catch(error => console.error('Error:', error));

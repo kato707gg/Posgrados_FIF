@@ -31,7 +31,7 @@ body {
   border: 1px solid #9fb3c6;
   border-radius: 15px;
   font: caption;
-  font-size: 1rem;
+  font-size: 1.1rem;
   z-index: 1;
   max-height: 90vh;
 }
@@ -72,7 +72,12 @@ body {
   outline: none;
   height: 2rem;
   color: #000000;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  padding: 0 5px;
+}
+
+label {
+  padding: 0 2px;
 }
 
 input::placeholder {
@@ -248,9 +253,13 @@ td {
 }
 
 @media screen and (max-width: 770px) {
+  label {
+    font-size: 1.5rem;
+  }
+
   .container1,
   .container2 {
-    width: 90vw; /* Cambiamos a viewport width */
+    width: 90vw;
     max-width: none; /* Eliminamos el max-width para pantallas pequeñas */
   }
 }
@@ -259,12 +268,12 @@ td {
 
   .container1 h1,
   .container2 h1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .container1,
   .container2 {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     padding: 1.3rem;
   }
 
@@ -276,13 +285,32 @@ td {
   .container2 select,
   .container2 input[type="email"] {
     margin-bottom: 1rem;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
+    padding: 0 5px;
   }
 
   .popup-content {
     padding: 1rem;
     width: 80%;
     height: 50%;
+  }
+
+}
+
+@media screen and (max-height: 700px) {
+
+  label {
+    font-size: 1rem;
+  }
+
+  .container1 h1,
+  .container2 h1 {
+    font-size: 1.5rem;
+  }
+
+  .container1,
+  .container2 {
+    font-size: 0.8rem;
   }
 
 }

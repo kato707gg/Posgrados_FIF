@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../CSS/variables.css';
 
 body {
-    font-family: Poppins;
+    font-family: var(--font-family-header);
     margin: 0;
 }
 
@@ -9,7 +9,7 @@ body {
     display: flex;
     align-items: stretch;
     color: white;
-    margin: 2vh 2vw;
+    margin: var(--container-spacing);
     height: 9vh;
 }
 
@@ -25,34 +25,35 @@ body {
 .container-botones,
 .container-usuario,
 .container-cerrar-btn {
-    border-radius: clamp(.4rem, .4vw, .4rem);
-    background: #001a37;
+    border-radius: var(--border-radius);
+    background: var(--header-color);
     height: 100%;
 }
 
 .container-titulo-header,
 .container-botones,
 .container-usuario {
-    margin-right: 0.8vw;
+    margin-right: 2vh;
 }
 
 .container-titulo-header,
-.container-usuario, .container-cerrar-btn  {
+.container-usuario,
+.container-cerrar-btn {
     justify-content: center;
 }
 
 .container-titulo-header {
     width: 15vw;
-    flex-grow: 0!important; 
+    flex-grow: 0 !important;
 }
 
 .titulo-header {
     text-align: center;
-    color: #fff;
+    color: white;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: var(--font-size-2xl);
     line-height: 1.5rem;
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
 }
 
 .container-lista-botones {
@@ -68,15 +69,15 @@ body {
     display: flex;
     align-items: center;
     margin-right: 1.5vw;
-}
 
-.boton-link:first-child {
-    margin-left: 1vw; /* Agrega margen izquierdo solo al primer botón */
+    &:first-child {
+        margin-left: 1vw;
+    }
 }
 
 .boton-link a,
 .boton-link button {
-    font-family: Poppins;
+    font-family: var(--font-family-header);
     text-decoration: none;
     height: 80%;
     display: flex;
@@ -85,35 +86,35 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
-    border-radius: clamp(.4rem, .4vw, .4rem);
+    font-size: var(--font-size-base);
+    border-radius: var(--border-radius);
 }
 
 .boton-link button:hover {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    background-color: white;
+    color: var(--text-color);
 }
 
 .boton-link button.active {
-    background-color: #555; /* Color de fondo cuando está activo */
-    color: white; /* Color del texto cuando está activo */
+    background-color: #555;
+    color: white;
 }
 
 .usuario {
-    font-family: Poppins;
+    font-family: var(--font-family-header);
     color: white;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
 }
 
 .container-cerrar-btn {
-    background-color: rgb(255, 30, 30);
+    background-color: var(--delete-button-color);
     width: 3.5vw;
-    flex-grow: 0!important; /* Asegura que no se expanda */
-}
+    flex-grow: 0 !important;
 
-.container-cerrar-btn:hover {
-    background-color: rgb(255, 64, 64);
+    &:hover {
+        background-color: var(--delete-button-hover);
+    }
 }
 
 .cerrar-btn {
@@ -131,14 +132,16 @@ body {
     font-size: 2vh;
 }
 
-/* Diseño para pantallas pequeñas */
+.header-telefono {
+    display: none;
+}
 
 .container-titulo-sidebarbtn {
     padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #001a37;
+    background-color: var(--header-color);
     height: 5vh;
     margin-bottom: 2vh;
 }
@@ -152,12 +155,12 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vH;
-    background-color: #001a37;
+    height: 100vh;
+    background-color: var(--header-color);
     padding-top: 6vh;
     z-index: 1000;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: var(--transition-base);
 }
 
 .espacio-sidebar {
@@ -168,7 +171,7 @@ body {
 .sidebar a {
     padding: 1rem 2rem;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: var(--font-size-xl);
     color: white;
     display: block;
     transition: 0.3s;
@@ -186,6 +189,7 @@ body {
     right: 0;
     padding: 0.8rem 1rem;
     font-size: 2.5rem;
+    cursor: pointer;
 }
 
 .open-sidebar {
@@ -206,16 +210,14 @@ body {
 }
 
 @media screen and (max-width: 1600px) {
-
     .header {
         height: 11vh;
     }
 }
 
-/* Ajustes para pantallas pequeñas */
 @media (max-width: 1420px) {
     .titulo-header {
-        font-size: 1.7rem;
+        font-size: var(--font-size-xl);
     }
 }
 

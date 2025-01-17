@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* Colores */
+    --header-color: #001a37;
+    --header-table-color: rgb(26, 115, 232);
+    --row-table-color: #aaa;
+    --delete-button-color: rgb(255, 30, 30);
+    --delete-button-hover: rgb(255, 64, 64);
+    --primary-button-color: #123773;
+    --primary-button-hover: #1455bd;
+    --secondary-button-color: #ffffff;
+    --secondary-button-hover: #cfcfcf;
+    --text-color: #3c4043;
+    
+    /* Espaciado */
+    --container-spacing: 2vh 2vw;
+    --padding-base: 0.5rem 1rem;
+    
+    /* Bordes */
+    --border-button: 1px solid #919191;
+    --border-radius: clamp(.4rem, .4vw, .4rem);
+    
+    /* Fuentes */
+    --font-family-main: "Google Sans", Roboto, Arial, sans-serif;
+    --font-family-header: Poppins, sans-serif;
+    
+    /* Tamaños de fuente */
+    --font-size-sm: 0.875rem;    /* 14px */
+    --font-size-base: 1.1rem;      /* 17.6px */
+    --font-size-lg: 1.25rem;     /* 20px */
+    --font-size-xl: 1.5rem;      /* 24px */
+    --font-size-2xl: 2rem;       /* 32px */
+    
+    /* Pesos de fuente */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    
+    /* Transiciones */
+    --transition-base: all 0.3s ease;
+}

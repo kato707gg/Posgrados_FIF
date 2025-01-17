@@ -53,125 +53,29 @@ $Periodos = Ejecutar($Con, $SQL2);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/modales.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Historial de Evaluaciones</title>
 </head>
 <style>
 
-    .buscar {
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        border-bottom: 1px solid #636363;
-        outline: none;
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--text-color);
-        border: 1px solid #ccc;
-        padding: 0.5rem;
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        width: 7vw;
-    }
-
-    /* Estilo placeholder en select */
-    .buscar.periodo {
-        color: #757575; /* Color del texto del placeholder */
-    }
-
-    .buscar.periodo option {
-        color: var(--text-color); /* Color del texto de las opciones */
-    }
-
-    .buscar.periodo:focus {
-        outline: none;
-    }
-
-    .buscar.periodo option:first-child {
-        display: none; /* Ocultar el primer option si es el placeholder */
-    }
-
-    .ver-observacion {
-        font-size: 1rem;
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
-        padding: 0.8rem 0.9rem;
-        background-color: #ffffff;
-        border: none;
-        cursor: pointer;
-        color: var(--text-color);
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        border-bottom: 0.0625rem solid var(--secondary-color);
-    }
-
-    .ver-observacion:hover {
-        background-color: #cfcfcf;
-    }
-
-    @media (max-width: 770px) {
-        .ver-observacion {
-            color: white;
-            background-color: #123773;
-        }
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .modal.show {
-        opacity: 1;
-    }
-
-    .modal-content {
-        background-color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.7);
-        padding: 2rem;
-        border-radius: 0.4rem;
-        width: 80%;
-        max-width: 500px;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .modal.show .modal-content {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-
-    .close {
-        position: absolute;
-        top: 0;
-        right: .6rem;
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
     #observacionContent {
-        font-family: "Google Sans", Roboto, Arial, sans-serif;
         font-size: 1rem;
         color: var(--text-color);
         line-height: 1.5;
-        margin-top: 1rem;
     }
+
+    @media (max-width: 770px) {
+            .btn-primary {
+                background-color: var(--primary-button-color);
+            }
+            .btn-primary::before {
+                content: 'Ver';
+            }
+        }
+
 </style>
 
 <body>
@@ -222,7 +126,7 @@ $Periodos = Ejecutar($Con, $SQL2);
                         echo "<td data-label='Fecha'>" . $FechaSola . "</td>";
                         echo "<td data-label='Periodo'>" . $Fila["periodo"] . "</td>";
                         echo "<td data-label='Calificación'>" . $Fila["calificacion"] . "</td>";
-                        echo "<td data-label='Observaciones'><button class='ver-observacion' data-observacion='" . htmlspecialchars($Fila["observacion"]) . "'>Ver</button></td>";
+                        echo "<td data-label='Observaciones'><button class='btn btn-primary' data-observacion='" . htmlspecialchars($Fila["observacion"]) . "'>👁</button></td>";
                         echo "</tr>";
                     }
                 } else {
@@ -236,7 +140,7 @@ $Periodos = Ejecutar($Con, $SQL2);
 </div>
 
 <div id="modalObservaciones" class="modal">
-    <div class="modal-content">
+    <div class="modal-content small">
         <span class="close">&times;</span>
         <h3>Observaciones y Recomendaciones</h3>
         <hr class="x-component x-component-default" style="border-top: 0;border-bottom: 0.05rem solid #196ad3;margin:auto;width: 100%;margin-bottom: 2rem;">
@@ -277,7 +181,7 @@ $Periodos = Ejecutar($Con, $SQL2);
     });
 
     // Obtener todos los botones de ver observación
-    const botonesObservacion = document.querySelectorAll('.ver-observacion');
+    const botonesObservacion = document.querySelectorAll('.btn-primary');
     const modal = document.getElementById('modalObservaciones');
     const observacionContent = document.getElementById('observacionContent');
 

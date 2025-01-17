@@ -8,15 +8,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Posgrado FIF</title>
     <style> 
         .alta-docentes {
           width: 50%;
-          top: 54%;
-          left: 50%;
-          position: absolute;
-          transform: translate(-50%, -50%);
+          margin: 0 auto;
+          padding-top: 2rem;
           box-sizing: border-box;
         }
         .alta-docentes h1 {
@@ -41,7 +40,6 @@
           font-family: "Google Sans", Roboto, Arial, sans-serif;
           width: 96%;
           margin-top: 0.5rem;
-          margin-bottom: 1.5rem;
           border-bottom: 1px solid #636363;
           outline: none;
           font-size: 1rem;
@@ -66,7 +64,7 @@
           border-radius: clamp(.4rem, .4vw, .4rem);
           width: 30%;
           display: block;
-          margin: 3rem auto 0 auto;
+          margin: 5rem auto 0 auto;
           cursor: pointer;
         }
 
@@ -130,22 +128,17 @@
         }
 
         @media screen and (max-width: 1600px) {
+          .alta-docentes {
+              width: 60%;
+          }
 
-        .alta-docentes {
-            top: 56%;
-            width: 60%;
-        }
-
-        .boton_guardar {
+          .boton_guardar {
                 margin: 2rem auto 0 auto;
             }
-
         }
 
         @media screen and (max-width: 1050px) {
-
           .alta-docentes {
-              top: 56%;
               width: 90%;
           }
 

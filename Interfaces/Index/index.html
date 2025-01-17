@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posgrado FIF</title>
-    <link rel="stylesheet" href="../../CSS/loginDesign.css">
+    <link rel="stylesheet" href="../../CSS/login.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
+    <script src="../../JS/transitions.js"></script>
 </head>
 
 <body>
@@ -16,11 +18,11 @@
             <img src="../../Imagenes/EscudoFIF.png" class="escudofif" alt="escudofif">
             <h1>Iniciar sesión</h1>
             <label for="inputUsuario">Usuario:</label>
-            <input type="text" name="inputUsuario" id="inputUsuario">
+            <input type="text" name="inputUsuario" id="inputUsuario" autocomplete="username">
             <br>
             <label for="inputPassword">Contraseña:</label>
             <div class="password-container">
-                <input type="password" name="inputPassword" id="inputPassword">
+                <input type="password" name="inputPassword" id="inputPassword" autocomplete="current-password">
                 <button type="button" id="togglePassword" class="toggle-password">
                     <img src="../../Imagenes/eye-icon.png" alt="Mostrar/Ocultar contraseña" class="eye-icon">
                 </button>

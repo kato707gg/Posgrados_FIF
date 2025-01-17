@@ -70,52 +70,21 @@ if ($Resultado) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../CSS/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/tablas.css">
+    <link rel="stylesheet" href="../../CSS/components/buttons.css">
+    <link rel="stylesheet" href="../../CSS/transitions.css">
     <title>Mis evaluaciones</title>
 </head>
 
 <style>
 
-.generar-pdf {
-        color: #ffffff;
-        font-size: 1.7rem;
-        padding: 0.2rem 0.5rem 0.4rem;
-        background-color: #123773;
-        border: none;
-        cursor: pointer;
-        border-radius: clamp(.4rem, .4vw, .4rem);
-        border-bottom: 0.0625rem solid var(--secondary-color);     
-        text-decoration: none;
-    }
-
-    .generar-pdf:hover {
-        background-color: #1455bd;
-    }
-
-    .generar-pdf:disabled {
-        cursor: not-allowed;
-    }
-
-    .generar-pdf:disabled:hover {
-        background-color: #123773;
-    }
-
     @media (max-width: 770px) {
-        .generar-pdf {
-            padding: 0.7rem 0.9rem;
-            border: none;
-            cursor: pointer;
+        .btn-primary{
+            background-color: var(--primary-button-color);
         }
 
-        .generar-pdf::before {
-            font-family: "Google Sans", Roboto, Arial, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            content: 'Generar';
-        }
-
-        .generar-pdf {
-            font-size: 0;  
+        .btn-primary::before{
+            content: 'Solicitar';
         }
     }
 
@@ -138,7 +107,7 @@ if ($Resultado) {
             <tbody>
                 <?php
                 // Mostrar los datos obtenidos de la base de datos
-                if ($Resultado) {
+                if ($Resultado && mysqli_num_rows($Resultado) > 0) {
                     mysqli_data_seek($Resultado, 0);
                     while ($fila = mysqli_fetch_assoc($Resultado)) {
                         echo "<tr>";
@@ -205,16 +174,15 @@ if ($Resultado) {
                         if ($verificacion['calificaciones_registradas'] == $verificacion['total_sinodales'] && $verificacion['calificaciones_registradas'] > 0) {
                             // Si todos calificaron, mostrar la calificación y habilitar el botón
                             echo "<td data-label='Calificación Final'>" . round($fila['promedio_final'], 2) . "</td>";
-                            echo "<td data-label='Acta de seminario'><a href='../../libraries/ActaSeminarioTutoral.php?id=" . $fila['id'] . "' target='_blank' class='generar-pdf'>📄</a></td>";
+                            echo "<td data-label='Acta de seminario'><a href='../../libraries/ActaSeminarioTutoral.php?id=" . $fila['id'] . "' target='_blank' class='btn btn-primary'>📄</a></td>";
                         } else {
-                            // Si faltan calificaciones, mostrar "Pendiente" y deshabilitar el botón
+                            // Si faltan calificaciones, mostrar "Pendiente" y "No disponible"
                             echo "<td data-label='Calificación Final'>Pendiente</td>";
-                            echo "<td data-label='Acta de seminario'><button class='generar-pdf' disabled title='Pendiente de calificaciones'>📄</button></td>";
+                            echo "<td data-label='Acta de seminario'>No disponible</td>";
                         }
 
                         echo "</tr>";
                     }
-                    
                 } else {
                     echo "<tr><td colspan='4'>No se encontraron evaluaciones</td></tr>";
                 }
