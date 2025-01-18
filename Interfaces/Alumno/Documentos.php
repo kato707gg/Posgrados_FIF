@@ -29,30 +29,30 @@
         margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        height: 3rem;
+        height: clamp(3rem, 3vh, 5rem);
     }
 
     label {
-        font-size: 1.1rem;
+        font-size: var(--font-size-base);
         margin-right: 0.4rem;
     }
 
     #document-type {
-        font-size: 1rem;
+        font-size: calc(var(--font-size-base) - 0.2rem);
         padding: 0.7rem 1rem;
         width: 13rem;
         border: 1px solid #ccc;
-        border-radius: 0.4rem;
+        border-radius: var(--border-radius);
         height: 100%;
     }
 
     #file-label {
-        font-size: 1rem;
+        font-size: calc(var(--font-size-base) - 0.2rem);
         display: flex;
         width: 13rem;
         padding: 0 1rem;
         border: 1px solid #ccc;
-        border-radius: 0.4rem 0 0 0.4rem;
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
         cursor: not-allowed;
         white-space: nowrap;
         overflow: hidden;
@@ -63,7 +63,7 @@
     }
 
     #clear-file-btn {
-        font-size: 1rem;
+        font-size: var(--font-size-sm);
         display: none;
         margin-left: 10px;
         color: red;
@@ -73,14 +73,14 @@
     }
 
     #upload-btn {
-        font-size: 0.9rem;
+        font-size: calc(var(--font-size-base) - 0.2rem);
         display: inline-block;
         padding: 0.7rem 1rem;
         background-color: grey;
         color: white;
         border: none;
         cursor: not-allowed;
-        border-radius: 0 0.4rem 0.4rem 0;
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
         vertical-align: middle;
         height: 100%;
         transition: background-color 0.3s ease;

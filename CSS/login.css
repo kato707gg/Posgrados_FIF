@@ -1,3 +1,5 @@
+@import '../CSS/variables.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -31,7 +33,7 @@ body {
   border: 1px solid #9fb3c6;
   border-radius: 15px;
   font: caption;
-  font-size: 1.1rem;
+  font-size: var(--font-size-base);
   z-index: 1;
   max-height: 90vh;
 }
@@ -49,7 +51,7 @@ body {
   margin: 0;
   padding: 0 0 2rem;
   text-align: center;
-  font-size: 1.7rem;
+  font-size: calc(var(--font-size-base) + 0.2rem);
 }
 
 .container2 h2 {
@@ -72,7 +74,7 @@ body {
   outline: none;
   height: 2rem;
   color: #000000;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-base) - 0.1rem);
   padding: 0 5px;
 }
 
@@ -90,7 +92,7 @@ input::placeholder {
   height: 2.5rem;
   background: #134bb3;
   color: #fff;
-  font-size: 1.125rem;
+  font-size: var(--font-size-base);
   border-radius: 5px;
   width: 50%;
   display: block;
@@ -112,7 +114,7 @@ input::placeholder {
   color: #134bb3;
   font-weight: bold;
   text-decoration: underline;
-  font-size: 1.125rem;
+  font-size: var(--font-size-base);
   width: 50%;
   display: block;
   margin: 1.5rem auto 0 auto;
@@ -125,7 +127,7 @@ input::placeholder {
   background: none;
   text-align: center;
   border: none;
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
   font-weight: 700;
   color: #737373;
   cursor: pointer;
@@ -191,22 +193,16 @@ td {
   position: absolute;
   top: 0.5rem;
   right: 1rem;
-  font-size: 1.7rem;
+  font-size: calc(var(--font-size-xl) = 0.2rem);
   cursor: pointer;
 }
 
 .copy-btn {
   margin: 2rem auto 0;
   padding: .5rem 1rem;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-base) - 0.1rem);
   cursor: pointer;
 }
-
-/* Ajuste base para pantallas normales */
-:root {
-  font-size: 1rem;
-}
-
 
 @media screen and (max-width: 1600px) {
   .container1,
@@ -254,7 +250,7 @@ td {
 
 @media screen and (max-width: 770px) {
   label {
-    font-size: 1.5rem;
+    font-size: var(--font-size-xl);
   }
 
   .container1,
@@ -268,12 +264,12 @@ td {
 
   .container1 h1,
   .container2 h1 {
-    font-size: 2rem;
+    font-size: var(--font-size-2xl);
   }
 
   .container1,
   .container2 {
-    font-size: 1.3rem;
+    font-size: var(--font-size-lg);
     padding: 1.3rem;
   }
 
@@ -285,7 +281,7 @@ td {
   .container2 select,
   .container2 input[type="email"] {
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: var(--font-size-base);
     padding: 0 5px;
   }
 
@@ -297,20 +293,20 @@ td {
 
 }
 
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 800px) {
 
   label {
-    font-size: 1rem;
+    font-size: calc(var(--font-size-base) - 0.1rem);
   }
 
   .container1 h1,
   .container2 h1 {
-    font-size: 1.5rem;
+    font-size: var(--font-size-xl);
   }
 
   .container1,
   .container2 {
-    font-size: 0.8rem;
+    font-size: var(--font-size-sm);
   }
 
 }

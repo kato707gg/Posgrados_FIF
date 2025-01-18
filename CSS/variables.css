@@ -25,12 +25,12 @@
     --font-family-main: "Google Sans", Roboto, Arial, sans-serif;
     --font-family-header: Poppins, sans-serif;
     
-    /* Tamaños de fuente */
-    --font-size-sm: 0.875rem;    /* 14px */
-    --font-size-base: 1.1rem;      /* 17.6px */
-    --font-size-lg: 1.25rem;     /* 20px */
-    --font-size-xl: 1.5rem;      /* 24px */
-    --font-size-2xl: 2rem;       /* 32px */
+    /* Tamaños de fuente más responsivos */
+    --font-size-sm: clamp(0.8rem, 0.6vw, 1.5rem);
+    --font-size-base: clamp(1.1rem, 0.8vw, 2rem);
+    --font-size-lg: clamp(1.25rem, 1vw, 3rem);
+    --font-size-xl: clamp(1.5rem, 1.2vw, 4rem);
+    --font-size-2xl: clamp(2rem, 1.5vw, 5rem);
     
     /* Pesos de fuente */
     --font-weight-normal: 400;

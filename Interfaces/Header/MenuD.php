@@ -47,7 +47,7 @@ verificarSesion('D');
         <div id="mySidebar" class="sidebar">
             <span href="javascript:void(0)" class="close-sidebar" onclick="closeNav()">×</span>
             <span class="espacio-sidebar"></span>
-            <a>Usuario: <?php echo htmlspecialchars(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
+            <a id="usuario-sidebar"> Usuario: <?php echo htmlspecialchars(isset($_SESSION['Nombre']) ? $_SESSION['Nombre'] : 'Invitado');?></a>
             <a href="../Docente/EvaluacionesPendientes.php">Evaluaciones Pendientes</a>
             <a href="../Docente/HistorialEvaluaciones.php">Historial de Evaluaciones</a>
             <a class="cerrar-btn-telefono" href="../Header/Cerrar.php">Cerrar</a>

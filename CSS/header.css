@@ -129,7 +129,7 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: var(--font-size-base);
 }
 
 .header-telefono {
@@ -178,7 +178,7 @@ body {
 }
 
 #usuario-sidebar {
-    font-size: 2rem;
+    font-size: calc(var(--font-size-xl) + 0.2rem);
     font-weight: bold;
 }
 
@@ -188,12 +188,12 @@ body {
     top: 0;
     right: 0;
     padding: 0.8rem 1rem;
-    font-size: 2.5rem;
+    font-size: var(--font-size-2xl);
     cursor: pointer;
 }
 
 .open-sidebar {
-    font-size: 1.5rem;
+    font-size: var(--font-size-xl);
     cursor: pointer;
     color: white;
     border: none;

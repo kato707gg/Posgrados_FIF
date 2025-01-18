@@ -24,13 +24,13 @@
           margin: 0;
           margin: 0 0 2.5rem;
           text-align: center;
-          font-size: 2rem;
+          font-size: var(--font-size-2xl);
         }
         .alta-docentes label {
           font-family: system-ui;
           color: #3c4043;
           font-weight: 600;
-          font-size: 1.5rem;
+          font-size: var(--font-size-xl);
           margin: 0;
           padding: 0 5px;
         }
@@ -42,7 +42,7 @@
           margin-top: 0.5rem;
           border-bottom: 1px solid #636363;
           outline: none;
-          font-size: 1rem;
+          font-size: calc(var(--font-size-base) - 0.1rem);
           font-weight: 500;
           color: var(--text-color);
           border: 1px solid #ccc;
@@ -57,11 +57,11 @@
         .boton_guardar {
           border: none;
           outline: none;
-          height: 3rem;
+          height: clamp(3rem, 3vh, 5rem);
           background: #123773;
           color: #fff;
-          font-size: 1.5rem;
-          border-radius: clamp(.4rem, .4vw, .4rem);
+          font-size: var(--font-size-xl);
+          border-radius: var(--border-radius);
           width: 30%;
           display: block;
           margin: 5rem auto 0 auto;
@@ -116,14 +116,14 @@
           position: absolute;
           top: 0.5rem;
           right: 1rem;
-          font-size: 1.7rem;
+          font-size: calc(var(--font-size-xl) + 0.2rem);
           cursor: pointer;
         }
 
         .copy-btn {
           margin: 2rem auto 0;
           padding: .5rem 1rem;
-          font-size: 1rem;
+          font-size: calc(var(--font-size-base) - 0.1rem);
           cursor: pointer;
         }
 
@@ -163,12 +163,12 @@
           }
 
           .alta-docentes h1 {
-            font-size: 1.5rem;
+            font-size: var(--font-size-xl);
             margin: 0 0 3rem;
           }
 
           .alta-docentes label {
-            font-size: 1.25rem;
+            font-size: var(--font-size-lg);
           }
 
           .grid-container {

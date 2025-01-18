@@ -76,7 +76,7 @@
     letter-spacing: .01785714em;
     font-family: system-ui;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: var(--font-size-xl);
     color: var(--text-color);
 }
 
@@ -84,7 +84,7 @@
 .observacion-input {
     color: #555;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     font-weight: 500;
     width: 98%;
     margin: .5rem 0 1rem;
@@ -97,7 +97,7 @@
 /* estilo del boton guardar */
 .guardar-button {
     display: flex;
-    font-size: 1.3rem;
+    font-size: var(--font-size-lg);
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     padding: 0.7rem 3rem;
     background-color: #123773;
