@@ -1,6 +1,9 @@
 <?php
 function verificarSesion($tipoRequerido) {
-    session_start();
+    // Verificar si ya hay una sesión activa antes de intentar iniciarla
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     
     // Headers de caché
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
