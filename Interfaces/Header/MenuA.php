@@ -12,7 +12,6 @@ verificarSesion('A');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../CSS/header.css">
     <link rel="stylesheet" href="../../CSS/transitions.css">
-    <script src="../../JS/transitions.js"></script>
     <title>Alumno</title>
 </head>
 <body>

@@ -329,6 +329,9 @@ $Resultado = Ejecutar($Con, $SQL);
 
         function guardarObservaciones() {
             const observacionInput = document.getElementById('observacion_' + expedienteActual);
+            // Seleccionar el botón usando la fila y el data-label
+            const fila = document.querySelector(`tr[data-expediente="${expedienteActual}"]`);
+            const btnAgregar = fila.querySelector('td[data-label="Observaciones"] .btn-secondary');
 
             if (esDirectorModal) {
                 // Guardar observaciones de director
@@ -345,6 +348,9 @@ $Resultado = Ejecutar($Con, $SQL);
                     observacionInput.value = obsInput.value;
                 }
             }
+
+            // Añadir clase al botón
+            btnAgregar.classList.add('accion-completada');
 
             checkFields(expedienteActual);
             cerrarModal();

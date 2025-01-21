@@ -59,6 +59,7 @@ $Res = Ejecutar($Con, $SQL);
       <table>
         <thead>
           <tr>
+            <th>Semestre</th>
             <th>Fecha</th>
             <th>Hora</th>
             <th>Aula</th>
@@ -72,6 +73,17 @@ $Res = Ejecutar($Con, $SQL);
             while($Fila = $Res->fetch_assoc()){
               $exp = $Fila["exp"];
               echo "<tr>";
+              echo "<td data-label='Semestre'><div'><select class='inputs' id='semestre-" . $exp . "' required>
+                <option value='' disabled selected>Selecciona...</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+                <option value='6'>6</option>
+                <option value='7'>7</option>
+                <option value='8'>8</option>
+              </select><span class='check-icon'></span></div></td>";
               echo "<td data-label='Fecha'><div'><input type='date' class='inputs' id='fecha-" . $exp . "'><span class='check-icon'></span></div></td>";
               echo "<td data-label='Hora'><div'><input type='time' class='inputs' id='hora-" . $exp . "' ><span class='check-icon'></span></div></td>";
               echo "<td data-label='Aula'><div'><input type='text' class='inputs' id='aula-" . $exp . "'><span class='check-icon'></span></div></td>";
@@ -86,7 +98,7 @@ $Res = Ejecutar($Con, $SQL);
               echo "</tr>";
             }
           }else{
-            echo "<tr><td colspan='5'>No se encontraron evaluaciones</td></tr>";
+            echo "<tr><td colspan='6'>No se encontraron evaluaciones</td></tr>";
           }
           Cerrar($Con);
           ?>
@@ -100,15 +112,16 @@ $Res = Ejecutar($Con, $SQL);
             const fechaSeleccionada = document.getElementById('fecha-' + expediente).value;
             const horaSeleccionada = document.getElementById('hora-' + expediente).value;
             const aula = document.getElementById('aula-' + expediente).value;
+            const semestre = document.getElementById('semestre-' + expediente).value;
             const fileInput = document.getElementById('file-' + expediente);
 
             // Verificar que los campos no estén vacíos
-            if (!fechaSeleccionada || !horaSeleccionada || !aula || !fileInput.files.length) {
+            if (!fechaSeleccionada || !horaSeleccionada || !aula || !fileInput.files.length || !semestre) {
                 alert('Por favor, completa todos los campos y selecciona un archivo.');
                 return;
             }
 
-            // Combina la fecha y hora en el formato DATETIME (YYYY-MM-DD HH:MM:SS)
+            // Combina la fecha y hora en el formato DATETIME
             const fechaHoraCombinada = fechaSeleccionada + ' ' + horaSeleccionada;
 
             // Crear un objeto FormData
@@ -116,6 +129,7 @@ $Res = Ejecutar($Con, $SQL);
             formData.append('exp', expediente);
             formData.append('fecha_evaluacion', fechaHoraCombinada);
             formData.append('aula', aula);
+            formData.append('semestre', semestre);
             formData.append('entregable', fileInput.files[0]);
         
             // Crear una solicitud XMLHttpRequest

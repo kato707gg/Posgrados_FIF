@@ -53,11 +53,11 @@ $SQL2 = "SELECT c.nombre AS coor_nombre,
         c.a_paterno AS coor_paterno,  
         c.a_materno AS coor_materno, 
         e.nombre, e.a_paterno, e.a_materno,
-        ev.cal_final
+        ev.cal_final, ev.semestre
         FROM asignaciones a
         INNER JOIN coordinadores c ON a.clave_coordinador = c.clave
         INNER JOIN estudiantes e ON a.exp_alumno = e.exp
-        INNER JOIN evaluaciones ev ON a.exp_alumno =  ev.exp_alumno
+        INNER JOIN evaluaciones ev ON a.exp_alumno = ev.exp_alumno
         WHERE a.exp_alumno = '$id_alumno'";
 
 
@@ -90,6 +90,7 @@ if (mysqli_num_rows($Resultado2) > 0) {
     $Nom_Coordinador =  $Fila['coor_nombre'] . " " . $Fila['coor_paterno'] . " " . $Fila['coor_materno'];
     $Nom_Alumno = $Fila['nombre'] . " " . $Fila['a_paterno'] . " " . $Fila['a_materno'];
     $Cal_Final = $Fila['cal_final'];
+    $Semestre = $Fila['semestre'];
 }
 
 if (mysqli_num_rows($Resultado3) > 0){
@@ -152,10 +153,10 @@ $pdf->Ln(10);
 $pdf->SetFont('Arial', '', 12);
 
 // Cuerpo principal
-$pdf->MultiCell(0, $lineHeight, utf8_decode("Por este medio, le informamos que el comité académico del estudiante $Nom_Alumno\n"
-    . "con número de expediente $id_alumno, se reunió de manera virtual, para realizar la evaluación\n"
+$pdf->MultiCell(0, $lineHeight, utf8_decode("Por este medio, le informamos que el comité académico del estudiante $Nom_Alumno "
+    . "con número de expediente $id_alumno, se reunió de manera virtual, para realizar la evaluación "
     . "del avance del proyecto de investigación.\n\n"
-    . "De acuerdo con lo planteado en el cronograma de trabajo y a los requerimientos del _____ semestre\n"
+    . "De acuerdo con lo planteado en el cronograma de trabajo y a los requerimientos del $Semestre ° semestre "
     . "del programa del Doctorado en Ciencias de la Computación del cual se tienen los siguientes resultados:"), 0, 'J');
 $pdf->Ln($lineHeight);
 

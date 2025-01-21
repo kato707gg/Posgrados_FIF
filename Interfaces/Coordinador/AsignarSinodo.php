@@ -134,7 +134,7 @@ $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);
                         echo "<td data-label='ID'>" . $Sinodo['clave'] . "</td>";
                         echo "<td data-label='Nombre'>" . $NombreSin . "</td>";
                         // Cambiar el value del checkbox a la clave del sinodo
-                        echo "<td data-label='Seleccionar'><input type='checkbox' class='sinodo-checkbox' value='" . $Sinodo['clave'] ."' onclick='handleCheckbox(this, \"" . $NombreSin . "\")'></td>";
+                        echo "<td data-label='Seleccionar'><input type='checkbox' class='checkbox' value='" . $Sinodo['clave'] ."' onclick='handleCheckbox(this, \"" . $NombreSin . "\")'></td>";
                         echo "</tr>";
                     }
                 }
@@ -159,7 +159,7 @@ confirmarButton.disabled = true;
 
 // Función para permitir solo un checkbox seleccionado a la vez
 function handleCheckbox(checkbox, nombreSinodo) {
-    let checkboxes = document.querySelectorAll('.sinodo-checkbox');
+    let checkboxes = document.querySelectorAll('.checkbox');
     
     // Si el sínodo seleccionado es el comodín (clave 0)
     if (checkbox.value === "0") {
@@ -213,7 +213,7 @@ function openModal(button) {
 
     let sinodosSeleccionados = sinodosSeleccionadosPorEstudiante[exp] || [];
 
-    let checkboxes = document.querySelectorAll('.sinodo-checkbox');
+    let checkboxes = document.querySelectorAll('.checkbox');
     checkboxes.forEach(checkbox => {
         // Si el sínodo es el comodín (clave 0), siempre debe estar habilitado
         if (checkbox.value === "0") {

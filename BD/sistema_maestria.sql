@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-01-2025 a las 08:25:31
+-- Tiempo de generación: 21-01-2025 a las 06:30:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,9 @@ CREATE TABLE `asignaciones` (
 INSERT INTO `asignaciones` (`id`, `exp_alumno`, `director`, `sinodo2`, `sinodo3`, `externo`, `clave_coordinador`) VALUES
 (45, 301574, 54321, 111111, 114090, 222222, 567575),
 (47, 1, 0, 1234, 4321, 12345, 567575),
-(48, 2, 1234, 4321, 12345, 33333, 567575);
+(48, 2, 1234, 4321, 12345, 33333, 567575),
+(51, 301627, 1234, 4321, 12345, 33333, 567575),
+(55, 3, 1234, 4321, 0, 33333, 567575);
 
 -- --------------------------------------------------------
 
@@ -82,9 +84,9 @@ INSERT INTO `coordinadores` (`clave`, `nombre`, `a_paterno`, `a_materno`, `telef
 --
 
 CREATE TABLE `cuentas` (
-  `id` bigint(20) DEFAULT NULL,
-  `contrasena` varchar(255) DEFAULT NULL,
-  `tipo` char(1) DEFAULT NULL
+  `id` bigint(20) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  `tipo` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -118,10 +120,7 @@ INSERT INTO `cuentas` (`id`, `contrasena`, `tipo`) VALUES
 (33333, 'DELGADO33', 'D'),
 (444444, 'BLANKED44', 'D'),
 (128976, 'SANTIAGO65', 'A'),
-(301627, 'PACHECO77', 'A'),
-(23423, 'HERNANDEZ23', 'D'),
-(301579, 'HERNANDEZ65', 'A'),
-(25245, 'HERNANDEZ45', 'D');
+(301627, 'PACHECO77', 'A');
 
 -- --------------------------------------------------------
 
@@ -133,7 +132,7 @@ CREATE TABLE `detalle_evaluaciones` (
   `id_detalle` int(11) NOT NULL,
   `id_evaluacion` int(11) NOT NULL,
   `id_sinodo` bigint(20) NOT NULL,
-  `calificacion` double NOT NULL,
+  `calificacion` double DEFAULT NULL,
   `observacion` varchar(500) DEFAULT NULL,
   `periodo` varchar(7) NOT NULL,
   `d_observacion1` varchar(300) DEFAULT NULL,
@@ -150,10 +149,20 @@ INSERT INTO `detalle_evaluaciones` (`id_detalle`, `id_evaluacion`, `id_sinodo`, 
 (122, 47, 111111, 7.8, 'Sytilugiluyt magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
 (123, 47, 114090, 9, 'Hyurfytdyd magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
 (124, 47, 222222, 7.7, 'Vhwdyi magna sit enim qui cillum ipsum reprehenderit cillum aute. Qui sunt aliqua magna nulla pariatur quis. Aliqua culpa ex ad fugiat voluptate excepteur aliquip sint fugiat reprehenderit. Ex reprehenderit reprehenderit aute laborum non ex id consectetur incididunt in eu. Mollit dolor ut tempor adipisicing. Esse velit fugiat nulla ullamco excepteur nisi nostrud elit aliqua in. Nulla anim pariatur aliquip dolore consequat culpa pariatur cillum ad.', '2025-2', NULL, NULL, NULL),
-(134, 51, 1234, 0, NULL, '', NULL, NULL, NULL),
-(135, 51, 4321, 0, NULL, '', NULL, NULL, NULL),
-(136, 51, 12345, 0, NULL, '', NULL, NULL, NULL),
-(137, 51, 33333, 0, NULL, '', NULL, NULL, NULL);
+(134, 51, 1234, 0, 'Non in voluptate do laborum consectetur aliquip nostrud commodo aliqua elit proident nostrud ullamco excepteur. Qui ad adipisicing aute cupidatat duis tempor in. Voluptate reprehenderit dolore officia duis adipisicing velit dolor sint qui culpa occaecat tempor qui non. Elit anim esse ipsum consequat voluptate nisi labore duis pariatur proident exercitation occaecat aliquip. Nulla cillum sint est minim. Mollit esse voluptate dolore duis sunt ex non magna ipsum laboris. Reprehenderit cillum dolor ', '2025-2', 'Officia cupidatat commodo ad aliquip sit aliquip in. Non culpa occaecat nisi laboris aliquip sunt quis ullamco fugiat. Ad eiusmod enim nisi Lorem quis qui aliqua in. Fugiat ea amet eu minim est ullamco. Proident quis id consequat sunt cillum exercitation incididunt ipsum laborum fugiat anim nostrud.', 'Ea ut mollit dolor fugiat consequat duis occaecat enim ea. Cupidatat elit eiusmod esse ea dolore culpa velit mollit ea labore. Dolor velit consectetur veniam dolore duis irure ipsum aliqua minim reprehenderit eu cupidatat eiusmod adipisicing. Aute sit proident aliquip sunt nostrud mollit ut aute. La', 'Incididunt laboris culpa do nostrud consequat ea et Lorem proident ea pariatur. Nisi ipsum id aliquip amet nisi ex Lorem cillum ullamco nulla. Magna aute sit velit labore in sint voluptate eiusmod nisi et anim mollit ullamco aliquip. Officia elit sunt sint occaecat eiusmod exercitation aliqua est nu'),
+(135, 51, 4321, 8, 'Incididunt laboris culpa do nostrud consequat ea et Lorem proident ea pariatur. Nisi ipsum id aliquip amet nisi ex Lorem cillum ullamco nulla. Magna aute sit velit labore in sint voluptate eiusmod nisi et anim mollit ullamco aliquip. Officia elit sunt sint occaecat eiusmod exercitation aliqua est nulla. Dolore incididunt reprehenderit reprehenderit Lorem mollit exercitation cupidatat.', '2025-2', NULL, NULL, NULL),
+(136, 51, 12345, 7, 'Adipisicing consequat pariatur incididunt reprehenderit non aliqua adipisicing aute nulla. Occaecat laborum nulla in aliqua ipsum amet. Pariatur incididunt in laboris pariatur anim et pariatur exercitation est. Elit esse fugiat exercitation pariatur ad anim. Irure sint in irure aliquip officia anim veniam tempor consectetur fugiat commodo.\r\n', '2025-2', NULL, NULL, NULL),
+(137, 51, 33333, 9, 'Officia cupidatat commodo ad aliquip sit aliquip in. Non culpa occaecat nisi laboris aliquip sunt quis ullamco fugiat. Ad eiusmod enim nisi Lorem quis qui aliqua in. Fugiat ea amet eu minim est ullamco. Proident quis id consequat sunt cillum exercitation incididunt ipsum laborum fugiat anim nostrud. Nulla amet laborum mollit deserunt. Reprehenderit pariatur eiusmod proident eu deserunt commodo id laboris.', '2025-2', NULL, NULL, NULL),
+(187, 66, 1234, 8, 'lol', '2025-1', NULL, NULL, NULL),
+(188, 66, 4321, NULL, NULL, '', NULL, NULL, NULL),
+(189, 66, 12345, NULL, NULL, '', NULL, NULL, NULL),
+(194, 68, 1234, NULL, 'rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugeklou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huero', '2025-1', 'gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp', 'r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj g', 'thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoi'),
+(195, 68, 4321, 9.9, 'gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hvedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o gleuo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o', '2025-1', NULL, NULL, NULL),
+(196, 68, 12345, 7.8, 'haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbheugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj ', '2025-1', NULL, NULL, NULL),
+(197, 68, 33333, 8, 'vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d hv oivj oedroiervosdfh iers ouiseh gow gwhri  i gos udhg oieh ged huerohg  hod oier o gedbhebrb thrth rthrt hr hrthrthrth r rtjytjtyjg haelgjp;o glej gleh  gku eiueil ugekliruj gjeh keri uo vherkvidu ou  s v hg go shdi eoiv hderoli voeiud hv d', '2025-1', NULL, NULL, NULL),
+(198, 69, 1234, NULL, NULL, '', NULL, NULL, NULL),
+(199, 69, 4321, NULL, NULL, '', NULL, NULL, NULL),
+(200, 69, 33333, NULL, NULL, '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -180,6 +189,7 @@ INSERT INTO `docentes` (`clave`, `nombre`, `a_paterno`, `a_materno`, `status`) V
 (12345, 'CARLOS ALBERTO', 'OLMOS', 'TREJO', 'A'),
 (33333, 'SELENE', 'DELGADO', 'LOPEZ', 'A'),
 (54321, 'FIDEL', 'GONZALES', 'GUTIERREZ', 'A'),
+(78532, 'PRUEBA', 'PRUEBA', 'PRUEBA', 'A'),
 (111111, 'JORGE', 'PEREZ', 'RAMOS', 'A'),
 (114090, 'JAVIER', 'PAULIN', 'MARTINEZ', 'A'),
 (222222, 'JULIO', 'ESPINOZA', 'PAZ', 'A'),
@@ -228,13 +238,10 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 (5, 'CARLA', 'VILLAREAL', 'SOLIS', 5525373688, 'Carla@hotmail.com', 'MCC'),
 (6, 'ROSA', 'BUENROSTRO', 'FERNANDEZ', 5523738128, 'Rosa@hotmail.com', 'MSC'),
 (7, 'ALEJANDRO', 'PAREDES', 'HUERTA', 8623862836, 'Alejandro@hotmail.com', 'MIEVEA'),
-(114589, 'HANNA PAOLA', 'VELEZQUEZ', 'SUAREZ', 5985233178, 'h@gmail.com', 'MCC'),
 (128976, 'VIRGINIA', 'SANTIAGO', 'PABLO', 4411200465, 'vicky_changuito@hotmail.com', 'MCC'),
 (301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
-(301579, 'DIEGO', 'HERNANDEZ', 'SANCHEZ', 4424322665, 'katoh707@gmail.com', 'DITE'),
 (301612, 'YARETZI', 'AA', '123123', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
 (301627, 'MARIA FERNANDA', 'PACHECO', 'SANCHEZ', 4426532877, 'mpacheco@alumnos.uaq.mx', 'DCC'),
-(456789, 'SIUL FERNANDO', 'MARTINEZ', 'MANCERA', 9874561237, 's@gmail.com', 'DCC');
 
 -- --------------------------------------------------------
 
@@ -247,16 +254,20 @@ CREATE TABLE `evaluaciones` (
   `exp_alumno` bigint(20) NOT NULL,
   `fecha_evaluacion` datetime NOT NULL,
   `cal_final` double NOT NULL,
-  `aula` varchar(900) NOT NULL
+  `aula` varchar(900) NOT NULL,
+  `semestre` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `evaluaciones`
 --
 
-INSERT INTO `evaluaciones` (`id`, `exp_alumno`, `fecha_evaluacion`, `cal_final`, `aula`) VALUES
-(47, 301574, '2025-01-10 09:32:00', 8.17, 'A1'),
-(51, 2, '2025-01-14 12:45:00', 0, 'A2');
+INSERT INTO `evaluaciones` (`id`, `exp_alumno`, `fecha_evaluacion`, `cal_final`, `aula`, `semestre`) VALUES
+(47, 301574, '2025-01-10 09:32:00', 8.17, 'A1', 0),
+(51, 2, '2025-01-14 12:45:00', 7, 'A2', 0),
+(66, 1, '2025-01-17 07:02:00', 8, 'lol', 0),
+(68, 301627, '2025-01-21 11:17:00', 8.64, 'A2', 4),
+(69, 3, '2025-01-21 11:06:00', 0, 'http://localhost/Posgrados_FIF/Interfaces/Alumno/EvaluacionesAgendadas.php', 3);
 
 --
 -- Índices para tablas volcadas
@@ -322,25 +333,25 @@ ALTER TABLE `evaluaciones`
 -- AUTO_INCREMENT de la tabla `asignaciones`
 --
 ALTER TABLE `asignaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos_alumno`
 --
 ALTER TABLE `documentos_alumno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluaciones`
 --
 ALTER TABLE `evaluaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- Restricciones para tablas volcadas
@@ -361,7 +372,8 @@ ALTER TABLE `asignaciones`
 -- Filtros para la tabla `detalle_evaluaciones`
 --
 ALTER TABLE `detalle_evaluaciones`
-  ADD CONSTRAINT `detalle_evaluaciones_ibfk_1` FOREIGN KEY (`id_sinodo`) REFERENCES `docentes` (`clave`);
+  ADD CONSTRAINT `detalle_evaluaciones_ibfk_1` FOREIGN KEY (`id_sinodo`) REFERENCES `docentes` (`clave`),
+  ADD CONSTRAINT `detalle_evaluaciones_ibfk_2` FOREIGN KEY (`id_evaluacion`) REFERENCES `evaluaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `documentos_alumno`

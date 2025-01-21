@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $exp_alumno = mysqli_real_escape_string($Con, $_POST['exp']);
     $fecha_evaluacion = mysqli_real_escape_string($Con, $_POST['fecha_evaluacion']);
     $aula = mysqli_real_escape_string($Con, $_POST['aula']);
+    $semestre = mysqli_real_escape_string($Con, $_POST['semestre']);
 
     $archivoGuardado = "";
 
@@ -42,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Insertar en evaluaciones
-        $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion, aula) VALUES (?, ?, ?)";
+        $SQL = "INSERT INTO evaluaciones (exp_alumno, fecha_evaluacion, aula, semestre) VALUES (?, ?, ?, ?)";
         $stmt = mysqli_prepare($Con, $SQL);
-        mysqli_stmt_bind_param($stmt, "sss", $exp_alumno, $fecha_evaluacion, $aula);
+        mysqli_stmt_bind_param($stmt, "sssi", $exp_alumno, $fecha_evaluacion, $aula, $semestre);
         mysqli_stmt_execute($stmt);
         $id_evaluacion = mysqli_insert_id($Con);
 

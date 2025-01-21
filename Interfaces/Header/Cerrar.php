@@ -19,11 +19,11 @@
                 window.history.pushState('', null, './');
                 window.addEventListener('popstate', function() {
                     window.history.pushState('', null, './');
-                    window.location.replace('../Index/index.html');
+                    window.location.replace('../../index.html');
                 });
             }
             // Redirigir al login
-            window.location.replace('../Index/index.html');
+            window.location.replace('../../index.html');
         }
     </script>
 </head>

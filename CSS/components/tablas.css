@@ -65,6 +65,7 @@ td {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     color: var(--text-color);
+    word-wrap: break-word;
 }
 
 th {
@@ -97,6 +98,12 @@ h3 {
     padding: var(--padding-base);
     border-radius: var(--border-radius);
     width: 7vw;
+}
+
+.checkbox {
+    cursor: pointer;
+    width: 1.2rem;
+    height: 1.2rem;
 }
 
 .buscar {
@@ -150,7 +157,7 @@ h3 {
         width: 27vw;
     }
 
-    input[type="checkbox" i] {
+    .checkbox {
         cursor: pointer;
         width: 1.5rem;
         height: 1.5rem;
@@ -181,6 +188,16 @@ h3 {
         padding: var(--padding-base);
         text-align: right;
         border: none;
+        flex-wrap: wrap; /* Permite que el contenido se envuelva */
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: var(--font-weight-bold);
+        text-align: left;
+        padding-right: 0.5rem;
+        flex: 1; /* Toma el espacio disponible */
+        min-width: 120px; /* Asegura un ancho mínimo para la etiqueta */
     }
 
     td:first-child {
@@ -189,12 +206,5 @@ h3 {
 
     td:last-child {
         padding-bottom: 0;
-    }
-
-    td::before {
-        content: attr(data-label);
-        font-weight: var(--font-weight-bold);
-        text-align: left;
-        padding-right: 0.5rem;
     }
 }

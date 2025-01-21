@@ -72,20 +72,20 @@ if ($result->num_rows == 1) {
                 session_destroy();
                 echo '<script type="text/javascript">
                         alert("Tipo de cuenta no válido.");
-                        window.location.href="../../Interfaces/Index/index.html";
+                        window.location.href="../../index.html";
                       </script>';
                 break;
         }
     } else {
         echo '<script type="text/javascript">
                 alert("Usuario o Contraseña Incorrecta");
-                window.location.href="../../Interfaces/Index/index.html";
+                window.location.href="../../index.html";
               </script>';
     }
 } else {
     echo '<script type="text/javascript">
             alert("Usuario no encontrado.");
-            window.location.href="../../Interfaces/Index/index.html";
+            window.location.href="../../index.html";
           </script>';
 }
 

@@ -12,13 +12,13 @@ function verificarSesion($tipoRequerido) {
     
     // Verificar sesión activa
     if (!isset($_SESSION['id']) || !isset($_SESSION['tipo'])) {
-        header("Location: ../Index/index.html");
+        header("Location: ../../index.html");
         exit();
     }
     
     // Verificar tipo de usuario
     if ($_SESSION['tipo'] !== $tipoRequerido) {
-        header("Location: ../Index/index.html");
+        header("Location: ../../index.html");
         exit();
     }
 }

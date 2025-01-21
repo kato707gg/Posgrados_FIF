@@ -6,16 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posgrado FIF</title>
-    <link rel="stylesheet" href="../../CSS/login.css">
-    <link rel="stylesheet" href="../../CSS/transitions.css">
-    <script src="../../JS/transitions.js"></script>
+    <link rel="stylesheet" href="CSS/login.css">
+    <link rel="stylesheet" href="CSS/transitions.css">
 </head>
 
 <body>
     <div class="container1" id="initialContent">
         <!-- Contenido inicial -->
-        <form method="POST" action="ValidaAcceso.php">
-            <img src="../../Imagenes/EscudoFIF.png" class="escudofif" alt="escudofif">
+        <form method="POST" action="Interfaces/Index/ValidaAcceso.php">
+            <img src="Imagenes/EscudoFIF.png" class="escudofif" alt="escudofif">
             <h1>Iniciar sesión</h1>
             <label for="inputUsuario">Usuario:</label>
             <input type="text" name="inputUsuario" id="inputUsuario" autocomplete="username">
@@ -24,7 +23,7 @@
             <div class="password-container">
                 <input type="password" name="inputPassword" id="inputPassword" autocomplete="current-password">
                 <button type="button" id="togglePassword" class="toggle-password">
-                    <img src="../../Imagenes/eye-icon.png" alt="Mostrar/Ocultar contraseña" class="eye-icon">
+                    <img src="Imagenes/eye-icon.png" alt="Mostrar/Ocultar contraseña" class="eye-icon">
                 </button>
             </div>
             <br>
@@ -95,7 +94,7 @@
         </div>
     </div>
 
-    <script src="../../JS/script.js"></script>
+    <script src="JS/script.js"></script>
 </body>
 
 </html>
