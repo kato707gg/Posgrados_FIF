@@ -9,16 +9,33 @@ include '../../Config/conexion.php';
 // Conectar a la base de datos
 $Con = Conectar();
 
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
+
+$id_coordinador = $_SESSION['id'];
+
+// Obtener el programa del coordinador
+$SQL_programa = "SELECT programa FROM coordinadores WHERE clave = ?";
+$stmt = mysqli_prepare($Con, $SQL_programa);
+mysqli_stmt_bind_param($stmt, 'i', $id_coordinador);
+mysqli_stmt_execute($stmt);
+$resultado_programa = mysqli_stmt_get_result($stmt);
+$programa_coordinador = mysqli_fetch_assoc($resultado_programa)['programa'];
+
 // Consulta SQL para obtener los datos de los estudiantes
 $SQL = "
     SELECT e.exp, e.nombre, e.a_paterno, e.a_materno 
     FROM estudiantes e 
-    INNER JOIN coordinadores c ON e.programa = c.programa 
     LEFT JOIN asignaciones a ON e.exp = a.exp_alumno 
-    WHERE a.exp_alumno IS NULL
+    WHERE a.exp_alumno IS NULL 
+    AND e.programa = ?
 ";
 
-$Resultado = Ejecutar($Con, $SQL);
+$stmt = mysqli_prepare($Con, $SQL);
+mysqli_stmt_bind_param($stmt, 's', $programa_coordinador);
+mysqli_stmt_execute($stmt);
+$Resultado = mysqli_stmt_get_result($stmt);
 
 $SQLSinodos = "SELECT clave, nombre, a_paterno, a_materno FROM docentes"; // Consulta para obtener los sinodos
 $ResultadoSinodos = Ejecutar($Con, $SQLSinodos);

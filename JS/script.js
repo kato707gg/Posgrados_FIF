@@ -37,53 +37,48 @@ function validarTelefono(event) {
 }
 
 let operationSuccess = false; // Variable global para el estado de la operación
-document.querySelector('form[action="RegistroAlumno.php"]').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío del formulario de la manera tradicional
+document.querySelector('form[action="Interfaces/Index/RegistroAlumno.php"]').addEventListener('submit', function(event) {
+    event.preventDefault();
 
     const formData = new FormData(this);
 
-    fetch('RegistroAlumno.php', {
+    fetch('Interfaces/Index/RegistroAlumno.php', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+            'Accept': 'application/json'  // Indicamos que esperamos JSON
+        }
     })
     .then(response => {
-        console.log('Response status:', response.status);
-        return response.text().then(text => {
-            console.log('Response text:', text);
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error('Error parsing JSON:', e);
-                throw new Error('Invalid JSON response: ' + text);
-            }
-        });
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+        return response.json();  // Cambiamos text() por json()
     })
     .then(data => {
         const popup = document.getElementById('popup');
         const popupText = document.getElementById('popup-text');
         const copyButton = document.getElementById('copy-btn');
 
-        // Oculta el botón de copiar por defecto
         copyButton.style.display = 'none';
 
         if (data.status === 'success') {
-            operationSuccess = true; // Marca la operación como exitosa
             // Mostrar el mensaje y el botón de copiar
+            operationSuccess = true;
             popupText.innerText = data.message;
             copyButton.style.display = 'block';
-            window.copyText = data.copyText; // Guardamos el texto para copiar
+            window.copyText = data.copyText;
         } else if (data.status === 'exists') {
             // Mostrar el mensaje de que la cuenta ya existe sin el botón de copiar
             popupText.innerText = data.message;
         } else {
             popupText.innerText = data.message || 'Error desconocido al registrar la cuenta';
         }
-
         // Mostrar el popup
         popup.style.display = 'block';
     })
     .catch(error => {
-        console.error('Error completo:', error);
+        console.error('Error:', error);
         const popup = document.getElementById('popup');
         const popupText = document.getElementById('popup-text');
         popupText.innerText = 'Error al procesar la solicitud: ' + error.message;
@@ -119,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     togglePassword.addEventListener('click', function (e) {
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
-        this.querySelector('img').src = type === 'password' ? '../../Imagenes/eye-icon.png' : '../../Imagenes/eye-slash-icon.png';
+        this.querySelector('img').src = type === 'password' ? '../Posgrados_FIF/Imagenes/eye-icon.png' : '../Posgrados_FIF/Imagenes/eye-slash-icon.png';
     });
 
     // Función para mostrar el ícono solo si hay texto

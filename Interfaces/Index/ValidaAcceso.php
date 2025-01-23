@@ -37,7 +37,7 @@ if ($result->num_rows == 1) {
                 $query_usuario = "SELECT nombre, a_paterno, a_materno FROM docentes WHERE clave = ?";
                 break;
             case 'C':
-                $query_usuario = "SELECT nombre, a_paterno, a_materno FROM coordinadores WHERE clave = ?";
+                $query_usuario = "SELECT nombre, a_paterno, a_materno, programa FROM coordinadores WHERE clave = ?";
                 break;
             default:
                 $query_usuario = null;
@@ -51,8 +51,10 @@ if ($result->num_rows == 1) {
 
             if ($result_usuario->num_rows == 1) {
                 $row_usuario = $result_usuario->fetch_assoc();
-                // Guardar el nombre completo del usuario en la sesión
                 $_SESSION['Nombre'] = $row_usuario['nombre'] . ' ' . $row_usuario['a_paterno'] . ' ' . $row_usuario['a_materno'];
+                if ($row['tipo'] === 'C') {
+                    $_SESSION['programa'] = $row_usuario['programa'];
+                }
             }
             $stmt_usuario->close();
         }

@@ -94,7 +94,7 @@ input::placeholder {
   color: #fff;
   font-size: var(--font-size-base);
   border-radius: 5px;
-  width: 50%;
+  padding: 0 15%;
   display: block;
   margin: 1rem auto 2rem auto;
   cursor: pointer;
