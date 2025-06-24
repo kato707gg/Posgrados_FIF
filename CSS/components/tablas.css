@@ -137,6 +137,11 @@ h3 {
 }
 
 @media screen and (max-width: 1600px) {
+
+    th {
+        font-size: var(--font-size-lg);
+    }
+    
     .container-principal {
         height: 79vh;
     }

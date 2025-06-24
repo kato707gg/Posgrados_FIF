@@ -63,6 +63,12 @@ $Resultado = Ejecutar($Con, $SQL);
             width: 5vw;
         }
 
+        @media screen and (max-width: 1600px) {
+            .inputs {
+                width: 100%;
+            }
+        }
+
         @media (max-width: 770px) {
             .inputs {
                 width: 20vw;
@@ -240,6 +246,9 @@ $Resultado = Ejecutar($Con, $SQL);
         let expedienteActual = '';
         let esDirectorModal = false;
 
+        // Agrega una variable global para almacenar borradores, por expediente
+        let draftObservations = {};
+
         function checkFields(expediente) {
             const btn = document.getElementById('btn_' + expediente);
             const fila = document.querySelector(`tr[data-expediente="${expediente}"]`);
@@ -283,48 +292,63 @@ $Resultado = Ejecutar($Con, $SQL);
             const modal = document.getElementById('modalObservaciones');
             const contenido = document.getElementById('observacionesContent');
 
-            // Recuperar observaciones existentes
-            const existingObservations = document.getElementById('observacion_' + expediente)?.value || '';
+            // Recuperar observaciones existentes del input oculto
+            let existingObservations = document.getElementById('observacion_' + expediente)?.value || '';
+            // Si hay un borrador previo, se utiliza ese en lugar del valor existente
+            if (draftObservations[expediente]) {
+                existingObservations = draftObservations[expediente];
+            }
 
             contenido.innerHTML = '';
 
             if (esDirector) {
-                // Formato para director
-                const obsSections = existingObservations.split('|');
+                let obsSections = existingObservations.split('|');
                 contenido.innerHTML = `
                     <div>
                         <label class='label-observaciones'>Sobre Avance gradual:</label>
                         <textarea class="observacion-input" id="obs1_${expediente}" rows="5" 
-                          onchange="checkFields('${expediente}')">${obsSections[0] || ''}</textarea>
+                          oninput="actualizarBorrador('${expediente}', true)" onchange="checkFields('${expediente}')">${obsSections[0] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Sobre entregable y resultados esperados:</label>
                         <textarea class="observacion-input" id="obs2_${expediente}" rows="5" 
-                          onchange="checkFields('${expediente}')">${obsSections[1] || ''}</textarea>
+                          oninput="actualizarBorrador('${expediente}', true)" onchange="checkFields('${expediente}')">${obsSections[1] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Sobre el Avance del Proyecto:</label>
                         <textarea class="observacion-input" id="obs3_${expediente}" rows="5" 
-                          onchange="checkFields('${expediente}')">${obsSections[2] || ''}</textarea>
+                          oninput="actualizarBorrador('${expediente}', true)" onchange="checkFields('${expediente}')">${obsSections[2] || ''}</textarea>
                     </div>
                     <div>
                         <label class='label-observaciones'>Comentario Individual:</label>
                         <textarea class="observacion-input" id="obs4_${expediente}" rows="5" 
-                          onchange="checkFields('${expediente}')">${obsSections[3] || ''}</textarea>
+                          oninput="actualizarBorrador('${expediente}', true)" onchange="checkFields('${expediente}')">${obsSections[3] || ''}</textarea>
                     </div>`;
             } else {
-                // Formato para sínodo
                 contenido.innerHTML = `
                     <div>
                         <textarea class="observacion-input" id="obs_${expediente}" rows="5" 
-                          onchange="checkFields('${expediente}')" required>${existingObservations}</textarea>
+                          oninput="actualizarBorrador('${expediente}', false)" onchange="checkFields('${expediente}')" required>${existingObservations}</textarea>
                     </div>`;
             }
 
             modal.style.display = "block";
-            // Forzar un reflow para que la transición funcione
+            // Forzar reflow y mostrar la animación
             modal.offsetHeight;
             modal.classList.add('show');
+        }
+
+        function actualizarBorrador(expediente, esDirector) {
+            if (esDirector) {
+                const obs1 = document.getElementById(`obs1_${expediente}`)?.value || '';
+                const obs2 = document.getElementById(`obs2_${expediente}`)?.value || '';
+                const obs3 = document.getElementById(`obs3_${expediente}`)?.value || '';
+                const obs4 = document.getElementById(`obs4_${expediente}`)?.value || '';
+                draftObservations[expediente] = [obs1, obs2, obs3, obs4].join('|');
+            } else {
+                const obs = document.getElementById(`obs_${expediente}`)?.value || '';
+                draftObservations[expediente] = obs;
+            }
         }
 
         function guardarObservaciones() {
@@ -339,7 +363,6 @@ $Resultado = Ejecutar($Con, $SQL);
                 const obs2 = document.getElementById(`obs2_${expedienteActual}`)?.value || '';
                 const obs3 = document.getElementById(`obs3_${expedienteActual}`)?.value || '';
                 const obs4 = document.getElementById(`obs4_${expedienteActual}`)?.value || '';
-
                 observacionInput.value = [obs1, obs2, obs3, obs4].join('|');
             } else {
                 // Guardar observación de sínodo
@@ -349,13 +372,17 @@ $Resultado = Ejecutar($Con, $SQL);
                 }
             }
 
-            // Añadir clase al botón
+            // Limpiar el borrador una vez guardado
+            delete draftObservations[expedienteActual];
+
+            // Añadir clase al botón indicando que ya se agregó la observación
             btnAgregar.classList.add('accion-completada');
 
             checkFields(expedienteActual);
             cerrarModal();
         }
 
+        // La función cerrarModal no modifica el contenido del modal, por lo que el borrador se mantiene
         function cerrarModal() {
             const modal = document.getElementById('modalObservaciones');
             modal.classList.remove('show');

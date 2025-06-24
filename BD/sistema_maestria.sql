@@ -241,7 +241,7 @@ INSERT INTO `estudiantes` (`exp`, `nombre`, `a_paterno`, `a_materno`, `telefono`
 (128976, 'VIRGINIA', 'SANTIAGO', 'PABLO', 4411200465, 'vicky_changuito@hotmail.com', 'MCC'),
 (301574, 'JESUS', 'GARCIA', 'SANTIAGO', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
 (301612, 'YARETZI', 'AA', '123123', 4425562487, 'lyaretzi361@gmail.com', 'MCC'),
-(301627, 'MARIA FERNANDA', 'PACHECO', 'SANCHEZ', 4426532877, 'mpacheco@alumnos.uaq.mx', 'DCC'),
+(301627, 'MARIA FERNANDA', 'PACHECO', 'SANCHEZ', 4426532877, 'mpacheco@alumnos.uaq.mx', 'DCC');
 
 -- --------------------------------------------------------
 
